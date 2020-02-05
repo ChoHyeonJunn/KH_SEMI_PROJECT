@@ -10,22 +10,22 @@ import org.jsoup.select.Elements;
 
 public class CGVJsoupCrawlingTest {
 	public static void main(String[] args) {
-		// Jsoup¸¦ ÀÌ¿ëÇØ¼­ http://www.cgv.co.kr/movies/ Å©·Ñ¸µ
+		// Jsoupë¥¼ ì´ìš©í•´ì„œ http://www.cgv.co.kr/movies/ í¬ë¡¤ë§
 		
-		String url = "http://www.cgv.co.kr/movies/"; //Å©·Ñ¸µÇÒ urlÁöÁ¤
-		Document doc = null;        //Document¿¡´Â ÆäÀÌÁöÀÇ ÀüÃ¼ HTML ¹®¼­°¡ ÀúÀåµÈ´Ù
+		String url = "http://www.cgv.co.kr/movies/"; //í¬ë¡¤ë§í•  urlì§€ì •
+		Document doc = null;        //Documentì—ëŠ” í˜ì´ì§€ì˜ ì „ì²´ HTML ë¬¸ì„œê°€ ì €ì¥ëœë‹¤
 
 		try {
 			doc = Jsoup.connect(url).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//select¸¦ ÀÌ¿ëÇÏ¿© ¿øÇÏ´Â ÅÂ±×¸¦ ¼±ÅÃÇÑ´Ù. select´Â ¿øÇÏ´Â °ªÀ» °¡Á®¿À±â À§ÇÑ Áß¿äÇÑ ±â´ÉÀÌ´Ù.
+		//selectë¥¼ ì´ìš©í•˜ì—¬ ì›í•˜ëŠ” íƒœê·¸ë¥¼ ì„ íƒí•œë‹¤. selectëŠ” ì›í•˜ëŠ” ê°’ì„ ê°€ì ¸ì˜¤ê¸° ìœ„í•œ ì¤‘ìš”í•œ ê¸°ëŠ¥ì´ë‹¤.
 		Elements elements = doc.select("div.sect-movie-chart");    
 
 		System.out.println("============================================================");
 
-		//IteratorÀ» »ç¿ëÇÏ¿© ÇÏ³ª¾¿ °ª °¡Á®¿À±â
+		//Iteratorì„ ì‚¬ìš©í•˜ì—¬ í•˜ë‚˜ì”© ê°’ ê°€ì ¸ì˜¤ê¸°
 		Iterator<Element> ie1 = elements.select("strong.rank").iterator();
 		Iterator<Element> ie2 = elements.select("strong.title").iterator();
 		        

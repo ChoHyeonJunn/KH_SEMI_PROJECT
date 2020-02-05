@@ -10,22 +10,22 @@ import org.jsoup.select.Elements;
 
 public class YoutubeJsoupCrawlingTest {
 	public static void main(String[] args) {
-		// Jsoup¸¦ ÀÌ¿ëÇØ¼­ https://www.youtube.com/results?search_query=python Å©·Ñ¸µ (ÆÄÀÌ½ã °Ë»ö!!)
+		// Jsoupë¥¼ ì´ìš©í•´ì„œ https://www.youtube.com/results?search_query=python í¬ë¡¤ë§ (íŒŒì´ì¬ ê²€ìƒ‰!!)
 		
-		String url = "https://www.youtube.com/results?search_query=python"; //Å©·Ñ¸µÇÒ urlÁöÁ¤
-		Document doc = null;        //Document¿¡´Â ÆäÀÌÁöÀÇ ÀüÃ¼ HTML ¹®¼­°¡ ÀúÀåµÈ´Ù
+		String url = "https://www.youtube.com/results?search_query=python"; //í¬ë¡¤ë§í•  urlì§€ì •
+		Document doc = null;        //Documentì—ëŠ” í˜ì´ì§€ì˜ ì „ì²´ HTML ë¬¸ì„œê°€ ì €ì¥ëœë‹¤
 
 		try {
 			doc = Jsoup.connect(url).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//select¸¦ ÀÌ¿ëÇÏ¿© ¿øÇÏ´Â ÅÂ±×¸¦ ¼±ÅÃÇÑ´Ù. select´Â ¿øÇÏ´Â °ªÀ» °¡Á®¿À±â À§ÇÑ Áß¿äÇÑ ±â´ÉÀÌ´Ù.
+		//selectë¥¼ ì´ìš©í•˜ì—¬ ì›í•˜ëŠ” íƒœê·¸ë¥¼ ì„ íƒí•œë‹¤. selectëŠ” ì›í•˜ëŠ” ê°’ì„ ê°€ì ¸ì˜¤ê¸° ìœ„í•œ ì¤‘ìš”í•œ ê¸°ëŠ¥ì´ë‹¤.
 		Elements elements = doc.select("div#contents");    
 
 		System.out.println("============================================================");
 
-		//IteratorÀ» »ç¿ëÇÏ¿© ÇÏ³ª¾¿ °ª °¡Á®¿À±â
+		//Iteratorì„ ì‚¬ìš©í•˜ì—¬ í•˜ë‚˜ì”© ê°’ ê°€ì ¸ì˜¤ê¸°
 		Iterator<Element> ie1 = elements.select("yt-formatted-string.style-scope.ytd-video-renderer").iterator();
 		//Iterator<Element> ie2 = elements.select("strong.title").iterator();
 		        

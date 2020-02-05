@@ -10,20 +10,20 @@ import org.jsoup.select.Elements;
 
 public class Inflearn {
 	public static void main(String[] args) {
-		String url = "https://www.inflearn.com/courses/it-programming/web-dev"; //Å©·Ñ¸µÇÒ urlÁöÁ¤
-		Document doc = null;        //Document¿¡´Â ÆäÀÌÁöÀÇ ÀüÃ¼ HTML ¹®¼­°¡ ÀúÀåµÈ´Ù
+		String url = "https://www.inflearn.com/courses/it-programming/web-dev"; //í¬ë¡¤ë§í•  urlì§€ì •
+		Document doc = null;        //Documentì—ëŠ” í˜ì´ì§€ì˜ ì „ì²´ HTML ë¬¸ì„œê°€ ì €ì¥ëœë‹¤
 
 		try {
 			doc = Jsoup.connect(url).get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//select¸¦ ÀÌ¿ëÇÏ¿© ¿øÇÏ´Â ÅÂ±×¸¦ ¼±ÅÃÇÑ´Ù. select´Â ¿øÇÏ´Â °ªÀ» °¡Á®¿À±â À§ÇÑ Áß¿äÇÑ ±â´ÉÀÌ´Ù.
+		//selectë¥¼ ì´ìš©í•˜ì—¬ ì›í•˜ëŠ” íƒœê·¸ë¥¼ ì„ íƒí•œë‹¤. selectëŠ” ì›í•˜ëŠ” ê°’ì„ ê°€ì ¸ì˜¤ê¸° ìœ„í•œ ì¤‘ìš”í•œ ê¸°ëŠ¥ì´ë‹¤.
 		Elements elements = doc.select("div.columns.is-multiline.is-mobile.courses_card_list_body");    
 
 		System.out.println("============================================================");
 
-		//IteratorÀ» »ç¿ëÇÏ¿© ÇÏ³ª¾¿ °ª °¡Á®¿À±â
+		//Iteratorì„ ì‚¬ìš©í•˜ì—¬ í•˜ë‚˜ì”© ê°’ ê°€ì ¸ì˜¤ê¸°
 		Iterator<Element> ie1 = elements.select("div.course_title").iterator();
 		        
 		while (ie1.hasNext()) {
