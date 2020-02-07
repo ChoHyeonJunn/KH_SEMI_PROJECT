@@ -11,32 +11,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = { 
-		"", // 요청의 내용을 간단히 요약
+		"/jsp/main", // main 페이지로 이동
 		"", // 요청의 내용을 간단히 요약
 })
-public class BoardController extends HttpServlet {
+public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public BoardController() {
+	public MainController() {
 		super();
 	}
 
-	private void getRequest(HttpServletRequest request, HttpServletResponse response) {
+	private void getRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// command에 따른 로직 처리
 
 		String command = request.getRequestURI();
 		System.out.println("<" + command + ">");
 
-		if (command.endsWith("")) {
-			doBoardTest(request, response);
+		if (command.endsWith("main")) {
+			doMain(request, response);
 		} else if (command.endsWith("")) {
-
-		} 
-		//,,,,,
+			
+		} else {
+			doError(request, response);
+		}
+		// ,,,,,
 	}
 
-	private void doBoardTest(HttpServletRequest request, HttpServletResponse response) {
-		// biz 호출을 통한 로직처리 및 dispatch(), jsResponse() 를 이용한 페이지 전환
+	private void doMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		dispatch("home/main.jsp", request, response);
+	}
+
+	private void doError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		dispatch("error.jsp", request, response);
 	}
 
 	private void dispatch(String url, HttpServletRequest request, HttpServletResponse response)
@@ -58,7 +64,7 @@ public class BoardController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 
-		getRequest(request, response);	// 모든 요청은 getRequest() 메서드에서 처리
+		getRequest(request, response); // 모든 요청은 getRequest() 메서드에서 처리
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -66,7 +72,7 @@ public class BoardController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 
-		getRequest(request, response);	// 모든 요청은 getRequest() 메서드에서 처리
+		getRequest(request, response); // 모든 요청은 getRequest() 메서드에서 처리
 	}
 
 }
