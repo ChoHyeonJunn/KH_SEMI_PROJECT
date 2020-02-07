@@ -2,6 +2,10 @@
 	padding: 0px;
 	margin: 0px;
 }
-div{
+div, span{
 	border: 1px dotted blue;
+}
+.content{
+	padding: 10px;
+	margin: 10px;
 }
