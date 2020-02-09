@@ -9,42 +9,63 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = { 
-		"/jsp/main", // main 페이지로 이동
-		"", // 요청의 내용을 간단히 요약
-})
+@WebServlet(//
+		name = "main", // Controller Mapping name
+		//
+		urlPatterns = { //
+				"mainpage.do", // main 페이지로 이동
+		})
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	HttpSession session;
 
 	public MainController() {
 		super();
 	}
 
-	private void getRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void getRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// command에 따른 로직 처리
 
 		String command = request.getRequestURI();
 		System.out.println("<" + command + ">");
 
-		if (command.endsWith("main")) {
-			doMain(request, response);
-		} else if (command.endsWith("")) {
-			
-		} else {
+		if (command.endsWith("/mainpage.do")) {
+			doMainPage(request, response);
+		}
+
+		else {
 			doError(request, response);
 		}
 		// ,,,,,
 	}
 
-	private void doMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		dispatch("home/main.jsp", request, response);
+	private void doMainPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		session = request.getSession();
+		if (session.getAttribute("loginMember") != null || session.getAttribute("loginKakao") != null || session.getAttribute("loginNaver") != null) {
+			// 로그인 상태일 때
+			System.out.println("로그인 상태로 main 접근");
+			dispatch("/views/home/main.jsp", request, response);
+		} else {
+			// 미 로그인 상태일 때
+			System.out.println("로그아웃 상태로 home 접근");
+			dispatch("/views/home/home.jsp", request, response);
+		}
+
 	}
 
-	private void doError(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void doError(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		dispatch("error.jsp", request, response);
 	}
 
+	/*
+	 * Servlet Basic Template : Please do not modify ...
+	 */
 	private void dispatch(String url, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher dispatch = request.getRequestDispatcher(url);

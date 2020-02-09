@@ -5,7 +5,9 @@
 	<properties resource="com/devca/mybatis/db.properties"></properties>
 
 	<typeAliases>
-		<typeAlias type="com.md.vo.MDBOARD" alias="MDBOARD" />
+		<typeAlias type="com.devca.model.dto.MEMBER" alias="MEMBER" />
+		<typeAlias type="com.devca.model.dto.KAKAO_MEMBER" alias="KAKAO_MEMBER" />
+		<typeAlias type="com.devca.model.dto.NAVER_MEMBER" alias="NAVER_MEMBER" />
 	</typeAliases>
 
 	<environments default="development">
@@ -20,7 +22,7 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="com/devca/mybatis/mapper_one.xml" />
-		<mapper resource="com/devca/mybatis/mapper_two.xml" />
+		<mapper resource="com/devca/mybatis/mainMapper.xml" />
+		<mapper resource="com/devca/mybatis/memberMapper.xml" />
 	</mappers>
 </configuration>
