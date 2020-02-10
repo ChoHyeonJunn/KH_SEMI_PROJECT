@@ -17,42 +17,46 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="sessionLoginMember" value="${sessionScope.loginMember}"></c:set>
+<c:set var="sessionLoginKakao" value="${sessionScope.loginKakao}"></c:set>
+<c:set var="sessionLoginNaver" value="${sessionScope.loginNaver}"></c:set>
 <!-- END :: set JSTL variable -->
 
 </head>
 <body>
 	<header>
 		<nav class="content">
-			<div id="home">
+			<span id="home">
 				<a href="/DEVCA/main/mainpage.do">HOME</a>
-			</div>
-			
-			<div id="search">
-				<form action="lecture_search" method="post">
+			</span>
+			<span>
+				드롭다운메뉴
+			</span>
+			<span id="search">
+				<form action="lecture_search" method="post" style="display: inline;">
 					<input type="text" name="search" placeholder="Ask 'What course do you need?'">
 				</form>		
-			</div>
+			</span>
 			
-			<div id="account">
+			<span id="account">
 				<c:choose>
 					<c:when test="${not empty sessionLoginMember || not empty sessionLoginKakao || not empty sessionLoginNaver}">
-						<div>	
+						<span>	
 							<a href="/DEVCA/member/profilepage.do">프로필</a>
 							<a href="/DEVCA/member/logout.do">로그아웃</a>
-						</div>	
+						</span>	
 					</c:when>
 					<c:otherwise>
-						<div>
+						<span>
 							<a href="/DEVCA/member/joinpage.do">회원가입</a>
-						</div>
-						<div>	
+						</span>
+						<span>	
 							<a href="/DEVCA/member/loginpage.do">로그인</a>
-						</div>							
+						</span>							
 					</c:otherwise>
 				</c:choose>
 				
 				
-			</div>	
+			</span>	
 		</nav>	
 	</header>
 </body>

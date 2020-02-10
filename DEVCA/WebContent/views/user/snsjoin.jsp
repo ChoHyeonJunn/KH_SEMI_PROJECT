@@ -32,6 +32,7 @@ $(function(){
 		// 실제 유저 입력 form은 event 취소
 		// javaScript가 작동되지 않는 환경에서는 유저 입력 form이 submit됨 -> server 측에서 검증되므로 로그인 불가.
 		
+		// 변수 set
 		var MEMBER_NAME = $("#snsJoinForm input[name='MEMBER_NAME']").val();
 		var MEMBER_EMAIL;
 		if(SNS_EMAIL != null && SNS_EMAIL != ""){
@@ -41,6 +42,7 @@ $(function(){
 		}
 		var MEMBER_PHONE = $("#snsJoinForm input[name='MEMBER_PHONE']").val();
 		
+		// opener 의 히든폼에 setValues 한 후 submit
 		$(opener.document).find("#snsJoinHiddenForm input[name='snsType']").val(snsType);
 		
 		$(opener.document).find("#snsJoinHiddenForm input[name='MEMBER_NAME']").val(MEMBER_NAME);
@@ -124,7 +126,7 @@ $(function(){
 					<label for="phone">전화번호</label>
 				</div>
 				<div>			
-					<input id="phone" type="tel" name="MEMBER_PHONE" required="required" placeholder="010-1234-1234" autocomplete="tel"">
+					<input id="phone" type="tel" name="MEMBER_PHONE" required="required" placeholder="010-1234-1234" autocomplete="tel">
 				</div>
 			</div>
 			<div>

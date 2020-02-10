@@ -66,7 +66,7 @@
 					<label for="phone">전화번호</label>
 				</div>
 				<div>			
-					<input id="phone" type="tel" name="MEMBER_PHONE" required="required" placeholder="010-1234-1234" autocomplete="tel"">
+					<input id="phone" type="tel" name="MEMBER_PHONE" required="required" placeholder="010-1234-1234" autocomplete="tel">
 				</div>
 			</div>
 			<div>
@@ -106,7 +106,7 @@
 		</form>
 	</section>
 	
-	<!-- START :: sns 로그인 팝업창으로 전송되는 form -->
+	<!-- START :: SNSJOIN 팝업창으로 전송되는 form -->
 		<form id="snsHiddenForm" action="" method="post">
 			<input type="hidden" name="snsType">
 			<input type="hidden" name="SNS_ID" /> 
@@ -114,9 +114,9 @@
 			<input type="hidden" name="SNS_EMAIL" />
 			<input type="hidden" name="access_token" />
 		</form>
-	<!-- END :: sns 로그인 팝업창으로 전송되는 form -->
+	<!-- END :: SNSJOIN 팝업창으로 전송되는 form -->
 	
-	<!-- START :: sns 로그인 시 실제 서버로 전송되는 form -->
+	<!-- START :: SNSJOIN 시 실제 서버로 전송되는 form -->
 		<form id="snsJoinHiddenForm" action="/DEVCA/member/snsjoin.do" method="post">
 			<input type="hidden" name="snsType">
 			
@@ -128,10 +128,14 @@
 			<input type="hidden" name="SNS_NICKNAME" /> 	
 			<input type="hidden" name="access_token" />
 		</form>
-	<!-- END :: sns 로그인 시 실제 서버로 전송되는 form -->
+	<!-- END :: SNSJOIN 시 실제 서버로 전송되는 form -->
 </body>
+
+<!-- START :: SNS LOGIN -->
 <script type="text/javascript">
-//<![CDATA[
+
+/////////////// START :: 카카오 sns 연동
+
 // 사용할 앱의 JavaScript 키를 설정해 주세요.
 Kakao.init('dde3d6a6f398e8afdf7600f84f211532');
 
@@ -171,6 +175,7 @@ Kakao.Auth.createLoginButton({
   }
 });
 
+// kakao logout 
 function klogout(){
 	Kakao.Auth.logout(function(){
 		setTimeout(function(){
@@ -178,7 +183,19 @@ function klogout(){
 		}, 1000);
 	})
 }
-//]]>
 
+/////////////// END :: 카카오 sns 연동
+
+
+/////////////// START :: 네이버 sns 연동
+/////////////// END :: 네이버 sns 연동
 </script>
+<!-- END :: SNS LOGIN -->
 </html>
+
+
+
+
+
+
+

@@ -13,6 +13,7 @@ aside {
  	position: relative;
  	float: left;
  	width: 240px;
+ 	height: 100%;
 }
 /* 블록 기본 css */
 div, span, p {

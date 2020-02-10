@@ -14,8 +14,10 @@
 section{
 	width: 100%;
 	height: 500px;
+}
+article{
 	position: relative;
-	left: 250px;
+	height: 100%;
 }
 </style>
 <!-- END :: css -->
@@ -37,14 +39,24 @@ section{
 <body>
 	<%@ include file="/views/form/header.jsp"%>
 	
-	<%@ include file="/views/form/profilesidebar.jsp"%>	
-	<!-- START :: profile content -->
+	
 	<section>
-	
-	</section>
-	
-	
-	<!-- END :: profile content -->	
+		<%@ include file="/views/form/profilesidebar.jsp"%>	
+		
+		<!-- START :: profile content -->
+		<article>
+		
+		
+		
+			컨텐츠 작성
+			
+			
+			
+			
+		</article>	
+		<!-- END :: profile content -->	
+		
+	</section>	
 	<%@ include file="/views/form/footer.jsp"%>
 </body>
 </html>

@@ -44,34 +44,47 @@ public class MemberController extends HttpServlet {
 		String command = request.getRequestURI();
 		System.out.println("<" + command + ">");
 
+		// 회원가입 창으로 이동
 		if (command.endsWith("/joinpage.do")) {
 			doJoinPage(request, response);
 		}
 
+		// 회원가입 요청 처리
 		else if (command.endsWith("/join.do")) {
 			doJoin(request, response);
 		}
 
+		// SNS 회원가입 요청처리
 		else if (command.endsWith("/snsjoin.do")) {
 			doSNSJoin(request, response);
 		}
 
+		// 로그인 페이지로 이동
 		else if (command.endsWith("/loginpage.do")) {
 			doLoginPage(request, response);
 		}
 
+		// 로그인 요청 처리
 		else if (command.endsWith("/login.do")) {
 			doLogin(request, response);
 		}
 
+		// SNS 로 가입된 이메일이 존재하는지 체크
+		else if (command.endsWith("/snslogincheck.do")) {
+			doSnsLoginCheck(request, response);
+		}
+
+		// 로그아웃 요청 처리
 		else if (command.endsWith("/logout.do")) {
 			doLogout(request, response);
 		}
 
+		// 프로필 페이지로 이동
 		else if (command.endsWith("/profilepage.do")) {
 			doProfilePage(request, response);
 		}
 
+		// 에러 처리
 		else {
 			doError(request, response);
 		}
@@ -173,6 +186,11 @@ public class MemberController extends HttpServlet {
 		} else {
 			jsResponse("로그인 실패", "/DEVCA/member/loginpage.do", response);
 		}
+	}
+
+	// SNS 로 가입된 이메일이 존재하는지 체크
+	private void doSnsLoginCheck(HttpServletRequest request, HttpServletResponse response) {
+		
 	}
 
 	// 로그아웃
