@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>DEVCA</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>main</servlet-name>
+		<servlet-class>com.devca.controller.MainController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>main</servlet-name>
+		<url-pattern>/main/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>member</servlet-name>
+		<servlet-class>com.devca.controller.MemberController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>member</servlet-name>
+		<url-pattern>/member/*</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>portfolio</servlet-name>
+		<servlet-class>com.devca.controller.PortfolioController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>portfolio</servlet-name>
+		<url-pattern>/portfolio/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>lecture</servlet-name>
+		<servlet-class>com.devca.controller.LectureController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>lecture</servlet-name>
+		<url-pattern>/lecture/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>board</servlet-name>
+		<servlet-class>com.devca.controller.BoardController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>board</servlet-name>
+		<url-pattern>/board/*</url-pattern>
+	</servlet-mapping>
+</web-app>
