@@ -7,10 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- HEADER FORM -->
+<%@ include file="/views/form/header.jsp"%>
 
 <!-- START :: css -->
-<link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
-
 <style type="text/css">
 section{
 	width: 100%;
@@ -21,11 +21,14 @@ section{
 
 <!-- START :: set JSTL variable -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<c:set var="sessionLoginMember" value="${sessionScope.loginMember}"></c:set>
-<c:set var="sessionLoginKakao" value="${sessionScope.loginKakao}"></c:set>
-<c:set var="sessionLoginNaver" value="${sessionScope.loginNaver}"></c:set>
 <!-- END :: set JSTL variable -->
+
+<!-- START :: JAVASCRIPT -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+
+</script>
+<!-- END :: JAVASCRIPT -->
 
 <!-- START :: 비회원이 잘못된 경로를 통해 접근했을 때 block -->
 <c:if test="${empty sessionLoginMember && empty sessionLoginKakao && empty sessionLoginNaver}">
@@ -34,14 +37,16 @@ section{
 <!-- END :: 비회원이 잘못된 경로를 통해 접근했을 때 block -->
 
 </head>
-<body>
-	<%@ include file="/views/Form/header.jsp"%>
-	
+<body>	
 	<section>
 		<!-- 회원 전용 페이지 -->
 		<c:out value="${sessionLoginMember.MEMBER_NAME }"></c:out>
+		
 		<c:out value="${sessionLoginKakao.KAKAO_NICKNAME}"></c:out>
 		<c:out value="${sessionLoginKakao.KAKAO_ID}"></c:out>
+		
+		<c:set var="access_token" value="${sessionScope.access_token}"></c:set>
+		<c:out value="${access_token}"></c:out>
 		<article id="roadmap">
 			로드맵		
 		</article>
@@ -71,6 +76,8 @@ section{
 		</article>
 		
 	</section>
-	<%@ include file="/views/Form/footer.jsp"%>
+	
+	<!-- FOOTER FORM -->	
+	<%@ include file="/views/form/footer.jsp"%>
 </body>
 </html>

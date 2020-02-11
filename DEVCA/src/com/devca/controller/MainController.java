@@ -49,11 +49,11 @@ public class MainController extends HttpServlet {
 		if (session.getAttribute("loginMember") != null || session.getAttribute("loginKakao") != null || session.getAttribute("loginNaver") != null) {
 			// 로그인 상태일 때
 			System.out.println("로그인 상태로 main 접근");
-			dispatch("/views/Main/main.jsp", request, response);
+			dispatch("/views/main/main.jsp", request, response);
 		} else {
 			// 미 로그인 상태일 때
 			System.out.println("로그아웃 상태로 home 접근");
-			dispatch("/views/Main/home.jsp", request, response);
+			dispatch("/views/main/home.jsp", request, response);
 		}
 
 	}

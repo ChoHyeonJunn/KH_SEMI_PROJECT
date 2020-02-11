@@ -44,7 +44,7 @@ public class LectureController extends HttpServlet {
 
 	private void doLectureDetailPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		dispatch("/views/Lecture/lecturedetail.jsp", request, response);
+		dispatch("/views/lecture/lecturedetail.jsp", request, response);
 	}
 
 	private void doError(HttpServletRequest request, HttpServletResponse response)

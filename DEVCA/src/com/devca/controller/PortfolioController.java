@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 		name = "portfolio", // Controller Mapping name
 		//
 		urlPatterns = { //
-				"profilepage.do", // 간단한 주석
+				"portfoliopage.do", // 간단한 주석
 		})
 public class PortfolioController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ public class PortfolioController extends HttpServlet {
 		System.out.println("<" + command + ">");
 
 		// 프로필 페이지로 이동
-		if (command.endsWith("/profilepage.do")) {
+		if (command.endsWith("/portfoliopage.do")) {
 			doProfilePage(request, response);
 		}
 		// 에러 처리
@@ -44,7 +44,7 @@ public class PortfolioController extends HttpServlet {
 	// 프로필 페이지
 	private void doProfilePage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		dispatch("/views/portfolio/profilepage.jsp", request, response);
+		dispatch("/views/portfolio/portfoliopage.jsp", request, response);
 	}
 
 	// 에러 페이지

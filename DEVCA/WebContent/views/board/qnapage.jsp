@@ -43,7 +43,7 @@ section{
 		
 	</section>
 	
-	<!-- FOOTER FORM -->		
+	<!-- FOOTER FORM -->	
 	<%@ include file="/views/form/footer.jsp"%>
 </body>
 </html>

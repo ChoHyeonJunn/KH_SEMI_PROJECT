@@ -12,6 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- START :: css -->
+<link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
+<!-- END :: css -->
 
 <!-- START :: set JSTL variable -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -33,15 +36,32 @@
 			</span>
 			<span id="search">
 				<form action="lecture_search" method="post" style="display: inline;">
-					<input type="text" name="search" placeholder="Ask 'What course do you need?'">
+					<input type="text" name="search" placeholder="Ask 'What course do you need?'" style="width: 800px;">
 				</form>		
+			</span>										
+			<span>
+				<a href="/DEVCA/lecture/lecturedetailpage.do">강의게시물</a>
+			</span>
+			<span>
+				<a href="/DEVCA/board/studypage.do">스터디</a>
+			</span>
+			<span>	
+				<a href="/DEVCA/board/qnapage.do">Q&A</a>
 			</span>
 			
 			<span id="account">
+			
+
+				
 				<c:choose>
 					<c:when test="${not empty sessionLoginMember || not empty sessionLoginKakao || not empty sessionLoginNaver}">
 						<span>	
-							<a href="/DEVCA/portfolio/profilepage.do">프로필</a>
+							<a href="/DEVCA/portfolio/portfoliopage.do">프로필</a>
+						</span>
+						<span>	
+							<a href="/DEVCA/member/privacypage.do">계정관리</a>
+						</span>
+						<span>
 							<a href="/DEVCA/member/logout.do">로그아웃</a>
 						</span>	
 					</c:when>
@@ -54,13 +74,7 @@
 						</span>							
 					</c:otherwise>
 				</c:choose>
-				
-				<span>
-					<a href="/DEVCA/lecture/lecturepage.do">강의게시물</a>
-				</span>
-				<span>	
-					<a href="/DEVCA/board/qnapage.do">Q&A</a>
-				</span>	
+
 			</span>	
 		</nav>	
 	</header>

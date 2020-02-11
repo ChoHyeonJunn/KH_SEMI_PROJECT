@@ -16,6 +16,10 @@ section{
 	width: 100%;
 	height: 500px;
 }
+article{
+	position: relative;
+	height: 100%;
+}
 </style>
 <!-- END :: css -->
 
@@ -30,18 +34,32 @@ section{
 </script>
 <!-- END :: JAVASCRIPT -->
 
+<!-- START :: 비회원이 잘못된 경로를 통해 접근했을 때 block -->
+<c:if test="${empty sessionLoginMember && empty sessionLoginKakao && empty sessionLoginNaver}">
+	<jsp:forward page="/DEVCA/main/mainpage.do"></jsp:forward>
+</c:if>
+<!-- END :: 비회원이 잘못된 경로를 통해 접근했을 때 block -->
 </head>
 <body>
 	
+	
 	<section>
-		sagdlkasjdl;k
-		sadhsadh
-		sha
+		<%@ include file="/views/form/privacysidebar.jsp"%>	
 		
-		hd
-		hd
+		<!-- START :: profile content -->
+		<article>
 		
-	</section>
+		
+		
+			컨텐츠 작성
+			
+			
+			
+			
+		</article>	
+		<!-- END :: profile content -->	
+		
+	</section>	
 	
 	<!-- FOOTER FORM -->		
 	<%@ include file="/views/form/footer.jsp"%>

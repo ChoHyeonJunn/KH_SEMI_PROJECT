@@ -129,6 +129,13 @@
 			<input type="hidden" name="access_token" />
 		</form>
 	<!-- END :: SNSJOIN 시 실제 서버로 전송되는 form -->
+	
+	<!-- START :: SNSLOGIN 시 실제 서버로 전송되는 form -->
+	<form id="snsLoginHiddenForm" action="/DEVCA/member/loginkakao.do" method="post">
+		<input type="hidden" name="SNS_ID">
+		<input type="hidden" name="access_token">
+	</form>
+	<!-- END :: SNSLOGIN 시 실제 서버로 전송되는 form -->
 </body>
 
 <!-- START :: SNS LOGIN -->
@@ -143,30 +150,59 @@ Kakao.init('dde3d6a6f398e8afdf7600f84f211532');
 Kakao.Auth.createLoginButton({
   container: '#kakao-login-btn',
   success: function(authObj) {
-    alert(JSON.stringify(authObj));
     Kakao.API.request({
     	url: '/v1/user/me',
     	success: function(res){
-    		alert(JSON.stringify(res));
+    		/* alert(JSON.stringify(res)); */
 			console.log(res.id);
     		console.log(res.properties['nickname']);
 			console.log(res.kaccount_email);				
 			console.log(authObj.access_token);
 			
-			// 히든 폼에 set
-			$("#snsHiddenForm input[name='snsType']").val("KAKAO");
+			// 가입된 이메일이 존재하는지 체크
+			$.ajax({
+				type : "POST",
+				url : "/DEVCA/member/iskakaomember.do",
+				data : {
+					MEMBER_EMAIL : res.kaccount_email
+				},
+				dataType : "JSON",
 
-			$("#snsHiddenForm input[name='SNS_ID']").val(res.id);
-			$("#snsHiddenForm input[name='SNS_NICKNAME']").val(res.properties['nickname']);
-			$("#snsHiddenForm input[name='SNS_EMAIL']").val(res.kaccount_email);
-			$("#snsHiddenForm input[name='access_token']").val(res.access_token);
+				success : function(msg) {
+					/* alert(msg.iskakao); */
+					
+					if(msg.iskakao > 0){
+						//kakao 이메일로 회원가입이 되어 있음	-> 로그인
+						$("#snsLoginHiddenForm input[name='SNS_ID']").val(res.id);
+						$("#snsLoginHiddenForm input[name='access_token']").val(authObj.access_token);
+						$("#snsLoginHiddenForm").submit();
+					}else{
+						//kakao 이메일로 회원가입이 안되어 있음 -> 회원가입
+						
+						// 히든 폼에 set
+						$("#snsHiddenForm input[name='snsType']").val("KAKAO");
+						$("#snsHiddenForm input[name='SNS_ID']").val(res.id);
+						$("#snsHiddenForm input[name='SNS_NICKNAME']").val(res.properties['nickname']);
+						$("#snsHiddenForm input[name='SNS_EMAIL']").val(res.kaccount_email);
+						$("#snsHiddenForm input[name='access_token']").val(authObj.access_token);
+						
+						// 팝업 생성
+						var url = "/DEVCA/views/member/snsjoin.jsp";
+						var title = "";
+						var prop = "top=200px,left=600px,width=500px,height=500px";
 							
-			// 팝업 생성
-			var url = "/DEVCA/views/user/snsjoin.jsp";
-			var title = "";
-			var prop = "top=200px,left=600px,width=500px,height=500px";
-				
-			window.open(url, title, prop);
+						window.open(url, title, prop);
+					}
+				},
+
+				error : function(request, status, error) {
+					alert("통신 실패");
+					alert("code : " + request.status
+						+ "\n" + "message : "
+						+ request.responseText
+						+ "\n" + "error : " + error);
+			}
+		})
     	}
     })
   },

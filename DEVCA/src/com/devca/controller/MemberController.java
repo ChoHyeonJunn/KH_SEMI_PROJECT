@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+
 import com.devca.model.biz.member.MemberBiz;
 import com.devca.model.biz.member.MemberBizImpl;
 import com.devca.model.dto.KAKAO_MEMBER;
 import com.devca.model.dto.MEMBER;
+import com.devca.model.dto.NAVER_MEMBER;
 
 @WebServlet(//
 		name = "member", // Controller Mapping name
@@ -39,7 +42,6 @@ public class MemberController extends HttpServlet {
 
 	private void getRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// command에 따른 로직 처리
 
 		String command = request.getRequestURI();
 		System.out.println("<" + command + ">");
@@ -69,9 +71,13 @@ public class MemberController extends HttpServlet {
 			doLogin(request, response);
 		}
 
-		// SNS 로 가입된 이메일이 존재하는지 체크
-		else if (command.endsWith("/snslogincheck.do")) {
-			doSnsLoginCheck(request, response);
+		// KAKAO SNS 로 로그인
+		else if (command.endsWith("/loginsns.do")) {
+			doLoginSns(request, response);
+		}
+		// KAKAO SNS 로 가입된 이메일이 존재하는지 체크
+		else if (command.endsWith("/issnsmember.do")) {
+			doIsSnsMember(request, response);
 		}
 
 		// 로그아웃 요청 처리
@@ -79,19 +85,21 @@ public class MemberController extends HttpServlet {
 			doLogout(request, response);
 		}
 
-
+		// 계정관리 페이지로 이동
+		else if (command.endsWith("/privacypage.do")) {
+			doPrivacyPage(request, response);
+		}
 
 		// 에러 처리
 		else {
 			doError(request, response);
 		}
-		// ,,,,,
 	}
 
 	// 회원가입 페이지
 	private void doJoinPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		dispatch("/views/Member/joinpage.jsp", request, response);
+		dispatch("/views/member/joinpage.jsp", request, response);
 	}
 
 	// 회원가입
@@ -147,9 +155,9 @@ public class MemberController extends HttpServlet {
 				session = request.getSession();
 				session.setAttribute("loginKakao", kakao_member);
 				session.setAttribute("access_token", access_token);
-				jsResponse("KAKAO 회원가입 성공", "/DEVCA/Main/mainpage.do", response);
+				jsResponse("KAKAO 회원가입 성공", "/DEVCA/main/mainpage.do", response);
 			} else {
-				jsResponse("KAKAO 회원가입 실패", "/DEVCA/Member/joinpage.do", response);
+				jsResponse("KAKAO 회원가입 실패", "/DEVCA/member/joinpage.do", response);
 			}
 		}
 		if (snsType == "NAVER") {
@@ -160,7 +168,7 @@ public class MemberController extends HttpServlet {
 	// 로그인 페이지
 	private void doLoginPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		dispatch("/views/Member/loginpage.jsp", request, response);
+		dispatch("/views/member/loginpage.jsp", request, response);
 	}
 
 	// 로그인
@@ -179,15 +187,70 @@ public class MemberController extends HttpServlet {
 		if (loginMember != null) {
 			session = request.getSession();
 			session.setAttribute("loginMember", loginMember);
-			jsResponse("로그인 성공", "/DEVCA/Main/mainpage.do", response);
+			jsResponse("로그인 성공", "/DEVCA/main/mainpage.do", response);
 		} else {
-			jsResponse("로그인 실패", "/DEVCA/Member/loginpage.do", response);
+			jsResponse("로그인 실패", "/DEVCA/member/loginpage.do", response);
 		}
 	}
 
-	// SNS 로 가입된 이메일이 존재하는지 체크
-	private void doSnsLoginCheck(HttpServletRequest request, HttpServletResponse response) {
+	// KAKAO SNS 로 로그인
+	private void doLoginSns(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String snsType = request.getParameter("snsType");
+		String SNS_ID = request.getParameter("SNS_ID");
+		if (snsType.equals("KAKAO")) {
+			KAKAO_MEMBER kakao_member = new KAKAO_MEMBER();
+
+			kakao_member.setKAKAO_ID(SNS_ID);
+			KAKAO_MEMBER kakao_loginMember = biz.memberLogin(kakao_member);
+
+			if (kakao_loginMember != null) {
+				String access_token = request.getParameter("access_token");
+				
+				session = request.getSession();
+				session.setAttribute("loginKakao", kakao_loginMember);
+				session.setAttribute("access_token", access_token);
+				jsResponse("로그인 성공", "/DEVCA/main/mainpage.do", response);
+			} else {
+				jsResponse("로그인 실패", "/DEVCA/member/loginpage.do", response);
+			}
+		}
+		if (snsType.equals("NAVER")) {
+			NAVER_MEMBER naver_member = new NAVER_MEMBER();
+			
+			naver_member.setNAVER_ID(SNS_ID);
+			NAVER_MEMBER naver_loginMember = biz.memberLogin(naver_member);
+			
+			if (naver_loginMember != null) {
+				session = request.getSession();
+				session.setAttribute("loginKakao", naver_loginMember);
+				jsResponse("로그인 성공", "/DEVCA/main/mainpage.do", response);
+			} else {
+				jsResponse("로그인 실패", "/DEVCA/member/loginpage.do", response);
+			}
+		}
+
 		
+	}
+
+	// SNS KAKAO로 가입된 이메일이 존재하는지 체크
+	@SuppressWarnings("unchecked")
+	private void doIsSnsMember(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String snsType = request.getParameter("snsType");
+		String SNS_ID = request.getParameter("SNS_ID");
+
+		int issns = 0;
+		if (snsType.equals("KAKAO")) {
+			issns = biz.isKakaoMember(SNS_ID);
+		}
+		if (snsType.equals("NAVER")) {
+			issns = biz.isNaverMember(SNS_ID);
+		}
+
+		JSONObject obj = new JSONObject();
+		obj.put("issns", issns);
+
+		PrintWriter out = response.getWriter();
+		out.println(obj);
 	}
 
 	// 로그아웃
@@ -197,6 +260,11 @@ public class MemberController extends HttpServlet {
 		jsResponse("로그아웃", "/DEVCA/main/mainpage.do", response);
 	}
 
+	// 계정관리 페이지로 이동
+	private void doPrivacyPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		dispatch("/views/member/privacypage.jsp", request, response);
+	}
 
 	// 에러 페이지
 	private void doError(HttpServletRequest request, HttpServletResponse response)
