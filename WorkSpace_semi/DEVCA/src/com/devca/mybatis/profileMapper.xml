@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.devca.profileMapper">
+
+	<!-- 프로필 매퍼 -->
+	<select id="profile_select" parameterType="PROFILE" resultType="PROFILE">
+		SELECT * FROM PROFILE
+		WHERE MEMBER_CODE = #{MEMBER_CODE}
+	</select>
+	<select id="profile_select_seq" parameterType="int" resultType="PROFILE">
+		SELECT PROFILE_SEQ
+		FROM PROFILE
+		WHERE MEMBER_CODE = #{MEMBER_CODE}
+	</select>
+	<insert id="profile_insert" parameterType="PROFILE">
+		INSERT INTO PROFILE
+		VALUES(PROFILE_SEQ.NEXTVAL,#{MEMBER_CODE},#{PROFILE_CAREER_SEQ},
+		#{PROFILE_PERFORMANCE_SEQ},#{PROFILE_PROJECT_SEQ},#{PROFILE_SKILL_SEQ},
+		#{PROFILE_LANGUAGE},#{PROFILE_CERTIFICATE_SEQ},#{PROFILE_ACADEMY_BACKGROUND_SEQ},
+		#{PROFILE_STORAGE_SEQ},#{PROFILE_LINE_OF_WORK},#{PROFILE_INCOME}) 
+	</insert>
+	<update id="profile_update" parameterType="PROFILE">
+		UPDATE PROFILE 
+		SET PROFILE_CAREER_SEQ = #{PROFILE_CAREER_SEQ},
+		PROFILE_PERFORMANCE_SEQ = #{PROFILE_PERFORMANCE_SEQ},
+		PROFILE_PROJECT_SEQ = #{PROFILE_PROJECT_SEQ},
+		PROFILE_SKILL_SEQ = #{PROFILE_SKILL_SEQ},
+		PROFILE_LANGUAGE = #{PROFILE_LANGUAGE},
+		PROFILE_CERTIFICATE = #{PROFILE_CERTIFICATE_SEQ},
+		PROFILE_ACADEMY_BACKGROUND_SEQ#{PROFILE_ACADEMY_BACKGROUND_SEQ},
+		PROFILE_STORAGE_SEQ = #{PROFILE_STORAGE_SEQ},
+		PROFILE_LINE_OF_WORK = #{PROFILE_LINE_OF_WORK},
+		PROFILE_INCOME = #{PROFILE_INCOME} 
+		WHERE PROFILE_SEQ = #{PROFILE_SEQ}
+	</update>
+	
+	<delete id="profile_delete" parameterType="int">
+		DELETE FROM PROFILE
+		WHERE PROFILE_SEQ = #{PROFILE_SEQ}
+		AND MEMBER_CODE = #{MEMBER_CODE}
+	</delete>
+</mapper>
+
+
+
+
+

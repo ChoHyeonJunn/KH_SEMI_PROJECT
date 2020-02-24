@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.devca.languagecertificateMapper">
+
+	<select id="language_certificate_select" parameterType="int" resultType="LANGUAGE_CERTIFICATE">
+		SELECT * FROM LANGUAGE_CERTIFICATE
+		WHERE LANGUAGE_SEQ = #{LANGUAGE_SEQ}
+	</select>
+	<insert id="language_certificate_insert" parameterType="LANGUAGE_CERTIFICATE">
+		INSERT INTO LANGUAGE_CERTIFICATE
+		VALUES(LANGUAGE_CERTIFICATE_SEQ.NEXTVAL,#{LANGUAGE_SEQ},#{LANGUAGE_CERTIFICATE_NAME},#{LANGUAGE_CERTIFICATE_GRADE})
+	</insert>
+	<update id="language_certificate_update" parameterType="LANGUAGE_CERTIFICATE">
+		UPDATE LANGUAGE_CERTIFICATE
+		SET LANGUAGE_CERTIFICATE_NAME = #{LANGUAGE_CERTIFICATE_NAME},
+		LANGUAGE_CERTIFICATE_GRADE = #{LANGUAGE_CERTIFICATE_GRADE}
+		WHERE LANGUAGE_CERTIFICATE_SEQ = #{LANGUAGE_CERTIFICATE_SEQ}
+		AND  LANGUAGE_SEQ = #{LANGUAGE_SEQ}
+	</update>
+	<delete id="language_certificate_delete" parameterType="HashMap">
+		DELETE FROM LANGUAGE_CERTIFICATE
+		WHERE LANGUAGE_SEQ = #{LANGUAGE_SEQ}
+		AND LANGUAGE_CERTIFICATE_SEQ = #{LANGUAGE_CERTIFICATE_SEQ}
+	</delete>
+	<select id="language_certificate_select_seq" parameterType="int" resultType="LANGUAGE_CERTIFICATE">
+		SELECT LANGUAGE_CERTIFICATE_SEQ FROM LANGUAGE_CERTIFICATE
+		WHERE LANGUAGE_SEQ = #{LANGUAGE_SEQ}
+	</select>
+	
+</mapper>
