@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.devca.schoolMapper">
+
+	<select id="school_select" parameterType="int" resultType="SCHOOL">
+		SELECT * FROM SCHOOL
+		WHERE SCHOOL_MEMBER_CODE = #{SCHOOL_MEMBER_CODE}
+	</select>
+	<insert id="school_insert" parameterType="SCHOOL">
+		INSERT INTO SCHOOL
+		VALUES(SCHOOL_SEQ.NEXTVAL, #{SCHOOL_MEMBER_CODE},#{SCHOOL_NAME},#{SCHOOL_MAJOR},
+		#{SCHOOL_DEGREE},#{SCHOOL_OF_START},#{SCHOOL_OF_END},#{SCHOOL_CREDIT},#{SCHOOL_MAXCREDIT},#{SCHOOL_EXPLANATION})
+	</insert>
+	<update id="school_update" parameterType="SCHOOL">
+		UPDATE SCHOOL
+		SET #{SCHOOL_NAME},
+		SCHOOL_MAJOR = #{SCHOOL_MAJOR},
+		SCHOOL_DEGREE = #{SCHOOL_DEGREE},
+		SCHOOL_OF_START = #{SCHOOL_OF_START},
+		SCHOOL_OF_END = #{SCHOOL_OF_END},
+		SCHOOL_CREDIT = #{SCHOOL_CREDIT},
+		SCHOOL_MAXCREDIT = #{#{SCHOOL_MAXCREDIT},
+		SCHOOL_EXPLANATION = #{SCHOOL_EXPLANATION}
+		WHERE SCHOOL_SEQ = #{SCHOOL_SEQ}
+		AND SCHOOL_MEMBER_CODE = #{SCHOOL_MEMBER_CODE}
+	</update>
+	<delete id="school_delete" parameterType="int">
+		DELETE FROM SCHOOL
+		WHERE SCHOOL_SEQ = #{SCHOOL_SEQ} AND SCHOOL_MEMBER_CODE = #{SCHOOL_MEMBER_CODE}
+	</delete>
+
+</mapper>

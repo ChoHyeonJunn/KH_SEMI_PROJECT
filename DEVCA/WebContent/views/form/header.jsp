@@ -1,3 +1,5 @@
+<%@page import="com.devca.model.dto.MEMBER"%>
+<%@page import="org.apache.catalina.SessionListener"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -98,7 +100,6 @@ $(function(){
 					<input type="submit" value="검색">
 				</form>		
 			</span>										
-
 			<span id="account">				
 				Account
 			</span>	
@@ -136,9 +137,9 @@ $(function(){
 						<p>${sessionMember_profile.MEMBER_NAME }</p>
 						<p>${sessionMember_profile.MEMBER_EMAIL }</p>
 					</div>
-				</div>
+				</div>i
 				<div>	
-					<a href="/DEVCA/portfolio/portfoliopage.do">프로필</a>
+					<a href="/DEVCA/portfolio/portfoliopage.do?member_code=${sessionLoginMember.MEMBER_CODE }">프로필</a>
 				</div>
 				<div>	
 					<a href="/DEVCA/member/privacyprofilepage.do">계정관리</a>

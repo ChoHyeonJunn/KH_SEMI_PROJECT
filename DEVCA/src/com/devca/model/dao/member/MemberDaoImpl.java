@@ -170,7 +170,6 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		session.close();
 		return res;
 	}
-
 	// 회원 정보 조회 (MEMBER_CODE)
 	@Override
 	public MEMBER_PROFILE selectMemberProfile(int MEMBER_CODE) {

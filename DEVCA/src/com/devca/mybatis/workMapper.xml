@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.devca.workMapper">
+
+	<select id="work_select" parameterType="int" resultType="WORK">
+		SELECT * FROM WORK
+		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}		
+	</select>
+	<select id="work_select_seq" parameterType="int" resultType="WORK">
+		SELECT WORK_SEQ FROM WORK
+		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}		
+	</select>
+	<insert id="work_insert" parameterType="WORK">
+		INSERT INTO	WORK
+		VALUES(WORK_SEQ.NEXTVAL,#{WORK_MEMBER_CODE},#{LINE_OF_WORK},#{INCOME})
+	</insert>
+	<update id="work_update" parameterType="WORK">
+		UPDATE WORK
+		SET LINE_OF_WORK = #{LINE_OF_WORK}, INCOME=#{INCOME}
+		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}
+		AND WORK_SEQ = #{WORK_SEQ}
+	</update>
+	<delete id="work_delete" parameterType="int">
+		DELETE FROM WORK
+		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}
+	</delete>
+	<delete id="work_delete_one" parameterType="hashmap">
+		DELETE FROM WORK
+		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}
+		AND WORK_SEQ = #{WORK_SEQ}
+	</delete>
+
+</mapper>

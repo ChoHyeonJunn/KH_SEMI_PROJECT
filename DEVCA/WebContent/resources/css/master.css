@@ -1,29 +1,40 @@
 * {
-	padding: 0px;
-	margin: 0px;
+   padding: 0px;
+   margin: 0px;
 }
 /* 시멘틱 태그 기본 css */
 header, section, footer, nav, article, aside {
+<<<<<<< HEAD
 	border: 1px dotted red;
 	margin: 5px;
+=======
+   border: 1px dotted red;
+   margin: 5px;
+>>>>>>> p
 }
 aside {
+<<<<<<< HEAD
 	position: relative;
 	float: left;
 	width: 240px;
 	height: 100%;
+=======
+   position: absolute;
+   width: 240px;
+   height: 100%;
+>>>>>>> p
 }
 /* 블록 기본 css */
 div, span, p {
-	border: 1px dotted blue;
-	margin: 10px;
+   border: 1px dotted blue;
+   margin: 10px;
 }
 
 a {
-	text-decoration: none;
+   text-decoration: none;
 }
 
 li {
-	/* list-style: none; */
-	
+   /* list-style: none; */
+   
 }
