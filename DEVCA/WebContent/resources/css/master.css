@@ -6,14 +6,12 @@
 header, section, footer, nav, article, aside {
 	border: 1px dotted red;
 	margin: 5px;
-	/* text-align: center; */
 }
-
 aside {
- 	position: relative;
- 	float: left;
- 	width: 240px;
- 	height: 100%;
+	position: relative;
+	float: left;
+	width: 240px;
+	height: 100%;
 }
 /* 블록 기본 css */
 div, span, p {

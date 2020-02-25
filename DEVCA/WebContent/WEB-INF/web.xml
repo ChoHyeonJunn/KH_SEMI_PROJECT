@@ -12,7 +12,6 @@
 		<servlet-name>main</servlet-name>
 		<servlet-class>com.devca.controller.MainController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>main</servlet-name>
 		<url-pattern>/main/*</url-pattern>
@@ -22,7 +21,6 @@
 		<servlet-name>member</servlet-name>
 		<servlet-class>com.devca.controller.MemberController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>member</servlet-name>
 		<url-pattern>/member/*</url-pattern>
@@ -32,20 +30,20 @@
 		<servlet-name>portfolio</servlet-name>
 		<servlet-class>com.devca.controller.PortfolioController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>portfolio</servlet-name>
 		<url-pattern>/portfolio/*</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>lecture</servlet-name>
 		<servlet-class>com.devca.controller.LectureController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>lecture</servlet-name>
 		<url-pattern>/lecture/*</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>board</servlet-name>
 		<servlet-class>com.devca.controller.BoardController</servlet-class>
@@ -54,5 +52,15 @@
 	<servlet-mapping>
 		<servlet-name>board</servlet-name>
 		<url-pattern>/board/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>study</servlet-name>
+		<servlet-class>com.devca.controller.StudyController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>study</servlet-name>
+		<url-pattern>/study/*</url-pattern>
 	</servlet-mapping>
 </web-app>

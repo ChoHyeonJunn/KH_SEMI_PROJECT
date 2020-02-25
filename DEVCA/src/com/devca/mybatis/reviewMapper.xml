@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.devca.reviewMapper">
+
+	<select id="selectReviewList" parameterType="int" resultType="REVIEW">
+		SELECT REVIEW_CODE,MEMBER_CODE,LECTURE_CODE,REVIEW_WRITER,REVIEW_TITLE,REVIEW_CONTENT,TO_CHAR(REVIEW_REGDATE, 'YYYY-MM-DD HH24:MI:SS') AS REVIEW_REGDATE,REVIEW_RATE,MEMBER_PROFILE_IMAGE_S_NAME
+		FROM REVIEW JOIN MEMBER_PROFILE USING (MEMBER_CODE)
+		WHERE LECTURE_CODE = #{LECTURE_CODE}
+	</select>	
+	
+	<insert id="insertReview" parameterType="REVIEW" >
+		INSERT INTO REVIEW
+		VALUES(REVIEW_CODE_SEQ.NEXTVAL,#{MEMBER_CODE},#{LECTURE_CODE},#{REVIEW_WRITER},#{REVIEW_TITLE},#{REVIEW_CONTENT},SYSDATE,#{REVIEW_RATE})
+	</insert>
+	
+	<update id="updateReview" parameterType="REVIEW">
+		UPDATE REVIEW SET 
+		REVIEW_TITLE = #{REVIEW_TITLE}, REVIEW_CONTENT = #{REVIEW_CONTENT}
+		WHERE REVIEW_CODE = #{REVIEW_CODE}	
+	</update>
+	
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM REVIEW 
+		WHERE REVIEW_CODE = #{REVIEW_CODE}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

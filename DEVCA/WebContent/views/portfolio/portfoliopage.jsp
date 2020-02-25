@@ -13,11 +13,12 @@
 <!-- START :: css -->
 <style type="text/css">
 section{
-	width: 100%;
-	height: 500px;
+	height: 800px;
 }
 article{
-	position: relative;
+	position: absolute;
+	right:5px;
+	left: 250px;
 	height: 100%;
 }
 </style>

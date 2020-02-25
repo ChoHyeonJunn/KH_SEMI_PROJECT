@@ -16,16 +16,157 @@
 
 <script type="text/javascript">
 $(function(){
+	$("#email_check").attr("disabled", "disabled");
+	$("#SUBMIT").removeAttr("disabled");
+	
+	// 이메일 정규식
+	var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;   
+
 	var snsType = $(opener.document).find("#snsHiddenForm input[name='snsType']").val();
 	var SNS_ID = $(opener.document).find("#snsHiddenForm input[name='SNS_ID']").val();
 	var SNS_NICKNAME = $(opener.document).find("#snsHiddenForm input[name='SNS_NICKNAME']").val();
 	var SNS_EMAIL = $(opener.document).find("#snsHiddenForm input[name='SNS_EMAIL']").val();
 	var access_token = $(opener.document).find("#snsHiddenForm input[name='access_token']").val();
 	
-	// sns 를 통해 이메일을 받았다면 email input 삭제
-	if(SNS_EMAIL != null && SNS_EMAIL != ""){
-		$("#replaceSNSEmail").remove();		
+	// sns 를 통해 이메일을 받았다면 중복검사
+	if(SNS_EMAIL != null && SNS_EMAIL != ""){		
+		$("#email").val(SNS_EMAIL);
+		$.ajax({
+			
+			type: "POST",
+			url: "/DEVCA/member/emailconfirm.do",
+			data: { MEMBER_EMAIL : SNS_EMAIL },
+			dataType: "JSON",
+			
+			success: function(msg) {	
+				if(msg.result > 0) {						
+					$("#SUBMIT").attr("disabled", "disabled");
+					$("#email_check").attr("disabled", "disabled");
+					$("#email_confirm").text("이미 사용중인 이메일입니다.");
+					$("#email_confirm").attr("style", "color:red");
+				}
+			},
+			
+			error : function() {
+				alert("통신 실패");
+			}
+		})
+			
 	}
+	
+	$("#name").keyup(function() {
+		if($("#name").val() == null || $("#name").val() == "") {
+			$("#name_confirm").text("필수 정보입니다.");
+			$("#name_confirm").attr("style", "color:red");
+		} else {			
+			$.ajax({
+				
+				type: "POST",
+				url: "/DEVCA/member/nameconfirm.do",
+				data: { MEMBER_NAME : $("#name").val() },
+				dataType: "JSON",
+				
+				success: function(msg) {	
+					if(msg.result > 0) {
+						$("#SUBMIT").attr("disabled", "disabled");
+						$("#email_check").attr("disabled", "disabled");						
+						$("#name_confirm").text("이미 사용중인 별명입니다.");
+						$("#name_confirm").attr("style", "color:red");
+						
+					} else {
+						$("#name_confirm").text("사용 가능한 별명입니다.");
+						$("#name_confirm").attr("style", "color:blue");
+						
+						$("#SUBMIT").removeAttr("disabled");
+					}
+				},
+				
+				error : function() {
+					alert("통신 실패");
+				}
+			})
+		}
+	})
+	
+	$("#email").keyup(function() {
+		
+		if($("#email").val() == null || $("#email").val() == "") {
+			$("#SUBMIT").attr("disabled", "disabled");
+			$("#email_check").attr("disabled", "disabled");
+			$("#email_confirm").text("필수 정보입니다.");
+			$("#email_confirm").attr("style", "color:red");
+		} else {	
+			
+			if(regExp.test($("#email").val())){
+				$.ajax({
+					
+					type: "POST",
+					url: "/DEVCA/member/emailconfirm.do",
+					data: { MEMBER_EMAIL : $("#email").val() },
+					dataType: "JSON",
+					
+					success: function(msg) {	
+						if(msg.result > 0) {						
+							$("#SUBMIT").attr("disabled", "disabled");
+							$("#email_check").attr("disabled", "disabled");
+							$("#email_confirm").text("이미 사용중인 이메일입니다.");
+							$("#email_confirm").attr("style", "color:red");
+						} else {
+							$("#email_confirm").text("사용 가능한 이메일입니다. 이메일 인증을 진행해주세요.");
+							$("#email_confirm").attr("style", "color:blue");
+							
+							$("#email_check").removeAttr("disabled");
+							$("#SUBMIT").removeAttr("disabled");
+							
+						}
+					},
+					
+					error : function() {
+						alert("통신 실패");
+					}
+				})
+			} else{
+				$("#SUBMIT").attr("disabled", "disabled");
+				$("#email_check").attr("disabled", "disabled");
+				$("#email_confirm").text("이메일 형식이 아닙니다.");
+				$("#email_confirm").attr("style", "color:red");
+			}
+		}
+	})
+
+	$("#email_check").click(function(){
+		$("#email_confirm").text("이메일 인증 진행중...");
+		$("#email_confirm").attr("style", "color:green");
+
+		if($("#email").val() == null || $("#email").val() == "") {
+			$("#SUBMIT").attr("disabled", "disabled");
+			$("#email_check").attr("disabled", "disabled");
+			$("#email_confirm").text("필수 정보입니다.");
+			$("#email_confirm").attr("style", "color:red");
+		} else {			
+			$.ajax({				
+				type: "POST",
+				url: "/DEVCA/member/emailAuth.do",
+				data: { MEMBER_EMAIL : $("#email").val() },
+				dataType: "JSON",
+				
+				success: function(msg) {	
+					$("#emailAuthHiddenForm input[name='authNum']").val(msg.authNum);
+												
+					// 팝업 생성
+					var url = "/DEVCA/views/member/joinemailauth.jsp";
+					var title = "";
+					var prop = "top=200px,left=600px,width=500px,height=500px";
+							
+					window.open(url, title, prop);					
+				},
+				
+				error : function() {
+					alert("통신 실패");
+				}
+			})
+		}
+	})
 	
 	$("#snsJoinForm").submit(function(e){
 		e.preventDefault();
@@ -54,37 +195,7 @@ $(function(){
 		$(opener.document).find("#snsJoinHiddenForm input[name='access_token']").val(access_token);
 
 		$(opener.document).find("#snsJoinHiddenForm").submit();
-		close();
-		
-/* 		$.ajax({
-			type : "POST",
-			url : "/DEVCA/member/아이디체크체크체크체크체크체크체크ㅔ.do",
-			data : {
-				snsType : snsType, 
-				MEMBER_NAME : MEMBER_NAME,
-				MEMBER_EMAIL : MEMBER_EMAIL,
-				MEMBER_PHONE : MEMBER_PHONE,
-				
-				SNS_ID : SNS_ID,
-				SNS_NICKNAME : SNS_NICKNAME,
-				access_token : access_token
-			},
-			dataType : "JSON",
-
-			success : function(args) {
-				alert("성공");
-			},
-
-			error : function(request, status, error) {
-				alert("통신 실패");
-				alert("code : " + request.status
-						+ "\n" + "message : "
-						+ request.responseText
-						+ "\n" + "error : " + error);
-			}
-		}) */
-		
-		
+		close();		
 	})
 })
 	
@@ -103,7 +214,9 @@ $(function(){
 		<div>
 			<hr>
 		</div>
-		
+		<form id="emailAuthHiddenForm" action="#">
+			<input type="hidden" name="authNum">
+		</form>	
 		<form id="snsJoinForm" action="/DEVCA/member/snsjoin.do" method="post">
 			<div>
 				<div>
@@ -113,14 +226,22 @@ $(function(){
 					<input id="name" type="text" name="MEMBER_NAME" required="required" placeholder="이름" autocomplete="name">
 				</div>
 			</div>
+			
+			<div id="name_confirm"></div>	<!-- 경고문이 들어갈 공간 -->
+			
 			<div id="replaceSNSEmail">
 				<div>
 					<label for="email">이메일</label>
 				</div>
 				<div>
 					<input id="email" type="email" name="MEMBER_EMAIL" required="required" placeholder="abc@abc.com" autocomplete="email">
+					<input id="email_check" type="button" value="email 인증">					
 				</div>
-			</div>
+			</div>		
+
+			
+			<div id="email_confirm"></div>	<!-- 경고문이 들어갈 공간 -->
+			
 			<div>
 				<div>
 					<label for="phone">전화번호</label>
@@ -131,7 +252,7 @@ $(function(){
 			</div>
 			<div>
 				<div>		
-					<input type="submit" value="SNS계정만들기">
+					<input type="submit" value="SNS계정만들기" id="SUBMIT">
 				</div>
 			</div>
 		</form>

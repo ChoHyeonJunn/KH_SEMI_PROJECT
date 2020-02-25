@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.devca.lectureMapper">
+	
+	<insert id="multiInsertJobdKeyword" parameterType="map">		
+		<foreach collection="jobd_keywords" index="index" item="key" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO JOBD_KEYWORD
+			VALUES (#{key.TECH},#{key.IS_TECH})
+		</foreach>
+	</insert>
+	
+	<delete id="deleteJobRankList">
+		DELETE FROM JOB_RANK_NEW
+	</delete>
+	
+	<insert id="multiInsertJobRank" parameterType="map">
+		
+		<foreach collection="job_rank" index="index" item="job" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO JOB_RANK_NEW
+			VALUES (#{job.JOB_RANK_DIVISION},#{job.JOB_RANK_STACK},#{job.JOB_RANK_NUM})
+		</foreach>
+	</insert>
+	
+	<select id="selectJobRankList" resultType="JOB_RANK">
+		SELECT *
+		FROM JOB_RANK
+	</select>	
+
+	<insert id="multiInsertLecture" parameterType="map">		
+		<foreach collection="lectureList" index="index" item="lecture" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO LECTURE
+			VALUES
+			(GET_LECTURE_CODE,#{lecture.LECTURE_TITLE},#{lecture.LECTURE_IMG},#{lecture.LECTURE_LINK},
+			#{lecture.LECTURE_ADDRESS},#{lecture.LECTURE_LATITUDE},#{lecture.LECTURE_LOGITUDE},
+			#{lecture.LECTURE_PAYFLAG},'0',0,
+			#{lecture.LECTURE_DESCRIPTION},#{lecture.LECTURE_CONTENT})
+		</foreach>
+	</insert>
+	
+	<select id="selectLectureList" parameterType="int" resultType="LECTURE">
+		SELECT *
+		FROM(SELECT ROWNUM R,LECTURE_CODE,LECTURE_TITLE,LECTURE_IMG,LECTURE_LINK,LECTURE_ADDRESS,
+					LECTURE_LATITUDE,LECTURE_LOGITUDE,LECTURE_PAYFLAG,LECTURE_RATE,LECTURE_READCOUNT,
+					LECTURE_DESCRIPTION,LECTURE_CONTENT
+			FROM(SELECT *
+				FROM LECTURE))
+		<![CDATA[WHERE R > #{no} AND R <= #{no} + 20]]>
+	</select>	
+	
+	<select id="selectLectureSearchList" parameterType="map" resultType="LECTURE">
+		SELECT *
+		FROM(SELECT ROWNUM R,LECTURE_CODE,LECTURE_TITLE,LECTURE_IMG,LECTURE_LINK,LECTURE_ADDRESS,
+					LECTURE_LATITUDE,LECTURE_LOGITUDE,LECTURE_PAYFLAG,LECTURE_RATE,LECTURE_READCOUNT,
+					LECTURE_DESCRIPTION,LECTURE_CONTENT
+			FROM(SELECT *
+				FROM LECTURE
+				WHERE REGEXP_LIKE(LECTURE_TITLE, #{search})
+				OR REGEXP_LIKE(LECTURE_DESCRIPTION, #{search})
+				OR REGEXP_LIKE(LECTURE_CONTENT, #{search})
+				ORDER BY LECTURE_RATE))
+		<![CDATA[WHERE R > #{no} AND R <= #{no} + 20]]>
+	</select>	
+	
+	<select id="selectMyLectureList" parameterType="map" resultType="LECTURE">
+		SELECT * 
+		FROM LECTURE
+		WHERE LECTURE_CODE IN (SELECT LECTURE_CODE
+								FROM(SELECT ROWNUM,LECTURE_CODE
+									FROM MYLECTURE
+									WHERE MEMBER_CODE = #{MEMBER_CODE})
+								WHERE ROWNUM BETWEEN #{no} AND #{no}+19)
+	</select>
+	
+	<select id="selectMyGarbageLecture" parameterType="map" resultType="LECTURE">
+		SELECT LECTURE_CODE
+		FROM(SELECT ROWNUM,LECTURE_CODE
+			FROM MYLECTURE
+			WHERE MEMBER_CODE = #{MEMBER_CODE})
+		WHERE ROWNUM BETWEEN #{no} AND #{no}+19
+	</select>
+	
+	<delete id="deleteMyGarbageLecture">
+		DELETE FROM MYLECTURE
+		WHERE LECTURE_CODE = #{LECTURE_CODE}
+	</delete>
+	
+	<insert id="addMyLecture" parameterType="map">
+		INSERT INTO MYLECTURE
+		VALUES(#{MEMBER_CODE},#{LECTURE_CODE})
+	</insert>
+	
+	<select id="selectLectureDetail" parameterType="int" resultType="LECTURE">
+		SELECT *
+		FROM LECTURE
+		WHERE LECTURE_CODE = #{LECTURE_CODE}
+	</select>
+	
+	<update id="updateRate" parameterType="LECTURE">
+		UPDATE LECTURE SET
+		LECTURE_RATE = #{LECTURE_RATE}
+		WHERE LECTURE_CODE = #{LECTURE_CODE}
+	</update>
+	
+	<select id="selectRecommandList" parameterType="String" resultType="LECTURE">
+		SELECT ROWNUM,LECTURE_CODE,LECTURE_TITLE,LECTURE_IMG,LECTURE_LINK,LECTURE_ADDRESS,
+				LECTURE_LATITUDE,LECTURE_LOGITUDE,LECTURE_PAYFLAG,LECTURE_RATE,LECTURE_READCOUNT,
+				LECTURE_DESCRIPTION,LECTURE_CONTENT
+		FROM(SELECT *
+			FROM LECTURE
+			WHERE REGEXP_LIKE(LECTURE_TITLE, #{recommand})
+			OR REGEXP_LIKE(LECTURE_DESCRIPTION, #{recommand})
+			OR REGEXP_LIKE(LECTURE_CONTENT, #{recommand})
+			ORDER BY LECTURE_RATE)
+		<![CDATA[WHERE ROWNUM <= 30]]>
+	</select>	
+	
+	<select id="selectFrontEndList" parameterType="String" resultType="LECTURE">
+		SELECT ROWNUM,LECTURE_CODE,LECTURE_TITLE,LECTURE_IMG,LECTURE_LINK,LECTURE_ADDRESS,
+				LECTURE_LATITUDE,LECTURE_LOGITUDE,LECTURE_PAYFLAG,LECTURE_RATE,LECTURE_READCOUNT,
+				LECTURE_DESCRIPTION,LECTURE_CONTENT
+		FROM(SELECT *
+			FROM LECTURE
+			WHERE REGEXP_LIKE(LECTURE_TITLE, #{FrontEnd})
+			OR REGEXP_LIKE(LECTURE_DESCRIPTION, #{FrontEnd})
+			OR REGEXP_LIKE(LECTURE_CONTENT, #{FrontEnd})
+			ORDER BY LECTURE_RATE)
+		<![CDATA[WHERE ROWNUM <= 30]]>
+	</select>	
+	<select id="selectBackEndList" parameterType="String" resultType="LECTURE">
+		SELECT ROWNUM,LECTURE_CODE,LECTURE_TITLE,LECTURE_IMG,LECTURE_LINK,LECTURE_ADDRESS,
+				LECTURE_LATITUDE,LECTURE_LOGITUDE,LECTURE_PAYFLAG,LECTURE_RATE,LECTURE_READCOUNT,
+				LECTURE_DESCRIPTION,LECTURE_CONTENT
+		FROM(SELECT *
+			FROM LECTURE
+			WHERE REGEXP_LIKE(LECTURE_TITLE, #{BackEnd})
+			OR REGEXP_LIKE(LECTURE_DESCRIPTION, #{BackEnd})
+			OR REGEXP_LIKE(LECTURE_CONTENT, #{BackEnd})
+			ORDER BY LECTURE_RATE)
+		<![CDATA[WHERE ROWNUM <= 30]]>
+	</select>	
+	<select id="selectFullStackList" parameterType="String" resultType="LECTURE">
+		SELECT ROWNUM,LECTURE_CODE,LECTURE_TITLE,LECTURE_IMG,LECTURE_LINK,LECTURE_ADDRESS,
+				LECTURE_LATITUDE,LECTURE_LOGITUDE,LECTURE_PAYFLAG,LECTURE_RATE,LECTURE_READCOUNT,
+				LECTURE_DESCRIPTION,LECTURE_CONTENT
+		FROM(SELECT *
+			FROM LECTURE
+			WHERE REGEXP_LIKE(LECTURE_TITLE, #{FullStack})
+			OR REGEXP_LIKE(LECTURE_DESCRIPTION, #{FullStack})
+			OR REGEXP_LIKE(LECTURE_CONTENT, #{FullStack})
+			ORDER BY LECTURE_RATE)
+		<![CDATA[WHERE ROWNUM <= 30]]>
+	</select>	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

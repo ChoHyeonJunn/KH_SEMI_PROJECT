@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>잘못된 접근입니다.</h1>
+	<h1>존재하지 않는 페이지 입니다.</h1>
 	<h1>
 		<a href="/DEVCA/main/mainpage.do">DEVCA</a>
 	</h1>

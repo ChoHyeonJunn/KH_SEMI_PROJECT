@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 		//
 		urlPatterns = { //
 				"qnapage.do", // qna 페이지로 이동
-				"studypage.do", // study 페이지로 이동
 		})
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,17 +30,16 @@ public class BoardController extends HttpServlet {
 		String command = request.getRequestURI();
 		System.out.println("<" + command + ">");
 
-		// QNA 페이지로 이동
 		if (command.endsWith("/qnapage.do")) {
-			doQnaPage(request, response);
-		}
-		// STUDY 페이지로 이동
-		if (command.endsWith("/studypage.do")) {
-			doStudyPage(request, response);
-		}
-		// error 페이지로 이동
+			doQnaPage(request, response); // QNA 페이지로 이동
+		} 
+		
+		/*
+		 * error 접근 처리
+		 */		
 		else {
-			doError(request, response);
+			doError(request, response); // error 페이지로 이동
+
 		}
 	}
 
@@ -50,14 +48,9 @@ public class BoardController extends HttpServlet {
 		dispatch("/views/board/qnapage.jsp", request, response);
 	}
 
-	private void doStudyPage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		dispatch("/views/board/studypage.jsp", request, response);
-	}
-
 	private void doError(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		dispatch("error.jsp", request, response);
+		dispatch("/error.jsp", request, response);
 	}
 
 	/*
