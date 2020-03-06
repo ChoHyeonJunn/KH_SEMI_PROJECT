@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.LANGUAGE_CERTIFICATE;
+import com.devca.model.dto.profile.LANGUAGE_CERTIFICATE;
 import com.devca.mybatis.SqlMapConfig;
 
 public class LanguageCertificateDaoImpl extends SqlMapConfig implements LanguageCertificateDao {
@@ -32,6 +32,9 @@ public class LanguageCertificateDaoImpl extends SqlMapConfig implements Language
 	public int language_certificate_insert(LANGUAGE_CERTIFICATE dto) {
 		SqlSession session = getSqlSessionFactory().openSession(false);
 		int langcert_res = session.insert(namespace+".language_certificate_insert",dto);
+		if(langcert_res > 0) {
+			session.commit();
+		}
 		session.close();
 		return langcert_res;
 	}
@@ -40,6 +43,9 @@ public class LanguageCertificateDaoImpl extends SqlMapConfig implements Language
 	public int language_certificate_update(LANGUAGE_CERTIFICATE dto) {
 		SqlSession session = getSqlSessionFactory().openSession(false);
 		int langcert_res = session.update(namespace+".language_certificate_update",dto);
+		if(langcert_res > 0) {
+			session.commit();
+		}
 		session.close();
 		return langcert_res;
 	}
@@ -52,6 +58,28 @@ public class LanguageCertificateDaoImpl extends SqlMapConfig implements Language
 		
 		SqlSession session = getSqlSessionFactory().openSession(false);
 		int langcert_res = session.delete(namespace+".language_certificate_update",map);
+		if(langcert_res > 0) {
+			session.commit();
+		}
+		session.close();
+		return langcert_res;
+	}
+
+	@Override
+	public int language_certificate_insert_new(int language_seq) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+		int langcert_res = session.insert(namespace+".language_certificate_insert_new",language_seq);
+		if(langcert_res > 0){
+			session.commit();	
+		}
+		session.close();
+		return langcert_res;
+	}
+
+	@Override
+	public int language_certificate_count(int language_seq) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+		int langcert_res = session.selectOne(namespace+".language_certificate_count",language_seq);
 		session.close();
 		return langcert_res;
 	}

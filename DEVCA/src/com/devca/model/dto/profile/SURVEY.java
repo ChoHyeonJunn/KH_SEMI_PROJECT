@@ -1,4 +1,4 @@
-package com.devca.model.dto;
+package com.devca.model.dto.profile;
 
 public class SURVEY {
 	

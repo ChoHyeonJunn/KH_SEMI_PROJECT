@@ -1,4 +1,4 @@
-package com.devca.model.dto;
+package com.devca.model.dto.profile;
 
 public class WORK {
 	
@@ -6,14 +6,14 @@ public class WORK {
 	private int WORK_MEMBER_CODE;
 	private int WORK_SEQ;
 	private String LINE_OF_WORK;
-	private int INCOME;
+	private String INCOME;
 	
 	public WORK() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public WORK(int wORK_MEMBER_CODE, int wORK_SEQ, String lINE_OF_WORK, int iNCOME) {
+	public WORK(int wORK_MEMBER_CODE, int wORK_SEQ, String lINE_OF_WORK, String iNCOME) {
 		super();
 		WORK_MEMBER_CODE = wORK_MEMBER_CODE;
 		WORK_SEQ = wORK_SEQ;
@@ -45,13 +45,15 @@ public class WORK {
 		LINE_OF_WORK = lINE_OF_WORK;
 	}
 
-	public int getINCOME() {
+	public String getINCOME() {
 		return INCOME;
 	}
 
-	public void setINCOME(int iNCOME) {
+	public void setINCOME(String iNCOME) {
 		INCOME = iNCOME;
 	}
+
+	
 
 		
 }

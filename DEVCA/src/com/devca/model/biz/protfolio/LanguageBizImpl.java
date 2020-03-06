@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.devca.model.dao.portfolio.LanguageDao;
 import com.devca.model.dao.portfolio.LanguageDaoImpl;
-import com.devca.model.dto.LANGUAGE;
+import com.devca.model.dto.profile.LANGUAGE;
 
 public class LanguageBizImpl implements LanguageBiz {
 	

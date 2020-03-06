@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.devca.model.dao.portfolio.CertificateDao;
 import com.devca.model.dao.portfolio.CertificateDaoImpl;
-import com.devca.model.dto.CERTIFICATE;
+import com.devca.model.dto.profile.CERTIFICATE;
 
 public class CertificateBizImpl implements CertificateBiz {
 
@@ -37,6 +37,16 @@ public class CertificateBizImpl implements CertificateBiz {
 	@Override
 	public int certificate_delete(int member_code) {
 		return dao.certificate_delete(member_code);
+	}
+
+	@Override
+	public int certificate_count(int member_code) {
+		return dao.certificate_count(member_code);
+	}
+
+	@Override
+	public int certificate_insert_new(int member_code) {
+		return dao.certificate_insert_new(member_code);
 	}
 
 }

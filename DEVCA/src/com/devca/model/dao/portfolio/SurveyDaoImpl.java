@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.SURVEY;
+import com.devca.model.dto.profile.SURVEY;
 import com.devca.mybatis.SqlMapConfig;
 
 public class SurveyDaoImpl extends SqlMapConfig implements SurveyDao {

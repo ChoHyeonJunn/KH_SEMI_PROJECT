@@ -65,10 +65,13 @@ label{
    <section>
    <%@ include file="/views/form/portfoliosidebar.jsp"%>
    <article>
+   	   <h1>교육 정보를 입력하세요.</h1>
 	   <fieldset>
 	   	<form action="/DEVCA/portfolio/actionpage.do" method="post">
+	   	<input type="hidden" name="member_code" value="${sessionLoginMember.MEMBER_CODE }"/>
 	      <div class="school-main">
 	      	<c:forEach items="${schoolList }" var="schoolList">
+	      	<input type="hidden" name="school_seq" value="${schoolList.SCHOOL_SEQ }"/>
 		      <div class="school-item">
 		      	<div class="school-item-schoolname">
 		      		<label>학교/기관</label>
@@ -106,13 +109,13 @@ label{
 		      	</div>
 		      	<div class="school-item-othertext">
 		      		<label>기타 설명</label>
-		      		<textarea rows="2" cols="20" name="orhertext" placeholder="위에서 적지 못한 학력에 관한 사항을 적어주세요.">${schoolList.SCHOOL_EXPLANATION }</textarea>
+		      		<textarea rows="2" cols="20" name="othertext" placeholder="위에서 적지 못한 학력에 관한 사항을 적어주세요.">${schoolList.SCHOOL_EXPLANATION }</textarea>
 		      	</div>
 		      </div>
 		     </c:forEach>
 	      </div>
 	      <div class="controll-wrap">
-	      	<a href="#" class="back-button" onclick="location.href='/DEVCA/portfolio/languagepage.do?member_code=${sessionLoginMember.MEMBER_CODE }'">이전</a>
+	      	<a href="#" class="back-button" onclick="location.href='/DEVCA/portfolio/sidelanguagepage.do?member_code=${sessionLoginMember.MEMBER_CODE }'">이전</a>
 	      	<input type="submit" class="next-button" value="다음"/>
 	      </div>
 	      </form>

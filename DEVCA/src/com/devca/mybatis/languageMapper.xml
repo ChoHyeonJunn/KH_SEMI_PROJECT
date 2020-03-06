@@ -25,5 +25,12 @@
 		SELECT LANGUAGE_SEQ FROM LANGUAGE
 		WHERE LANGUAGE_MEMBER_CODE = #{LANGUAGE_MEMBER_CODE}
 	</select>
-	
+	<select id="language_count" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM LANGUAGE
+		WHERE LANGUAGE_MEMBER_CODE = #{LANGUAGE_MEMBER_CODE}
+	</select>
+	<insert id="language_insert_new" parameterType="LANGUAGE">
+		INSERT INTO LANGUAGE
+		VALUES(LANGUAGE_SEQ.NEXTVAL,#{LANGUAGE_MEMBER_CODE},'')
+	</insert>
 </mapper>

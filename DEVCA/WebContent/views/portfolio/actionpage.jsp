@@ -50,10 +50,13 @@ article {
    	<section>
    <%@ include file="/views/form/portfoliosidebar.jsp"%>
    	<article>
+   	   	<h1>활동한 경험을 적어주세요</h1>
    		<fieldset>
    			<form action="/DEVCA/portfolio/certificatepage.do" method="post">
+   			<input type="hidden" name="member_code" value="${sessionLoginMember.MEMBER_CODE }"/>
    				<div class="action-main">
    					<c:forEach items="${actionList }" var="actionList">
+   					<input type="hidden" name="action_seq" value="${actionList.ACTION_SEQ }"/>
    					<div class="action-item">
    						<div class="action-item-name">
    							<label>활동명</label>
@@ -81,7 +84,7 @@ article {
    					</c:forEach>
    				</div>
    				<div class="action-wrap">
-   					<a href="#" onclick="location.href='/DEVCA/portfolio/schoolpage.do?member_code=${sessionLoginMember.MEMBER_CODE }'">이전</a>
+   					<a href="#" onclick="location.href='/DEVCA/portfolio/sideschoolpage.do?member_code=${sessionLoginMember.MEMBER_CODE }'">이전</a>
    					<input type="submit" value="다음"/>
    				</div>
    			</form>

@@ -7,6 +7,10 @@
 		SELECT * FROM CAREER
 		WHERE CAREER_MEMBER_CODE = #{CAREER_MEMBER_CODE}
 	</select>
+	<select id="career_date" parameterType="int" resultType="int">
+		SELECT TRUNC(DATE_OF_DEPARTURE - DAY_OF_ENTRY) FROM CAREER
+		WHERE CAREER_MEMBER_CODE = #{CAREER_MEMBER_CODE}
+	</select>
 	<select id="career_select_seq" parameterType="CAREER" resultType="CAREER">
 		SELECT CAREER_SEQ FROM CAREER
 		WHERE CAREER_MEMBER_CODE = #{CAREER_MEMBER_CODE}

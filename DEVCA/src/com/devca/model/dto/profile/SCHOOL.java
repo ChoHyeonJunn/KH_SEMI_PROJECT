@@ -1,4 +1,4 @@
-package com.devca.model.dto;
+package com.devca.model.dto.profile;
 
 import java.sql.Date;
 
@@ -11,8 +11,8 @@ public class SCHOOL {
 	private String SCHOOL_NAME;
 	private String SCHOOL_MAJOR;
 	private String SCHOOL_DEGREE;
-	private Date SCHOOL_OF_START;
-	private Date SCHOOL_OF_END;
+	private String SCHOOL_OF_START;
+	private String SCHOOL_OF_END;
 	private double SCHOOL_CREDIT;
 	private double SCHOOL_MAXCREDIT;
 	private String SCHOOL_EXPLANATION;
@@ -23,7 +23,7 @@ public class SCHOOL {
 	}
 
 	public SCHOOL(int sCHOOL_MEMBER_CODE, int sCHOOL_SEQ, String sCHOOL_NAME, String sCHOOL_MAJOR, String sCHOOL_DEGREE,
-			Date sCHOOL_OF_START, Date sCHOOL_OF_END, double sCHOOL_CREDIT, double sCHOOL_MAXCREDIT,
+			String start_date, String end_date, double sCHOOL_CREDIT, double sCHOOL_MAXCREDIT,
 			String sCHOOL_EXPLANATION) {
 		super();
 		SCHOOL_MEMBER_CODE = sCHOOL_MEMBER_CODE;
@@ -31,8 +31,8 @@ public class SCHOOL {
 		SCHOOL_NAME = sCHOOL_NAME;
 		SCHOOL_MAJOR = sCHOOL_MAJOR;
 		SCHOOL_DEGREE = sCHOOL_DEGREE;
-		SCHOOL_OF_START = sCHOOL_OF_START;
-		SCHOOL_OF_END = sCHOOL_OF_END;
+		SCHOOL_OF_START = start_date;
+		SCHOOL_OF_END = end_date;
 		SCHOOL_CREDIT = sCHOOL_CREDIT;
 		SCHOOL_MAXCREDIT = sCHOOL_MAXCREDIT;
 		SCHOOL_EXPLANATION = sCHOOL_EXPLANATION;
@@ -78,19 +78,19 @@ public class SCHOOL {
 		SCHOOL_DEGREE = sCHOOL_DEGREE;
 	}
 
-	public Date getSCHOOL_OF_START() {
+	public String getSCHOOL_OF_START() {
 		return SCHOOL_OF_START;
 	}
 
-	public void setSCHOOL_OF_START(Date sCHOOL_OF_START) {
+	public void setSCHOOL_OF_START(String sCHOOL_OF_START) {
 		SCHOOL_OF_START = sCHOOL_OF_START;
 	}
 
-	public Date getSCHOOL_OF_END() {
+	public String getSCHOOL_OF_END() {
 		return SCHOOL_OF_END;
 	}
 
-	public void setSCHOOL_OF_END(Date sCHOOL_OF_END) {
+	public void setSCHOOL_OF_END(String sCHOOL_OF_END) {
 		SCHOOL_OF_END = sCHOOL_OF_END;
 	}
 

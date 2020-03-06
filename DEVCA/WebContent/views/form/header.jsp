@@ -1,4 +1,4 @@
-<%@page import="com.devca.model.dto.MEMBER"%>
+<%@page import="com.devca.model.dto.member.MEMBER"%>
 <%@page import="org.apache.catalina.SessionListener"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -9,12 +9,23 @@
 <%
 	response.setContentType("text/html; charset=UTF-8");
 %>
+<!-- bootstrap -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+   
+   <!--Fontawesome CDN-->
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+   
+<!-- end bootstrap --!>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- START :: css -->
+
 <link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 #dropDownMenuList{
@@ -137,7 +148,7 @@ $(function(){
 						<p>${sessionMember_profile.MEMBER_NAME }</p>
 						<p>${sessionMember_profile.MEMBER_EMAIL }</p>
 					</div>
-				</div>i
+				</div>
 				<div>	
 					<a href="/DEVCA/portfolio/portfoliopage.do?member_code=${sessionLoginMember.MEMBER_CODE }">프로필</a>
 				</div>

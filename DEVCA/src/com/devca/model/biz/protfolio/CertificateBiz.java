@@ -2,7 +2,7 @@ package com.devca.model.biz.protfolio;
 
 import java.util.List;
 
-import com.devca.model.dto.CERTIFICATE;
+import com.devca.model.dto.profile.CERTIFICATE;
 
 public interface CertificateBiz {
 
@@ -17,4 +17,8 @@ public interface CertificateBiz {
 	public int certificate_delete_one(int cretificate_seq, int member_code);
 	
 	public int certificate_delete(int member_code);
+	
+	public int certificate_count(int member_code);
+	
+	public int certificate_insert_new(int member_code);
 }

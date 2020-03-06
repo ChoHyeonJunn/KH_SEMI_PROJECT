@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.CERTIFICATE;
+import com.devca.model.dto.profile.CERTIFICATE;
 import com.devca.mybatis.SqlMapConfig;
 
 public class CertificateDaoImpl extends SqlMapConfig implements CertificateDao {
@@ -66,6 +66,23 @@ public class CertificateDaoImpl extends SqlMapConfig implements CertificateDao {
 		int certificate_res = session.delete(namespace+".certificate_delete",member_code);
 		session.close();
 		return certificate_res;
+	}
+	@Override
+	public int certificate_count(int member_code) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+		int res = session.selectOne(namespace+".certificate_count",member_code);
+		session.close();
+		return res;
+	}
+	@Override
+	public int certificate_insert_new(int member_code) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+		int res = session.insert(namespace+".certificate_insert_new",member_code);
+		if(res > 0) {
+			session.commit();
+		}
+		session.close();
+		return res;
 	}
 
 }

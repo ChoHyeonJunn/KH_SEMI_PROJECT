@@ -15,8 +15,9 @@
 		VALUES(WORK_SEQ.NEXTVAL,#{WORK_MEMBER_CODE},#{LINE_OF_WORK},#{INCOME})
 	</insert>
 	<update id="work_update" parameterType="WORK">
-		UPDATE WORK
-		SET LINE_OF_WORK = #{LINE_OF_WORK}, INCOME=#{INCOME}
+		UPDATE WORK SET 
+		LINE_OF_WORK = #{LINE_OF_WORK}, 
+		INCOME = #{INCOME}
 		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}
 		AND WORK_SEQ = #{WORK_SEQ}
 	</update>
@@ -29,5 +30,13 @@
 		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}
 		AND WORK_SEQ = #{WORK_SEQ}
 	</delete>
+	<select id="work_count" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM WORK
+		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}		
+	</select>
+	<insert id="work_insert_new" parameterType="int">
+		INSERT INTO	WORK
+		VALUES(WORK_SEQ.NEXTVAL,#{WORK_MEMBER_CODE},'',0)
+	</insert>
 
 </mapper>

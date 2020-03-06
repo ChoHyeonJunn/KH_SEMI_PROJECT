@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.CAREER;
+import com.devca.model.dto.profile.CAREER;
 import com.devca.mybatis.SqlMapConfig;
 
 public class CareerDaoImpl extends SqlMapConfig implements CareerDao {
@@ -86,6 +86,14 @@ public class CareerDaoImpl extends SqlMapConfig implements CareerDao {
 		session.close();
 		
 		return career_insert_new;
+	}
+
+	@Override
+	public int career_date(int member_code) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+		int career_date = session.selectOne(namespace +".career_date",member_code);		
+		session.close();
+		return career_date;
 	}
 	
 

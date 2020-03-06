@@ -2,7 +2,7 @@ package com.devca.model.dao.portfolio;
 
 import java.util.List;
 
-import com.devca.model.dto.SKILL;
+import com.devca.model.dto.profile.SKILL;
 
 public interface SkillDao {
 	

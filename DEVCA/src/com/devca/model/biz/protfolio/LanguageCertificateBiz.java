@@ -2,7 +2,7 @@ package com.devca.model.biz.protfolio;
 
 import java.util.List;
 
-import com.devca.model.dto.LANGUAGE_CERTIFICATE;
+import com.devca.model.dto.profile.LANGUAGE_CERTIFICATE;
 
 public interface LanguageCertificateBiz {
 
@@ -15,4 +15,8 @@ public interface LanguageCertificateBiz {
 	public int language_certificate_update(LANGUAGE_CERTIFICATE dto);
 	
 	public int language_certificate_delete(int language_seq, int member_code);
+	
+	public int language_certificate_insert_new(int language_seq);
+	
+	public int language_certificate_count(int language_seq);
 }

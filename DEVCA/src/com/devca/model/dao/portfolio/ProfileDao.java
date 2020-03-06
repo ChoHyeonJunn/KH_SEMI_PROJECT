@@ -2,7 +2,7 @@ package com.devca.model.dao.portfolio;
 
 import java.util.List;
 
-import com.devca.model.dto.PROFILE;
+import com.devca.model.dto.profile.PROFILE;
 
 public interface ProfileDao {
 	

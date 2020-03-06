@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.devca.model.dao.portfolio.SkillDao;
 import com.devca.model.dao.portfolio.SkillDaoImpl;
-import com.devca.model.dto.SKILL;
+import com.devca.model.dto.profile.SKILL;
 
 public class SkillBizImpl implements SkillBiz {
 

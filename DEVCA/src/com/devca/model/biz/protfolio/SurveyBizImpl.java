@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.devca.model.dao.portfolio.SurveyDao;
 import com.devca.model.dao.portfolio.SurveyDaoImpl;
-import com.devca.model.dto.SURVEY;
+import com.devca.model.dto.profile.SURVEY;
 
 public class SurveyBizImpl implements SurveyBiz {
 

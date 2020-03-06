@@ -49,7 +49,7 @@ public class Inflearn {
 				Document detail_doc = Jsoup.connect(link).get();
 				Element d_content = detail_doc.selectFirst("#description .body"); // 내용은 html 코드와 같이 통으로
 
-				// 임시 출력
+				// 임시 출력	
 
 				//System.out.println("title : " + title);
 				//System.out.println("// imgUrl : " + imgUrl);

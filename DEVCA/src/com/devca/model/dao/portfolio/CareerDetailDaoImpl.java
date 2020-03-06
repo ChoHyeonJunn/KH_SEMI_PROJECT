@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.CAREER_DETAIL;
+import com.devca.model.dto.profile.CAREER_DETAIL;
 import com.devca.mybatis.SqlMapConfig;
 
 public class CareerDetailDaoImpl extends SqlMapConfig implements CareerDetailDao {

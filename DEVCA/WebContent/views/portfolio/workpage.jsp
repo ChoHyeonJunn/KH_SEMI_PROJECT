@@ -49,24 +49,27 @@ article {
    <section>
       <%@ include file="/views/form/portfoliosidebar.jsp"%>
       <article>
+         <h1>희망하는 직군과 최소 연봉을 적어주세요.</h1>
       	<fieldset>
-   			<form action="/DEVCA/portfolio/workpage.do" method="post">
+   			<form action="/DEVCA/portfolio/previewpage.do" method="post">
+   			<input type="hidden" name="member_code" value="${sessionLoginMember.MEMBER_CODE }"/>
    				<div class="action-main">
    					<c:forEach items="${workList }" var="workList">
+   					<input type="hidden" name="work_seq" value="${workList.WORK_SEQ }"/>
    					<div class="action-item">
    						<div class="action-item-name">
    							<label>직종</label>
-   							<input type="text" name="action_name" value="${workList.LINE_OF_WORK }" placeholder="입력"/>
+   							<input type="text" name="work_name" value="${workList.LINE_OF_WORK }" placeholder="입력"/>
    						</div>
    						<div class="action-item-end">
    							<label>연봉</label>
-   							<input type="text" name="action_link" value="${workList.INCOME }" placeholder="0만원"/>
+   							<input type="text" name="income" value="${workList.INCOME }" placeholder="0만원"/>
    						</div>
    					</div>
    					</c:forEach>
    				</div>
    				<div class="action-wrap">
-   					<a href="#" onclick="location.href='/DEVCA/portfolio/schoolpage.do?member_code=${sessionLoginMember.MEMBER_CODE }'">이전</a>
+   					<a href="#" onclick="location.href='/DEVCA/portfolio/sidecertificatepage.do?member_code=${sessionLoginMember.MEMBER_CODE }'">이전</a>
    					<input type="submit" value="다음"/>
    				</div>
    			</form>

@@ -2,7 +2,7 @@ package com.devca.model.dao.portfolio;
 
 import java.util.List;
 
-import com.devca.model.dto.CAREER_DETAIL;
+import com.devca.model.dto.profile.CAREER_DETAIL;
 
 public interface CareerDetailDao {
 

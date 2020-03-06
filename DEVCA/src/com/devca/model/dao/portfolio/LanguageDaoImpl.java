@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.LANGUAGE;
+import com.devca.model.dto.profile.LANGUAGE;
 import com.devca.mybatis.SqlMapConfig;
 
 public class LanguageDaoImpl extends SqlMapConfig implements LanguageDao {

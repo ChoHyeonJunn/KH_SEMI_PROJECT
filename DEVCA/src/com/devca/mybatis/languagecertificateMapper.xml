@@ -26,5 +26,12 @@
 		SELECT LANGUAGE_CERTIFICATE_SEQ FROM LANGUAGE_CERTIFICATE
 		WHERE LANGUAGE_SEQ = #{LANGUAGE_SEQ}
 	</select>
-	
+	<select id="language_certificate_count" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM LANGUAGE_CERTIFICATE
+		WHERE LANGUAGE_SEQ = #{LANGUAGE_SEQ}
+	</select>
+	<insert id="language_certificate_insert_new" parameterType="int">
+		INSERT INTO LANGUAGE_CERTIFICATE
+		VALUES(LANGUAGE_CERTIFICATE_SEQ.NEXTVAL,#{LANGUAGE_SEQ},'','')
+	</insert>
 </mapper>

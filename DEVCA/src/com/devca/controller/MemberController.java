@@ -536,8 +536,7 @@ public class MemberController extends HttpServlet {
 
 		member_profile.setMEMBER_CODE(MEMBER_CODE);
 
-		member_profile
-				.setMEMBER_PROFILE_IMAGE_NAME((MEMBER_PROFILE_IMAGE_NAME == null) ? "" : MEMBER_PROFILE_IMAGE_NAME);
+		member_profile.setMEMBER_PROFILE_IMAGE_NAME((MEMBER_PROFILE_IMAGE_NAME == null) ? "" : MEMBER_PROFILE_IMAGE_NAME);
 		member_profile.setMEMBER_PROFILE_IMAGE_S_NAME(
 				(MEMBER_PROFILE_IMAGE_S_NAME == null) ? "" : MEMBER_PROFILE_IMAGE_S_NAME);
 		member_profile.setMEMBER_PROFILE_PATH(FILE_PATH);

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.PROJECT;
+import com.devca.model.dto.profile.PROJECT;
 import com.devca.mybatis.SqlMapConfig;
 
 public class ProjectDaoImpl extends SqlMapConfig implements ProjectDao {

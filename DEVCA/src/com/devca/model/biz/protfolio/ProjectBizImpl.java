@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.devca.model.dao.portfolio.ProjectDao;
 import com.devca.model.dao.portfolio.ProjectDaoImpl;
-import com.devca.model.dto.PROJECT;
+import com.devca.model.dto.profile.PROJECT;
 
 public class ProjectBizImpl implements ProjectBiz {
 

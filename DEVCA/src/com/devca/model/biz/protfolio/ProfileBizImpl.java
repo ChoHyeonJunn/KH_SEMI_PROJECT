@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.devca.model.dao.portfolio.ProfileDao;
 import com.devca.model.dao.portfolio.ProfileDaoImpl;
-import com.devca.model.dto.PROFILE;
+import com.devca.model.dto.profile.PROFILE;
 
 public class ProfileBizImpl implements ProfileBiz {
 

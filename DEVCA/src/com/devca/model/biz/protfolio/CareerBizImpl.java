@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.devca.model.dao.portfolio.CareerDao;
 import com.devca.model.dao.portfolio.CareerDaoImpl;
-import com.devca.model.dto.CAREER;
+import com.devca.model.dto.profile.CAREER;
 
 public class CareerBizImpl implements CareerBiz {
 	
@@ -42,6 +42,16 @@ public class CareerBizImpl implements CareerBiz {
 	@Override
 	public int career_insert_new(int member_code) {
 		return dao.career_insert_new(member_code);
+	}
+
+	@Override
+	public int[] career_date(int member_code) {
+		int[] date = {0, 0};
+		int year = (dao.career_date(member_code)/365);
+		int month = (dao.career_date(member_code)-(year*365))/30;
+		date[0] = year;
+		date[1] = month;
+		return date;
 	}
 
 }

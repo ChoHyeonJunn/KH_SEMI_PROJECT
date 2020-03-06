@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.WORK;
+import com.devca.model.dto.profile.WORK;
 import com.devca.mybatis.SqlMapConfig;
 
 public class WorkDaoImpl extends SqlMapConfig implements WorkDao {
@@ -65,6 +65,23 @@ public class WorkDaoImpl extends SqlMapConfig implements WorkDao {
 		int work_res = session.delete(namespace+".work_delete",member_code);
 		session.close();
 		return work_res;
+	}
+	@Override
+	public int work_count(int member_code) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+		int work_seq = session.selectOne(namespace+".work_count",member_code);
+		session.close();
+		return work_seq;
+	}
+	@Override
+	public int work_insert_new(int member_code) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+		int res = session.insert(namespace+".work_insert_new",member_code);
+		if(res > 0) {
+			session.commit();
+		}
+		session.close();
+		return res;
 	}
 
 }

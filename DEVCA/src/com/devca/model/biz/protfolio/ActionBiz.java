@@ -2,7 +2,7 @@ package com.devca.model.biz.protfolio;
 
 import java.util.List;
 
-import com.devca.model.dto.ACTION_DTO;
+import com.devca.model.dto.profile.ACTION_DTO;
 
 public interface ActionBiz {
 
@@ -17,4 +17,8 @@ public interface ActionBiz {
 	public int action_delete_one(int member_code, int action_seq);
 	
 	public int action_delete(int member_code);
+	
+	public int action_count(int member_code);
+	
+	public int action_insert_new(int member_code);
 }

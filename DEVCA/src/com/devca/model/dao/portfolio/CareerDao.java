@@ -2,7 +2,7 @@ package com.devca.model.dao.portfolio;
 
 import java.util.List;
 
-import com.devca.model.dto.CAREER;
+import com.devca.model.dto.profile.CAREER;
 
 public interface CareerDao {
 	//커리어 조회
@@ -20,4 +20,7 @@ public interface CareerDao {
 	public int career_count(int member_code);
 	
 	public int career_insert_new(int member_code);
+	
+	public int career_date(int member_code);
+	
 }

@@ -38,25 +38,26 @@ import com.devca.model.biz.protfolio.SkillBiz;
 import com.devca.model.biz.protfolio.SkillBizImpl;
 import com.devca.model.biz.protfolio.WorkBiz;
 import com.devca.model.biz.protfolio.WorkBizImpl;
-import com.devca.model.dto.ACTION_DTO;
-import com.devca.model.dto.CAREER;
-import com.devca.model.dto.CAREER_DETAIL;
-import com.devca.model.dto.CERTIFICATE;
-import com.devca.model.dto.KAKAO_MEMBER;
-import com.devca.model.dto.LANGUAGE;
-import com.devca.model.dto.LANGUAGE_CERTIFICATE;
-import com.devca.model.dto.MEMBER;
-import com.devca.model.dto.PROFILE;
-import com.devca.model.dto.PROJECT;
-import com.devca.model.dto.SCHOOL;
-import com.devca.model.dto.SKILL;
-import com.devca.model.dto.WORK;
+import com.devca.model.dto.member.KAKAO_MEMBER;
+import com.devca.model.dto.member.MEMBER;
+import com.devca.model.dto.profile.ACTION_DTO;
+import com.devca.model.dto.profile.CAREER;
+import com.devca.model.dto.profile.CAREER_DETAIL;
+import com.devca.model.dto.profile.CERTIFICATE;
+import com.devca.model.dto.profile.LANGUAGE;
+import com.devca.model.dto.profile.LANGUAGE_CERTIFICATE;
+import com.devca.model.dto.profile.PROFILE;
+import com.devca.model.dto.profile.PROJECT;
+import com.devca.model.dto.profile.SCHOOL;
+import com.devca.model.dto.profile.SKILL;
+import com.devca.model.dto.profile.WORK;
 
 @WebServlet(//
 		name = "portfolio", // Controller Mapping name
 		//
 		urlPatterns = { //
 				"portfoliopage.do", 		// 헤더 > 프로필버튼 입력 (프로필페이지 입장시 경력페이지 출력)
+				"sideportfoliopage.do",		// 프로젝트 페이지 > 경력 페이지
 				"projectpage.do", 			// 경력 프로필 > 프로젝트 페이지
 				"sideprojectpage.do",		// 사이드바 > 프로젝트 페이지
 				"skillpage.do",				// 경력 > 주요 기술 페이지
@@ -71,6 +72,8 @@ import com.devca.model.dto.WORK;
 				"certificatepage.do",		// 활동 > 자격증 페이지
 				"sideworkpage.do",			// 사이드 바 > 직종/연봉 페이지
 				"workpage.do",				// 자격증 > 직종/연봉 페이지
+				"previewpage.do",				// 직종/연봉 > 미리보기 페이지
+				"sidepreviewpage.do",				// 프로필 > 미리보기 페이지
 				
 				
 		})
@@ -104,6 +107,9 @@ public class PortfolioController extends HttpServlet {
 		// 프로필 페이지로 이동
 		if (command.endsWith("/portfoliopage.do")) {
 			doProfilePage(request, response);
+		}
+		else if(command.endsWith("/sideportfoliopage.do")) {
+			doSideProfilePage(request, response);
 		}
 		// 경력페이지 > 프로젝트 
 		else if(command.endsWith("/projectpage.do")){
@@ -161,6 +167,12 @@ public class PortfolioController extends HttpServlet {
 		else if(command.endsWith("/workpage.do")) {
 			doWorkPage(request, response);
 		}
+		else if(command.endsWith("/previewpage.do")) {
+			doPreviewPage(request, response);
+		}
+		else if(command.endsWith("/sidepreviewpage.do")) {
+			doSidePreviewPage(request, response);
+		}
 		// 에러 처리
 		else {
 			doError(request, response);
@@ -168,9 +180,101 @@ public class PortfolioController extends HttpServlet {
 		
 		
 	}
+	
+
+	private void doSidePreviewPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		int member_code = Integer.parseInt(request.getParameter("member_code"));
+
+		List<CAREER> careerList = careerbiz.career_select(member_code);
+		request.setAttribute("careerList", careerList);
+		int careerdate[] = careerbiz.career_date(member_code);
+		int year = careerdate[0];
+		int month = careerdate[1];
+		System.out.println(year);
+		System.out.println(month);
+		request.setAttribute("careerdate_year", year);
+		request.setAttribute("careerdate_month", month);
+		CAREER CAREER_SEQ = careerbiz.career_select_seq(member_code);
+		int career_seq = CAREER_SEQ.getCAREER_SEQ();
+		List<CAREER_DETAIL> career_detailList = careerdetailbiz.career_detail_select(career_seq);
+		request.setAttribute("careerdetailList", career_detailList);
+		List<PROJECT> project_List = projectbiz.project_select(member_code);
+		request.setAttribute("projectList", project_List);
+		List<SKILL> skillList = skillbiz.skill_select(member_code);
+		request.setAttribute("skillList", skillList);
+		List<LANGUAGE> languageList = languagebiz.language_select(member_code);
+		request.setAttribute("languageList", languageList);
+		List<SCHOOL> schoolList = schoolbiz.school_select(member_code);
+		request.setAttribute("schoolList", schoolList);
+		List<ACTION_DTO> actionList = actionbiz.action_select(member_code);
+		request.setAttribute("actionList", actionList);
+		List<CERTIFICATE> certificateList = certificatebiz.certificate_select(member_code);
+		request.setAttribute("certificateList", certificateList);
+		List<WORK> workList = workbiz.work_select(member_code);
+		request.setAttribute("workList", workList);
+		
+		dispatch("/views/portfolio/preview.jsp", request, response);
+		
+		dispatch("/views/portfolio/preview.jsp", request, response);
+	}
+
+	private void doPreviewPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int member_code = Integer.parseInt(request.getParameter("member_code"));
+		int res = 0;
+		// 직군 연봉 데이터 저장
+			int work_seq = Integer.parseInt(request.getParameter("work_seq"));
+			String work_name = request.getParameter("work_name");
+			String income = request.getParameter("income");
+			
+			WORK work= new WORK(member_code,work_seq,work_name,income);
+			
+			res = workbiz.work_update(work);
+			
+			// 직군 연봉 데이터 저장 종료
+		if(res > 0) {
+			List<CAREER> careerList = careerbiz.career_select(member_code);
+			request.setAttribute("careerList", careerList);
+			int careerdate[] = careerbiz.career_date(member_code);
+			int year = careerdate[0];
+			int month = careerdate[1];
+			System.out.println(year);
+			System.out.println(month);
+			request.setAttribute("careerdate_year", year);
+			request.setAttribute("careerdate_month", month);
+			List<PROJECT> project_List = projectbiz.project_select(member_code);
+			request.setAttribute("projectList", project_List);
+			List<SKILL> skillList = skillbiz.skill_select(member_code);
+			request.setAttribute("skillList", skillList);
+			List<LANGUAGE> languageList = languagebiz.language_select(member_code);
+			request.setAttribute("languageList", languageList);
+			List<SCHOOL> schoolList = schoolbiz.school_select(member_code);
+			request.setAttribute("schoolList", schoolList);
+			List<ACTION_DTO> actionList = actionbiz.action_select(member_code);
+			request.setAttribute("actionList", actionList);
+			List<CERTIFICATE> certificateList = certificatebiz.certificate_select(member_code);
+			request.setAttribute("certificateList", certificateList);
+			List<WORK> workList = workbiz.work_select(member_code);
+			request.setAttribute("workList", workList);
+			
+			dispatch("/views/portfolio/preview.jsp", request, response);	
+		}else {
+			jsResponse("잘못입력", "/DEVCA/portfolio/sideworkpage.do?member_code="+member_code, response);
+		}	
+	}
+
 	// 사이드바 > 직종/연봉페이지
 	private void doSideWorkPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int member_code = Integer.parseInt(request.getParameter("member_code"));
+		
+			// 뉴비 진입시 테이블 생성용
+				int work_count = workbiz.work_count(member_code);
+				// 경력 번호로 상세 항목 테이블 참조
+				if(work_count == 0) {	
+					workbiz.work_insert_new(member_code);
+				}
+			//뉴비 진입시 테이블 생성용
+		
 		List<WORK> workList = workbiz.work_select(member_code);
 		request.setAttribute("workList", workList);
 		dispatch("/views/portfolio/workpage.jsp", request, response);
@@ -179,14 +283,45 @@ public class PortfolioController extends HttpServlet {
 	// 자격증 > 직종/연봉페이지
 	private void doWorkPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int member_code = Integer.parseInt(request.getParameter("member_code"));
-		List<WORK> workList = workbiz.work_select(member_code);
-		request.setAttribute("workList", workList);
-		dispatch("/views/portfolio/workpage.jsp", request, response);
-		
+		int res = 0;
+		// 자격증 데이터 > DB 저장 시작
+			int certificate_seq = Integer.parseInt(request.getParameter("certificate_seq"));
+			String certificate_name = request.getParameter("certificate_name");
+			String certificate_start_date = request.getParameter("certificate_start_date");
+			String certificate_link = request.getParameter("certificate_link");
+			String certificate_ex_text = request.getParameter("certificate_ex_text");
+			
+			CERTIFICATE certificate = new CERTIFICATE(member_code,certificate_seq,certificate_name,certificate_start_date,
+					certificate_link,certificate_ex_text);
+			
+			res = certificatebiz.certificate_update(certificate);
+			// 자격증 데이터 > DB 저장 종료
+			if( res > 0){
+				// 뉴비 진입시 테이블 생성용
+					int work_count = workbiz.work_count(member_code);
+					// 경력 번호로 상세 항목 테이블 참조
+					if(work_count == 0) {	
+						workbiz.work_insert_new(member_code);
+					}
+				//뉴비 진입시 테이블 생성용
+			List<WORK> workList = workbiz.work_select(member_code);
+			request.setAttribute("workList", workList);
+			dispatch("/views/portfolio/workpage.jsp", request, response);
+		}else {
+			jsResponse("잘못입력", "/DEVCA/portfolio/sidecertificatepage.do?member_code="+member_code, response);
+		}
 	}
 	// 사이드바 > 자격증 페이지
 	private void doSideCertificatePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int member_code = Integer.parseInt(request.getParameter("member_code"));
+		
+			// 뉴비 진입시 테이블 생성용
+				int certificate_count = certificatebiz.certificate_count(member_code);
+				// 경력 번호로 상세 항목 테이블 참조
+				if(certificate_count == 0) {	
+					certificatebiz.certificate_insert_new(member_code);
+				}
+			//뉴비 진입시 테이블 생성용
 		List<CERTIFICATE> certificateList = certificatebiz.certificate_select(member_code);
 		request.setAttribute("certificateList", certificateList);
 		dispatch("/views/portfolio/certificatepage.jsp", request, response);
@@ -194,38 +329,104 @@ public class PortfolioController extends HttpServlet {
 	// 활동 > 자격증 페이지
 	private void doCertificatePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int member_code = Integer.parseInt(request.getParameter("member_code"));
+		int res = 0;
+		
+		// 활동 데이터 > DB 저장 시작
+			int action_seq = Integer.parseInt(request.getParameter("action_seq"));
+			String action_name = request.getParameter("action_name");
+			String action_start_date = request.getParameter("action_start_date");
+			String action_end_date = request.getParameter("action_end_date");
+			String action_link = request.getParameter("action_link");
+			String action_ex_text = request.getParameter("action_ex_text");
+			
+			ACTION_DTO action = new ACTION_DTO(action_seq,member_code,action_name,action_start_date,action_end_date,
+					action_link,action_ex_text);
+			
+			res = actionbiz.action_update(action);
+		// 활동 데이터 > DB 저장 종료
+		if( res > 0){
+			// 뉴비 진입시 테이블 생성용
+				int certificate_count = certificatebiz.certificate_count(member_code);
+				// 경력 번호로 상세 항목 테이블 참조
+				if(certificate_count == 0) {	
+					certificatebiz.certificate_insert_new(member_code);
+				}
+			//뉴비 진입시 테이블 생성용
 		List<CERTIFICATE> certificateList = certificatebiz.certificate_select(member_code);
 		request.setAttribute("certificateList", certificateList);
 		dispatch("/views/portfolio/certificatepage.jsp", request, response);
-		
+		}else {
+			jsResponse("잘못입력", "/DEVCA/portfolio/sideactionpage.do?member_code="+member_code, response);
+		}
 	}
 	// 사이드바 > 활동 페이지
 	private void doSideActionPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int member_code = Integer.parseInt(request.getParameter("member_code"));
+			// 뉴비 진입시 테이블 생성용
+				int action_count = actionbiz.action_count(member_code);
+				// 경력 번호로 상세 항목 테이블 참조
+				if(action_count == 0) {
+					actionbiz.action_insert_new(member_code);
+				}
+			//뉴비 진입시 테이블 생성용
+				
 		List<ACTION_DTO> actionList = actionbiz.action_select(member_code);
 		request.setAttribute("actionList", actionList);
+		
 		dispatch("/views/portfolio/actionpage.jsp", request, response);
 	}
 	// 학력 > 활동 페이지
 	private void doActionPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-
 		int member_code = Integer.parseInt(request.getParameter("member_code"));
-		List<ACTION_DTO> actionList = actionbiz.action_select(member_code);
-		request.setAttribute("actionList", actionList);
-		dispatch("/views/portfolio/actionpage.jsp", request, response);
-		
+		int res = 0;
+		SCHOOL school = null;
+		// 학력 데이터 > DB저장
+			int school_seq = Integer.parseInt(request.getParameter("school_seq"));
+			String schoolname = request.getParameter("schoolname");
+			String major = request.getParameter("major");
+			String degree = request.getParameter("degree");
+			String start_date = request.getParameter("start_date");
+			String end_date = request.getParameter("end_date");
+			double mycredit = Double.parseDouble(request.getParameter("mycredit"));
+			double maxcredit = Double.parseDouble(request.getParameter("maxcredit"));
+			String othertext = request.getParameter("othertext");
+			
+			school = new SCHOOL(member_code,school_seq,schoolname,major,degree,start_date,end_date,mycredit,maxcredit,othertext);
+			res = schoolbiz.school_update(school);
+			if(res > 0) {
+				// 학력 데이터 > DB 저장 종료
+				
+				// 뉴비 진입시 테이블 생성용
+					int action_count = actionbiz.action_count(member_code);
+					// 경력 번호로 상세 항목 테이블 참조
+					if(action_count == 0) {	
+						actionbiz.action_insert_new(member_code);
+					}
+				//뉴비 진입시 테이블 생성용
+						
+				List<ACTION_DTO> actionList = actionbiz.action_select(member_code);
+				request.setAttribute("actionList", actionList);
+				dispatch("/views/portfolio/actionpage.jsp", request, response);
+			}else {
+				jsResponse("잘못입력", "/DEVCA/portfolio/sideschoolpage.do?member_code="+member_code, response);
+			}
 	}
 	// 사이드바 > 학력 페이지
 	private void doSideSchoolPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int member_code = Integer.parseInt(request.getParameter("member_code"));
-		
+			// 뉴비 진입시 테이블 생성용
+				int school_count = schoolbiz.school_count(member_code);
+				// 경력 번호로 상세 항목 테이블 참조
+				if(school_count == 0) {
+					schoolbiz.school_insert_new(member_code);
+				}
+			//뉴비 진입시 테이블 생성용
 		List<SCHOOL> schoolList = schoolbiz.school_select(member_code);
-
 		request.setAttribute("schoolList", schoolList);
+		
 		
 		dispatch("/views/portfolio/schoolpage.jsp", request, response);
 	}
@@ -235,29 +436,54 @@ public class PortfolioController extends HttpServlet {
 		int member_code = Integer.parseInt(request.getParameter("member_code"));
 		int language_seq = Integer.parseInt(request.getParameter("language_seq"));
 		
-		String language_name = request.getParameter("otherselect");
-		if(language_name.equals("other")) {
+		System.out.println("member_code :"+member_code);
+		System.out.println("language :"+language_seq);
+		String language_name = request.getParameter("language");
+		System.out.println("language_name :"+language_name);
+		if(language_name == ("other")) {
 			language_name = request.getParameter("otherlanguage");
+			System.out.println("기타_language_name :"+language_name);
 		}
 		
+		LANGUAGE language_dto = new LANGUAGE();
+		language_dto.setLANGUAGE_SEQ(language_seq);
+		language_dto.setLANGUAGE_MEMBER_CODE(member_code);
+		language_dto.setLANGUAGE(language_name);
+		int language_res = 0;
+		language_res = languagebiz.language_update(language_dto);
 		//어학 시험 테이블
-		int language_certificate_seq = Integer.parseInt(request.getParameter("languagecertificate_seq"));
+		String[] languagecertificate_seq = request.getParameterValues("languagecertificate_seq");
 		String[] language_certificate_name = request.getParameterValues("language_name");
 		String[] language_certificate_grade = request.getParameterValues("language_grade");
 		int res = 0;
-
+		LANGUAGE_CERTIFICATE LANGUAGE_CERTIFICATE_DTO = null;
 		for(int i = 0; i < language_certificate_name.length;i++) {
-			LANGUAGE_CERTIFICATE LANGUAGE_CERTIFICATE_DTO = new LANGUAGE_CERTIFICATE(1+i, language_seq,
-					language_certificate_name[i],language_certificate_grade[i]);
-					res = langcertbiz.language_certificate_update(LANGUAGE_CERTIFICATE_DTO);
+			System.out.println("language_certificate_name :"+language_certificate_name[i]);
+			System.out.println("language_certificate_grade :"+language_certificate_grade[i]);
+			System.out.println("언어시험 번호: "+Integer.parseInt(languagecertificate_seq[i]));
+			LANGUAGE_CERTIFICATE_DTO = new LANGUAGE_CERTIFICATE();
+			LANGUAGE_CERTIFICATE_DTO.setLANGUAGE_SEQ(language_seq);
+			LANGUAGE_CERTIFICATE_DTO.setLANGUAGE_CERTIFICATE_SEQ(Integer.parseInt(languagecertificate_seq[i]));
+			LANGUAGE_CERTIFICATE_DTO.setLANGUAGE_CERTIFICATE_NAME(language_certificate_name[i]);
+			LANGUAGE_CERTIFICATE_DTO.setLANGUAGE_CERTIFICATE_GRADE(language_certificate_grade[i]);
+			res = langcertbiz.language_certificate_update(LANGUAGE_CERTIFICATE_DTO);
 		}	
 		
-		if(res >0) {
+		if(res >0 && language_res > 0) {
+			
+				// 뉴비 진입시 테이블 생성용
+					int school_count = schoolbiz.school_count(member_code);
+					// 경력 번호로 상세 항목 테이블 참조
+					if(school_count == 0) {
+						schoolbiz.school_insert_new(member_code);
+					}
+				//뉴비 진입시 테이블 생성용
 			List<SCHOOL> school_list = schoolbiz.school_select(member_code);
 			request.setAttribute("schoolList", school_list);
+			
 			dispatch("/views/portfolio/schoolpage.jsp", request, response);
 		}else {
-			jsResponse("잘못입력", "/DEVCA/protfolio/sidelanguagepage.do", response);
+			jsResponse("잘못입력", "/DEVCA/protfolio/sidelanguagepage.do?member_code="+member_code, response);
 		}
 		
 	}
@@ -265,12 +491,27 @@ public class PortfolioController extends HttpServlet {
 	private void doSideLanguagePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int member_code = Integer.parseInt(request.getParameter("member_code"));
-		
+		int language_seq = 0;
+		LANGUAGE language = null;
+		int language_certificate_count = 0;
+			// 뉴비 진입시 테이블 생성용
+				int language_count = languagebiz.language_count(member_code);
+				// 경력 번호로 상세 항목 테이블 참조
+				if(language_count == 0) {
+					languagebiz.language_insert_new(member_code);
+				}
+				language = languagebiz.language_select_seq(member_code);
+				language_seq = language.getLANGUAGE_SEQ();
+				language_certificate_count = langcertbiz.language_certificate_count(language_seq);
+				System.out.println(language_certificate_count);
+				System.out.println(language_seq);
+				if(language_certificate_count == 0) {
+					System.out.println(language_seq);
+					langcertbiz.language_certificate_insert_new(language_seq);
+				}
+			//뉴비 진입시 테이블 생성용
 		List<LANGUAGE> languageList = languagebiz.language_select(member_code);
-		LANGUAGE language = languagebiz.language_select_seq(member_code);
-		int language_seq = language.getLANGUAGE_SEQ();
 		List<LANGUAGE_CERTIFICATE> langcertList = langcertbiz.language_certificate_select(language_seq);
-		
 		request.setAttribute("languageList", languageList);
 		request.setAttribute("langcertList", langcertList);
 		
@@ -286,24 +527,46 @@ public class PortfolioController extends HttpServlet {
 		int cnt = 0;
 		SKILL skill_dto = null;
 		String[] skill_name= request.getParameterValues("skill_name");
-		
-		System.out.println(member_code);
-		for(int j = 0; j<skill_name.length;j++) {
-			System.out.println(skill_name[j]);
-		}
-		for(int i = 0; i< skill_name.length; i++) {
-		skill_dto = new SKILL();
-		skill_dto.setSKILL_MEMBER_CODE(member_code);
-		skill_dto.setSKILL(skill_name[i]);
-		res = skillbiz.skill_insert(skill_dto);
-		
-			if(res > 0 ) {
-				cnt++;
+		if(skill_name != null) {
+			System.out.println(member_code);
+			for(int j = 0; j<skill_name.length;j++) {
+				System.out.println(skill_name[j]);
 			}
-		res = 0;
-		}
-		if(cnt == skill_name.length) {
-			// 외국어 테이블 정보 조회
+			for(int i = 0; i< skill_name.length; i++) {
+			skill_dto = new SKILL();
+			skill_dto.setSKILL_MEMBER_CODE(member_code);
+			skill_dto.setSKILL(skill_name[i]);
+			res = skillbiz.skill_insert(skill_dto);
+			
+				if(res > 0 ) {
+					cnt++;
+				}
+			res = 0;
+			}
+			if(cnt == skill_name.length) {
+				// 외국어 테이블 정보 조회
+					// 뉴비 진입시 테이블 생성용
+						int language_count = languagebiz.language_count(member_code);
+						// 경력 번호로 상세 항목 테이블 참조
+						if(language_count == 0) {
+							languagebiz.language_insert_new(member_code);	//경력 테이블 생성
+						}
+					//뉴비 진입시 테이블 생성용
+				List<LANGUAGE> languageList = languagebiz.language_select(member_code);
+				LANGUAGE language = languagebiz.language_select_seq(member_code);
+				int language_seq = language.getLANGUAGE_SEQ();
+				List<LANGUAGE_CERTIFICATE> langcertList = langcertbiz.language_certificate_select(language_seq);
+				
+				request.setAttribute("languageList", languageList);
+				request.setAttribute("langcertList", langcertList);
+				
+				dispatch("/views/portfolio/languagepage.jsp", request, response);
+			}
+			else {
+				jsResponse("저장실패", "/DEVCA/protfolio/sideskillpage.do?member_code="+member_code, response);
+			}
+		}else {
+				// 외국어 테이블 정보 조회
 				// 뉴비 진입시 테이블 생성용
 					int language_count = languagebiz.language_count(member_code);
 					// 경력 번호로 상세 항목 테이블 참조
@@ -320,9 +583,6 @@ public class PortfolioController extends HttpServlet {
 			request.setAttribute("langcertList", langcertList);
 			
 			dispatch("/views/portfolio/languagepage.jsp", request, response);
-		}
-		else {
-			jsResponse("저장실패", "/DEVCA/protfolio/sideskillpage.do?member_code="+member_code, response);
 		}
 	}
 	// 사이드바 > 기술 페이지
@@ -379,6 +639,7 @@ public class PortfolioController extends HttpServlet {
 				//뉴비 진입시 테이블 생성용
 			List<SKILL> skillList = skillbiz.skill_select(member_code);
 			request.setAttribute("skillList", skillList);
+			
 			dispatch("/views/portfolio/skillpage.jsp", request, response);
 		}else {
 			jsResponse("잘못입력", "/DEVCA/protfolio/sideprojectpage.do?member_code="+member_code, response);
@@ -431,6 +692,7 @@ public class PortfolioController extends HttpServlet {
 			//뉴비 진입시 테이블 생성용
 			List<PROJECT> project_List = projectbiz.project_select(member_code);
 			request.setAttribute("projectList", project_List);
+			
 			dispatch("/views/portfolio/projectpage.jsp",request, response);
 		} else {
 			doProfilePage(request, response);
@@ -456,7 +718,20 @@ public class PortfolioController extends HttpServlet {
 		dispatch("/views/portfolio/projectpage.jsp", request, response);
 			
 	}
-	
+	private void doSideProfilePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int member_code = Integer.parseInt(request.getParameter("member_code"));
+		CAREER CAREER_SEQ = careerbiz.career_select_seq(member_code);
+		int career_seq = CAREER_SEQ.getCAREER_SEQ();
+		
+		List<CAREER> careerList = careerbiz.career_select(member_code);
+		List<CAREER_DETAIL> career_detailList = careerdetailbiz.career_detail_select(career_seq);
+		
+		request.setAttribute("career_detailList", career_detailList);
+		request.setAttribute("careerList", careerList);
+		
+
+		dispatch("/views/portfolio/portfoliopage.jsp", request, response);
+	}
 	// 프로필 페이지 + 초기화면 경력페이지
 	private void doProfilePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

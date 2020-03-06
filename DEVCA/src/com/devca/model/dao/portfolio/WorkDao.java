@@ -2,7 +2,7 @@ package com.devca.model.dao.portfolio;
 
 import java.util.List;
 
-import com.devca.model.dto.WORK;
+import com.devca.model.dto.profile.WORK;
 
 public interface WorkDao {
 	
@@ -17,4 +17,9 @@ public interface WorkDao {
 	public int work_delete_one(int work_seq, int profile_seq);
 	
 	public int work_delete(int member_code);
+	
+	public int work_count(int member_code);
+	
+	public int work_insert_new(int member_code);
+	
 }

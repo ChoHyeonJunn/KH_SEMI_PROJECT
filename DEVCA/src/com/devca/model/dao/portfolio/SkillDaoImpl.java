@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.SKILL;
+import com.devca.model.dto.profile.SKILL;
 import com.devca.mybatis.SqlMapConfig;
 
 public class SkillDaoImpl extends SqlMapConfig implements SkillDao {

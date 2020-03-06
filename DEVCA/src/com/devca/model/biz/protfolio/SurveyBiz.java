@@ -2,7 +2,7 @@ package com.devca.model.biz.protfolio;
 
 import java.util.List;
 
-import com.devca.model.dto.SURVEY;
+import com.devca.model.dto.profile.SURVEY;
 
 public interface SurveyBiz {
 

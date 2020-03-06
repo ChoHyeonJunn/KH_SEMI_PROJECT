@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.PROFILE;
+import com.devca.model.dto.profile.PROFILE;
 import com.devca.mybatis.SqlMapConfig;
 
 public class ProfileDaoImpl extends SqlMapConfig implements ProfileDao {

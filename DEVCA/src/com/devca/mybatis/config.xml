@@ -19,17 +19,17 @@
 		<typeAlias type="com.devca.model.dto.lecture.REVIEW" alias="REVIEW" />
 		
 		<typeAlias type="com.devca.model.dto.study.STUDY" alias="STUDY" />
-		<typeAlias type="com.devca.model.dto.CAREER" alias="CAREER" />
-		<typeAlias type="com.devca.model.dto.CAREER_DETAIL" alias="CAREER_DETAIL" />
-		<typeAlias type="com.devca.model.dto.CERTIFICATE" alias="CERTIFICATE" />
-		<typeAlias type="com.devca.model.dto.LANGUAGE" alias="LANGUAGE" />
-		<typeAlias type="com.devca.model.dto.LANGUAGE_CERTIFICATE" alias="LANGUAGE_CERTIFICATE" />
-		<typeAlias type="com.devca.model.dto.PROJECT" alias="PROJECT" />
-		<typeAlias type="com.devca.model.dto.SCHOOL" alias="SCHOOL" />
-		<typeAlias type="com.devca.model.dto.SKILL" alias="SKILL" />
-		<typeAlias type="com.devca.model.dto.SURVEY" alias="SURVAY" />
-		<typeAlias type="com.devca.model.dto.WORK" alias="WORK" />
-		<typeAlias type="com.devca.model.dto.ACTION_DTO" alias="ACTION_DTO" />
+		<typeAlias type="com.devca.model.dto.profile.CAREER" alias="CAREER" />
+		<typeAlias type="com.devca.model.dto.profile.CAREER_DETAIL" alias="CAREER_DETAIL" />
+		<typeAlias type="com.devca.model.dto.profile.CERTIFICATE" alias="CERTIFICATE" />
+		<typeAlias type="com.devca.model.dto.profile.LANGUAGE" alias="LANGUAGE" />
+		<typeAlias type="com.devca.model.dto.profile.LANGUAGE_CERTIFICATE" alias="LANGUAGE_CERTIFICATE" />
+		<typeAlias type="com.devca.model.dto.profile.PROJECT" alias="PROJECT" />
+		<typeAlias type="com.devca.model.dto.profile.SCHOOL" alias="SCHOOL" />
+		<typeAlias type="com.devca.model.dto.profile.SKILL" alias="SKILL" />
+		<typeAlias type="com.devca.model.dto.profile.SURVEY" alias="SURVAY" />
+		<typeAlias type="com.devca.model.dto.profile.WORK" alias="WORK" />
+		<typeAlias type="com.devca.model.dto.profile.ACTION_DTO" alias="ACTION_DTO" />
 	</typeAliases>
 
 	<environments default="development">

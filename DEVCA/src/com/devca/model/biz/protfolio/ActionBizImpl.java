@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.devca.model.dao.portfolio.Actiondao;
 import com.devca.model.dao.portfolio.ActiondaoImpl;
-import com.devca.model.dto.ACTION_DTO;
+import com.devca.model.dto.profile.ACTION_DTO;
 
 public class ActionBizImpl implements ActionBiz {
 	Actiondao dao = new ActiondaoImpl();
@@ -35,6 +35,16 @@ public class ActionBizImpl implements ActionBiz {
 	
 	public int action_delete(int member_code) {
 		return dao.action_delete(member_code);
+	}
+
+	@Override
+	public int action_count(int member_code) {
+		return dao.action_count(member_code);
+	}
+
+	@Override
+	public int action_insert_new(int member_code) {
+		return dao.action_insert_new(member_code);
 	}
 
 }

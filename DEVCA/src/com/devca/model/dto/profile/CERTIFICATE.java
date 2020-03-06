@@ -1,4 +1,4 @@
-package com.devca.model.dto;
+package com.devca.model.dto.profile;
 
 import java.sql.Date;
 
@@ -8,7 +8,7 @@ public class CERTIFICATE {
 	private int CERTIFICATE_MEMBER_CODE;
 	private int CERTIFICATE_SEQ;
 	private String CERTIFICATE_NAME;
-	private Date CERTIFICATE_DATE;
+	private String CERTIFICATE_DATE;
 	private String CERTIFICATE_LINK;
 	private String CERTIFICATE_EX_TEXT;
 	
@@ -17,8 +17,8 @@ public class CERTIFICATE {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CERTIFICATE(int cERTIFICATE_MEMBER_CODE, int cERTIFICATE_SEQ, String cERTIFICATE_NAME, Date cERTIFICATE_DATE,
-			String cERTIFICATE_LINK, String cERTIFICATE_EX_TEXT) {
+	public CERTIFICATE(int cERTIFICATE_MEMBER_CODE, int cERTIFICATE_SEQ, String cERTIFICATE_NAME,
+			String cERTIFICATE_DATE, String cERTIFICATE_LINK, String cERTIFICATE_EX_TEXT) {
 		super();
 		CERTIFICATE_MEMBER_CODE = cERTIFICATE_MEMBER_CODE;
 		CERTIFICATE_SEQ = cERTIFICATE_SEQ;
@@ -52,11 +52,11 @@ public class CERTIFICATE {
 		CERTIFICATE_NAME = cERTIFICATE_NAME;
 	}
 
-	public Date getCERTIFICATE_DATE() {
+	public String getCERTIFICATE_DATE() {
 		return CERTIFICATE_DATE;
 	}
 
-	public void setCERTIFICATE_DATE(Date cERTIFICATE_DATE) {
+	public void setCERTIFICATE_DATE(String cERTIFICATE_DATE) {
 		CERTIFICATE_DATE = cERTIFICATE_DATE;
 	}
 

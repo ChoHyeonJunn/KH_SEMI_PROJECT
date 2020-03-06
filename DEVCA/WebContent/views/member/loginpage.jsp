@@ -44,8 +44,7 @@ $(function(){
 		
 		// 임시 출력 alert!!//////////////////////////////////////
 		alert("userid : "
-				+ $("#hiddenForm input[name='MEMBER_EMAIL']")
-						.val()
+				+ $("#hiddenForm input[name='MEMBER_EMAIL']").val()
 				+ "\n"
 				+ "password : "
 				+ $("#hiddenForm input[name='MEMBER_PW']")
