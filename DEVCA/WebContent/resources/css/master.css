@@ -1,29 +1,31 @@
 * {
-   padding: 0px;
-   margin: 0px;
+	padding: 0px;
+	margin: 0px;
 }
+/* 시멘틱 태그 기본 css */
+header, section, footer, nav, article, aside {
+	border: 1px dotted red;
+	margin: 5px;
+	/* text-align: center; */
+}
+
 aside {
-   height: 100%;
+ 	position: relative;
+ 	float: left;
+ 	width: 240px;
+ 	height: 100%;
+}
+/* 블록 기본 css */
+div, span, p {
+	border: 1px dotted blue;
+	margin: 10px;
 }
 
-/* bootStrap */
-.card {
-   /* margin: 10% auto 100px auto; */
-   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-   -webkit-transition: .25s box-shadow;
-   transition: .25s box-shadow;
-}
-.card:focus,
-.card:hover {
-   box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-}
-.card-link{
-   color: #862d86;
-   font-weight: 800;
+a {
+	text-decoration: none;
 }
 
-.btn, .input-group-text{
-   color: white;
-   font-weight: 800;
-   background-color: #862d86; 
+li {
+	/* list-style: none; */
+	
 }

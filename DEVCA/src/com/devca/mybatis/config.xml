@@ -1,35 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//E" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+
 	<properties resource="com/devca/mybatis/db.properties"></properties>
-	<settings>
-		 <setting name="jdbcTypeForNull" value="NULL" />
-	</settings>
+
 	<typeAliases>
-		<typeAlias type="com.devca.model.dto.member.MEMBER" alias="MEMBER" />
-		<typeAlias type="com.devca.model.dto.member.KAKAO_MEMBER" alias="KAKAO_MEMBER" />
-		<typeAlias type="com.devca.model.dto.member.NAVER_MEMBER" alias="NAVER_MEMBER" />
-		<typeAlias type="com.devca.model.dto.member.MEMBER_PROFILE" alias="MEMBER_PROFILE" />
-		<typeAlias type="com.devca.model.dto.member.ROADMAP" alias="ROADMAP" />
+		<typeAlias type="com.devca.model.dto.MEMBER" alias="MEMBER" />
+		<typeAlias type="com.devca.model.dto.KAKAO_MEMBER" alias="KAKAO_MEMBER" />
+		<typeAlias type="com.devca.model.dto.NAVER_MEMBER" alias="NAVER_MEMBER" />
+		<typeAlias type="com.devca.model.dto.QNA_BOARD" alias="QNA_BOARD" />
+		<typeAlias type="com.devca.model.dto.QNA_COMMENT" alias="QNA_COMMENT" />
 		
-		<typeAlias type="com.devca.model.dto.lecture.JOBD_KEYWORD" alias="JOBD_KEYWORD" />
-		<typeAlias type="com.devca.model.dto.lecture.JOB_RANK" alias="JOB_RANK" />
-		<typeAlias type="com.devca.model.dto.lecture.LECTURE" alias="LECTURE" />
-		<typeAlias type="com.devca.model.dto.lecture.MYLECTURE" alias="MYLECTURE" />
-		<typeAlias type="com.devca.model.dto.lecture.REVIEW" alias="REVIEW" />
-		
-		<typeAlias type="com.devca.model.dto.study.STUDY" alias="STUDY" />
-		<typeAlias type="com.devca.model.dto.profile.CAREER" alias="CAREER" />
-		<typeAlias type="com.devca.model.dto.profile.CAREER_DETAIL" alias="CAREER_DETAIL" />
-		<typeAlias type="com.devca.model.dto.profile.CERTIFICATE" alias="CERTIFICATE" />
-		<typeAlias type="com.devca.model.dto.profile.LANGUAGE" alias="LANGUAGE" />
-		<typeAlias type="com.devca.model.dto.profile.LANGUAGE_CERTIFICATE" alias="LANGUAGE_CERTIFICATE" />
-		<typeAlias type="com.devca.model.dto.profile.PROJECT" alias="PROJECT" />
-		<typeAlias type="com.devca.model.dto.profile.SCHOOL" alias="SCHOOL" />
-		<typeAlias type="com.devca.model.dto.profile.SKILL" alias="SKILL" />
-		<typeAlias type="com.devca.model.dto.profile.SURVEY" alias="SURVAY" />
-		<typeAlias type="com.devca.model.dto.profile.WORK" alias="WORK" />
-		<typeAlias type="com.devca.model.dto.profile.ACTION_DTO" alias="ACTION_DTO" />
 	</typeAliases>
 
 	<environments default="development">
@@ -38,7 +19,7 @@
 			<dataSource type="POOLED">
 				<property name="driver" value="${driver}" />
 				<property name="url" value="${url}" />
-				<property name="username" value="${username}" />	
+				<property name="username" value="${username}" />
 				<property name="password" value="${password}" />
 			</dataSource>
 		</environment>
@@ -46,18 +27,7 @@
 	<mappers>
 		<mapper resource="com/devca/mybatis/mainMapper.xml" />
 		<mapper resource="com/devca/mybatis/memberMapper.xml" />
-		<mapper resource="com/devca/mybatis/lectureMapper.xml" />
-		<mapper resource="com/devca/mybatis/reviewMapper.xml" />
-		<mapper resource="com/devca/mybatis/studyMapper.xml" />
-		<mapper resource="com/devca/mybatis/careerMapper.xml"/>
-		<mapper resource="com/devca/mybatis/career_detailMapper.xml"/>
-		<mapper resource="com/devca/mybatis/projectMapper.xml"/>
-		<mapper resource="com/devca/mybatis/languageMapper.xml"/>
-		<mapper resource="com/devca/mybatis/languagecertificateMapper.xml"/>
-		<mapper resource="com/devca/mybatis/skillMapper.xml"/>
-		<mapper resource="com/devca/mybatis/schoolMapper.xml"/>
-		<mapper resource="com/devca/mybatis/actionMapper.xml"/>
-		<mapper resource="com/devca/mybatis/certificateMapper.xml"/>
-		<mapper resource="com/devca/mybatis/workMapper.xml"/>
+		<mapper resource="com/devca/mybatis/qnaPageMapper.xml" />
+		<mapper resource="com/devca/mybatis/qnaCommentMapper.xml" />
 	</mappers>
 </configuration>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devca.qnaPageMapper">
+
+
+	<select id="selectList" resultType="QNA_BOARD">
+		SELECT * FROM QNA_BOARD
+		ORDER
+		BY
+		QNA_GROUP_NO DESC, QNA_GROUP_SEQ
+	</select>
+
+	<select id="selectOne" parameterType="int"
+		resultType="QNA_BOARD">
+		SELECT * FROM QNA_BOARD WHERE QNA_BOARD_NO =
+		#{QNA_BOARD_NO}
+	</select>
+
+	<select id="insert" parameterType="QNA_BOARD">
+		INSERT INTO QNA_BOARD
+		VALUES(QNA_BOARD_NO_SEQ.NEXTVAL,QNA_POST_NO_SEQ.NEXTVAL,QNA_GROUP_NO_SEQ.NEXTVAL,1,0,#{QNA_TITLE},#{QNA_CONTENT},#{QNA_WRITER},SYSDATE)
+	</select>
+
+	<select id="update" parameterType="QNA_BOARD">
+		UPDATE QNA_BOARD SET
+		QNA_TITLE
+		= #{QNA_TITLE}, QNA_CONTENT = #{QNA_CONTENT}, QNA_DATE = SYSDATE
+		WHERE
+		QNA_BOARD_NO = #{QNA_BOARD_NO}
+	</select>
+
+	<select id="delete" parameterType="int">
+
+		DELETE FROM QNA_BOARD WHERE
+		QNA_BOARD_NO = #{QNA_BOARD_NO}
+
+	</select>
+
+	<select id="answerUpdate" parameterType="int">
+
+		UPDATE QNA_BOARD SET
+		QNA_GROUP_SEQ = QNA_GROUP_SEQ + 1
+		WHERE QNA_GROUP_NO = (SELECT
+		QNA_GROUP_NO FROM QNA_BOARD WHERE QNA_BOARD_NO = #{QNA_BOARD_NO})
+		AND
+		QNA_GROUP_SEQ >
+		(SELECT QNA_GROUP_SEQ FROM QNA_BOARD WHERE QNA_BOARD_NO
+		= #{QNA_BOARD_NO})
+
+	</select>
+
+	<select id="answerInsert" parameterType="QNA_BOARD">
+
+		INSERT INTO QNA_BOARD
+		(QNA_BOARD_NO, QNA_GROUP_NO, QNA_GROUP_SEQ,
+		QNA_TITLE_TAB, QNA_TITLE,
+		QNA_CONTENT, QNA_WRITER, QNA_DATE)
+		VALUES(QNA_BOARD_NO_SEQ.NEXTVAL,
+		(SELECT QNA_GROUP_NO FROM QNA_BOARD
+		WHERE QNA_BOARD_NO =
+		#{QNA_BOARD_NO}),
+		(SELECT QNA_GROUP_SEQ FROM
+		QNA_BOARD WHERE
+		QNA_BOARD_NO = #{QNA_BOARD_NO}) + 1,
+		(SELECT
+		QNA_TITLE_TAB FROM
+		QNA_BOARD WHERE
+		QNA_BOARD_NO = #{QNA_BOARD_NO}) + 1,
+		#{QNA_TITLE},#{QNA_CONTENT},#{QNA_WRITER},SYSDATE )
+
+	</select>
+
+
+
+</mapper>

@@ -1,6 +1,7 @@
 package com.devca.controller;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
@@ -15,7 +16,8 @@ import javax.servlet.http.HttpSession;
 		name = "board", // Controller Mapping name
 		//
 		urlPatterns = { //
-				"qnapage.do", // qna 페이지로 이동
+				"faqpage.do", // faq 페이지로 이동
+				"studypage.do", // study 페이지로 이동
 		})
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,27 +32,34 @@ public class BoardController extends HttpServlet {
 		String command = request.getRequestURI();
 		System.out.println("<" + command + ">");
 
-		if (command.endsWith("/qnapage.do")) {
-			doQnaPage(request, response); // QNA 페이지로 이동
-		} 
-		
-		/*
-		 * error 접근 처리
-		 */		
+		// FAQ 페이지로 이동
+		if (command.endsWith("/faqpage.do")) {
+			doFaqPage(request, response);
+		}
+		// STUDY 페이지로 이동
+		else if (command.endsWith("/studypage.do")) {
+			doStudyPage(request, response);
+		}
+		// error 페이지로 이동
 		else {
-			doError(request, response); // error 페이지로 이동
-
+			doError(request, response);
 		}
 	}
 
-	private void doQnaPage(HttpServletRequest request, HttpServletResponse response)
+	private void doFaqPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		dispatch("/views/board/qnapage.jsp", request, response);
+		// TODO Auto-generated method stub
+		dispatch("/views/board/faqpage.jsp", request, response);
+	}
+
+	private void doStudyPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		dispatch("/views/board/studypage.jsp", request, response);
 	}
 
 	private void doError(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		dispatch("/error.jsp", request, response);
+		dispatch("error.jsp", request, response);
 	}
 
 	/*

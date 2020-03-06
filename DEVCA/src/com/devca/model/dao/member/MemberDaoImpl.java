@@ -2,11 +2,9 @@ package com.devca.model.dao.member;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.devca.model.dto.member.KAKAO_MEMBER;
-import com.devca.model.dto.member.MEMBER;
-import com.devca.model.dto.member.MEMBER_PROFILE;
-import com.devca.model.dto.member.NAVER_MEMBER;
-import com.devca.model.dto.member.ROADMAP;
+import com.devca.model.dto.KAKAO_MEMBER;
+import com.devca.model.dto.MEMBER;
+import com.devca.model.dto.NAVER_MEMBER;
 import com.devca.mybatis.SqlMapConfig;
 
 public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
@@ -22,30 +20,6 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		SqlSession session = getSqlSessionFactory().openSession(false);
 
 		int res = session.insert(namespace + ".join", member);
-		if (res > 0)
-			session.commit();
-		session.close();
-		return res;
-	}
-
-	// 로드맵 데이터 입력!
-	@Override
-	public int insertRoadMap(ROADMAP roadmap) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int res = session.insert(namespace + ".insertRoadMap", roadmap);
-		if (res > 0)
-			session.commit();
-		session.close();
-		return res;
-	}
-
-	// 로드맵 데이터 추가
-	@Override
-	public int updateRoadMap(ROADMAP newRoadMap) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int res = session.update(namespace + ".updateRoadMap", newRoadMap);
 		if (res > 0)
 			session.commit();
 		session.close();
@@ -79,13 +53,8 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 	// NAVER 회원가입
 	@Override
 	public int naverJoin(NAVER_MEMBER naver_member) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int res = session.insert(namespace + ".naverjoin", naver_member);
-		if (res > 0)
-			session.commit();
-		session.close();
-		return res;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	// 이메일로 회원번호 가져오기 (sns로 가입시 먼저 member테이블에 insert 후 seq 를 가져오기 위함)
@@ -96,26 +65,6 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		MEMBER memberCode = session.selectOne(namespace + ".getMEMBER_CODE", MEMBER_EMAIL);
 		session.close();
 		return memberCode;
-	}
-
-	// 이름 중복체크
-	@Override
-	public int nameConfirm(String MEMBER_NAME) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int result = session.selectOne(namespace + ".nameConfirm", MEMBER_NAME);
-		session.close();
-		return result;
-	}
-
-	// 이메일 중복체크
-	@Override
-	public int emailConfirm(String MEMBER_EMAIL) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int result = session.selectOne(namespace + ".emailConfirm", MEMBER_EMAIL);
-		session.close();
-		return result;
 	}
 
 	/*
@@ -140,7 +89,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		session.close();
 		return kakao_loginMember;
 	}
-
+	
 	// 카카오 계정으로 로그인
 	@Override
 	public NAVER_MEMBER memberLogin(NAVER_MEMBER naver_member) {
@@ -150,7 +99,6 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		session.close();
 		return naver_loginMember;
 	}
-
 	// 카카오 이메일로 가입된 적이 있는지 체크
 	@Override
 	public int isKakaoMember(String KAKAO_ID) {
@@ -170,86 +118,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		session.close();
 		return res;
 	}
-	// 회원 정보 조회 (MEMBER_CODE)
-	@Override
-	public MEMBER_PROFILE selectMemberProfile(int MEMBER_CODE) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
 
-		MEMBER_PROFILE member_profile = session.selectOne(namespace + ".selectMemberProfile", MEMBER_CODE);
-		session.close();
-		return member_profile;
-	}
 
-	// 회원 정보 입력
-	@Override
-	public int insertMemberProfile(MEMBER_PROFILE member_profile) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int res = session.insert(namespace + ".insertMemberProfile", member_profile);
-		if (res > 0)
-			session.commit();
-		session.close();
-		return res;
-	}
-
-	// 회원 정보 업데이트
-	@Override
-	public int updateMember(MEMBER_PROFILE member_profile) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int res = session.update(namespace + ".updateMember", member_profile);
-		if (res > 0)
-			session.commit();
-		session.close();
-		return res;
-	}
-
-	// 회원 정보 업데이트
-	@Override
-	public int updateMemberProfile(MEMBER_PROFILE member_profile) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int res = session.update(namespace + ".updateMemberProfile", member_profile);
-		if (res > 0)
-			session.commit();
-		session.close();
-		return res;
-	}
-
-	// 회원 정보(이미지) 업데이트
-	@Override
-	public int updateMemberProfileImage(MEMBER_PROFILE member_profile) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int res = session.update(namespace + ".updateMemberProfileImage", member_profile);
-		if (res > 0)
-			session.commit();
-		session.close();
-		return res;
-	}
-
-	// 회원 정보(위치정보) 업데이트
-	@Override
-	public int updateMemberProfileGps(MEMBER_PROFILE member_profile) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int res = session.update(namespace + ".updateMemberProfileGps", member_profile);
-		if (res > 0)
-			session.commit();
-		session.close();
-		return res;
-	}
-
-	// 비밀번호 업데이트
-	@Override
-	public int updateMemerPassword(MEMBER_PROFILE member) {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int res = session.update(namespace + ".updateMemberPw", member);
-		if (res > 0)
-			session.commit();
-		session.close();
-		return res;
-	}
 
 }
