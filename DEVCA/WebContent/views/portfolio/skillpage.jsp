@@ -105,7 +105,7 @@ $(function() {
 								</div>
 							</div>
 							<div class = "skill-warp">
-								<a href="#" class="btn btn-primary btn-lg" onclick="location.href='/DEVCA/portfolio/sideprojectpage.do?member_code=${sessionLoginMember.MEMBER_CODE}'">이전</a>
+								<a href="#" class="btn btn-primary btn-lg" onclick="location.href='/DEVCA/portfolio/sideprojectpage.do'">이전</a>
 								<input class="btn btn-primary btn-lg" type="submit" value="다음" style="float: right;"/>
 							</div>
 						</form>

@@ -23,6 +23,7 @@ import com.devca.model.dto.lecture.LECTURE;
 import com.devca.model.dto.lecture.REVIEW;
 import com.devca.model.dto.member.KAKAO_MEMBER;
 import com.devca.model.dto.member.MEMBER;
+import com.devca.model.dto.member.MEMBER_PROFILE;
 import com.devca.model.dto.member.NAVER_MEMBER;
 import com.google.gson.Gson;
 
@@ -63,6 +64,8 @@ public class LectureController extends HttpServlet {
 			doLectureListPage(request, response); // 강의 리스트 페이지로 이동
 		} else if (command.endsWith("/lecturelistajax.do")) {
 			doLectureListAjax(request, response); // 강의 리스트 가져오기 ajax
+		} else if (command.endsWith("/lectureSearchAutoComplete.do")) {
+			doLectureSearchAutoComplete(request, response); // 강의 검색 자동완성
 		} else if (command.endsWith("/lecturesearchlistajax.do")) {
 			doLectureSearchListAjax(request, response); // 강의 검색 리스트 가져오기 ajax
 		} else if (command.endsWith("/lecturedetailpage.do")) {
@@ -95,7 +98,7 @@ public class LectureController extends HttpServlet {
 	/* jobData를 통해 최근 기술 동향 crawling */
 	private void doCrawlingJobData(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		biz.crawlingJobData();
+		biz.crawlingSetJOB_RANK_FREQUENCY();
 
 		dispatch("/views/main/home.jsp", request, response);
 	}
@@ -142,13 +145,25 @@ public class LectureController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.println(jsonList);
 	}
-	
+
+	// 강의 검색 자동완성
+	private void doLectureSearchAutoComplete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String search = request.getParameter("search");
+
+		List<LECTURE> lectureList = biz.selectLectureAutoCompleteList(search);
+		
+		Gson gson = new Gson();
+		String jsonList = gson.toJson(lectureList);
+		PrintWriter out = response.getWriter();
+		out.println(jsonList);
+	}
+
 	// 강의 검색 리스트 가져오기 ajax
 	private void doLectureSearchListAjax(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int no = Integer.parseInt(request.getParameter("no"));
 		String search = request.getParameter("search");
-		
+
 		System.out.println(no + "번째 scroll selectList");
 
 		List<LECTURE> lectureList = biz.selectLectureList(no, search);
@@ -227,6 +242,7 @@ public class LectureController extends HttpServlet {
 		dispatch("/views/lecture/lecturedetail.jsp", request, response);
 	}
 
+	// 만료된 강의 삭제
 	private void doDeleteMyGarbageLecture(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int LECTURE_CODE = Integer.parseInt(request.getParameter("LECTURE_CODE"));
 

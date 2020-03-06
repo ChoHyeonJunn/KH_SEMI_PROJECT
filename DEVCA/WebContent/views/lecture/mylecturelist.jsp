@@ -144,7 +144,7 @@ let selectMyLectureList = function(){
 				// 강의 링크버튼 opacity
 				var lecture_back = $("<div>").attr({
 					"class" : "lecture_back",
-					"onclick" : "location.href='/DEVCA/lecture/deleteMyGarbageLecture.do?lecture_code=" + item.LECTURE_CODE + "'"
+					"onclick" : "location.href='/DEVCA/lecture/lecturedetailpage.do?lecture_code=" + item.LECTURE_CODE + "'"
 				}).append(
 						$("<h4>").text(item.LECTURE_TITLE).attr("style","color: white;")
 						).append(

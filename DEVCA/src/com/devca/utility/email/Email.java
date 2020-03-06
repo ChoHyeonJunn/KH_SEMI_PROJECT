@@ -108,4 +108,58 @@ public class Email {
 		}
 		
 	}
+	
+	public static void sendInviteEmail(String email, String member_name, int study_code, String study_title, String study_content) {
+		String host = "smtp.gmail.com";
+		String subject = "DEVCA '" + study_title + "' 스터디 초대 안내";
+		String fromName = "DEVCA 관리자";
+		String from = "ancsbbc@gmail.com";
+		String to1 = email;
+		
+		String content = "<div>"
+				+ "<h1>DEVCA</h1>"
+				+ "<h2>스터디 초대 안내</h2>"
+				+ "<p>" + member_name + "님에게 온 스터디 초대권 입니다.</p>"
+				+ "<div style='background-color: pink;'>"
+				+ "<h1>" + study_title + "</h1>"
+				+ "<p>" + study_content + "<p>"
+				+ "<p>본 메일은 스터디 초대 알림을 위해 DEVCA에서 발송하는 메일입니다. '스터디 보러가기' 링크를 클릭해주세요.</p>"
+				+ "<a href='http://localhost:8090/DEVCA/study/studydetailpage.do?STUDY_CODE=" + study_code + "'>스터디 보러가기</a>"
+				+ "</div>";
+		
+		Properties props = new Properties();
+		
+		// G-Mail SMTP 사용시
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.transport", "smtp");
+		props.put("mail.smtp.host", host);
+		props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.user", from);
+		props.put("mail.smtp.auth", "true");
+		
+		Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication("ancsbbc@gmail.com", "tjamnjikpaapdwpu");
+			}
+		});
+		
+		Message msg = new MimeMessage(mailSession);
+		try {
+			msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B")));
+			
+			InternetAddress[] address1 = {new InternetAddress(to1)};
+			msg.setRecipients(Message.RecipientType.TO, address1);
+			msg.setSubject(subject);
+			msg.setSentDate(new java.util.Date());
+			msg.setContent(content, "text/html; charset=utf-8");
+			
+			
+			Transport.send(msg);
+		} catch (UnsupportedEncodingException | MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

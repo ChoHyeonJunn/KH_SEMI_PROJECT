@@ -1,5 +1,7 @@
 package com.devca.model.biz.member;
 
+import java.util.List;
+
 import com.devca.model.dto.member.KAKAO_MEMBER;
 import com.devca.model.dto.member.MEMBER;
 import com.devca.model.dto.member.MEMBER_PROFILE;
@@ -65,5 +67,14 @@ public interface MemberBiz {
 
 	// 비밀번호 업데이트
 	public int updateMemberPassword(MEMBER_PROFILE member);
+
+	// email or name 검색 자동완성 ajax
+	public List<MEMBER_PROFILE> searchMemberEmailName(String eMAIL_NAME, int MY_MEMBER_CODE);
+
+	// email 로 멤버 정보 가져오기
+	public MEMBER getMEMBER_CODE(String MEMBER_EMAIL);
+
+	// 정기결제 후 멤버 등급 up
+	public int updateMemberRole(int MEMBER_CODE);
 
 }

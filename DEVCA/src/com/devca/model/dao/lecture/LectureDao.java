@@ -15,15 +15,21 @@ public interface LectureDao {
 	// jobd_keywords multiInsert
 	public int multiInsertJobdKeyword(ArrayList<JOBD_KEYWORD> jobd_keywords);
 
-	// job_rank_new 비우기
-	public int deleteJobRankList();
-
-	// job_rank_new DB multiInsert
-	public int multiInsertJobRankList(List<JOB_RANK> job_rank);
+	// jobd_keywords select
+	public List<JOBD_KEYWORD> selectJobKeywordList();
 
 	// job_rank DB select
 	public List<JOB_RANK> selectJobRankList();
 
+	// job_rank_new DB multiInsert
+	public int multiInsertJobRankList(List<JOB_RANK> addJobRankList);
+
+	// job_rank_new 비우기
+	public int deleteJobRankFrequencyList();
+
+	// job_rank_new DB multiInsert
+	public int multiInsertJobRankFrequencyList(List<JOB_RANK> JobRankFrequencyList);
+	
 	/*
 	 * lecture 관련 요청
 	 */
@@ -32,6 +38,9 @@ public interface LectureDao {
 
 	// 강의 리스트 선택
 	public List<LECTURE> selectLectureList(int no);
+
+	// 강의 검색 자동완성
+	public List<LECTURE> selectLectureAutoCompleteList(String search);
 
 	// 강의 검색 리스트 선택
 	public List<LECTURE> selectLectureList(int no, String search);

@@ -3,6 +3,17 @@
 
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %> 
+
+<!-- bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	
+	<!--Fontawesome CDN-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	
+<!-- end bootstrap --!>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +22,17 @@
 
 <!-- START :: css -->
 <link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.container{
+	padding-top: 80px;
+}
+
+.btn, .input-group-text{
+	color: white;
+	font-weight: 800;
+	background-color: #862d86; 
+}
+</style>
 <!-- END :: css -->
 
 <!-- START :: set JSTL variable -->
@@ -49,16 +71,19 @@ $(function(){
 </head>
 <body>
 
-	<section>
+	<section class="container">
 		<form id="emailAuth" action="#">
-			<div>
-				이메일 인증번호 입력 : 
+		
+			<label for="authNum">이메일 인증번호 입력 :</label>
+			<div class="input-group mb-3">
+				<input id="authNum" class="form-control" type="text" name="authNum" required="required" placeholder="인증번호">
+				<div class="input-group-prepend">				
+		    		<span class="input-group-text"><i class="fas fa-key"></i></span>
+				</div>
 			</div>
-			<div>				
-				<input id="authNum" type="text" name="authNum">
-			</div>
-			<div>
-				<input type="submit" value="인증하기">
+			
+			<div class="input-group mb-3">
+				<input class="btn btn-block btn-lg" type="submit" value="인증하기">
 			</div>
 		</form>		
 	</section>

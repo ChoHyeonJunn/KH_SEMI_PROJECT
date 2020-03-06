@@ -36,28 +36,28 @@
          
          <ul class="list-group">
          	<li class="list-group-item">
-				<a href="/DEVCA/portfolio/portfoliopage.do?member_code=${sessionLoginMember.MEMBER_CODE }">경력</a>
+				<a href="/DEVCA/portfolio/portfoliopage.do">경력</a>
          	</li>
          	<li class="list-group-item">
-				<a href="/DEVCA/portfolio/sideprojectpage.do?member_code=${sessionLoginMember.MEMBER_CODE }">개인 프로젝트</a>
+				<a href="/DEVCA/portfolio/sideprojectpage.do">개인 프로젝트</a>
          	</li>
          	<li class="list-group-item">
-				<a href="/DEVCA/portfolio/sideskillpage.do?member_code=${sessionLoginMember.MEMBER_CODE }">주요기술</a>
+				<a href="/DEVCA/portfolio/sideskillpage.do">주요기술</a>
          	</li>
          	<li class="list-group-item">
-				<a href="/DEVCA/portfolio/sidelanguagepage.do?member_code=${sessionLoginMember.MEMBER_CODE }">외국어</a>
+				<a href="/DEVCA/portfolio/sidelanguagepage.do">외국어</a>
          	</li>
          	<li class="list-group-item">
-				<a href="/DEVCA/portfolio/sideschoolpage.do?member_code=${sessionLoginMember.MEMBER_CODE }">학력</a>
+				<a href="/DEVCA/portfolio/sideschoolpage.do">학력</a>
          	</li>
          	<li class="list-group-item">
-				<a href="/DEVCA/portfolio/sideactionpage.do?member_code=${sessionLoginMember.MEMBER_CODE }">활동</a>
+				<a href="/DEVCA/portfolio/sideactionpage.do">활동</a>
          	</li>
          	<li class="list-group-item">
-				<a href="/DEVCA/portfolio/sidecertificatepage.do?member_code=${sessionLoginMember.MEMBER_CODE }">수상경력/자격증</a>
+				<a href="/DEVCA/portfolio/sidecertificatepage.do">수상경력/자격증</a>
          	</li>
          	<li class="list-group-item">
-         		<a href="/DEVCA/portfolio/sideworkpage.do?member_code=${sessionLoginMember.MEMBER_CODE }">직종/연봉</a>
+         		<a href="/DEVCA/portfolio/sideworkpage.do">직종/연봉</a>
          	</li>
          </ul>
          

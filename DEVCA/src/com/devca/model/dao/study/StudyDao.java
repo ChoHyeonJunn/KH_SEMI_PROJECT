@@ -2,10 +2,14 @@ package com.devca.model.dao.study;
 
 import java.util.List;
 
+import com.devca.model.dto.study.APPLY_STUDY;
 import com.devca.model.dto.study.STUDY;
 
 public interface StudyDao {
 
+	/*
+	 * 스터디 글 관련
+	 */
 	// 스터디 리스트 가져오기
 	List<STUDY> selectStudyList();
 
@@ -20,5 +24,23 @@ public interface StudyDao {
 
 	// STUDY 글 삭제
 	int studyDelete(int STUDY_CODE);
+
+	/*
+	 * 스터디 신청 관련
+	 */
+	// 스터디 신청하기
+	int applyStudy(APPLY_STUDY apply_study);
+
+	// 스터디 신청 리스트 불러오기
+	List<APPLY_STUDY> applyStudyList(int STUDY_CODE);
+
+	// 스터디 신청 승인
+	int approveApplyStudy(APPLY_STUDY apply_study);
+
+	// 스터디 강퇴
+	int excludeApplyStudy(APPLY_STUDY apply_study);
+	
+	// 스터디 참여인원 변경
+	int changeStudyParticipants(STUDY study);
 
 }

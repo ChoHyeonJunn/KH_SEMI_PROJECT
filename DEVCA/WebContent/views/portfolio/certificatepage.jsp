@@ -77,7 +77,7 @@ article {
    					</c:forEach>
    				</div>
    				<div class="action-wrap">
-   					<a href="#" onclick="location.href='/DEVCA/portfolio/sideactionpage.do?member_code=${sessionLoginMember.MEMBER_CODE }'">이전</a>
+   					<a href="#" onclick="location.href='/DEVCA/portfolio/sideactionpage.do'">이전</a>
    					<input type="submit" value="다음"/>
    				</div>
    			</form>

@@ -13,7 +13,7 @@ import com.devca.model.dto.lecture.LECTURE;
 
 public class Inflearn {
 
-	public static ArrayList<LECTURE> inflearnCrawling(String search) throws IOException {
+	public static ArrayList<LECTURE> inflearnCrawling(String search) {
 
 		 ArrayList<LECTURE> inflearnList = new ArrayList<LECTURE>();
 
@@ -21,11 +21,15 @@ public class Inflearn {
 		int pagination_size = 0;
 
 		while (true) {
-			// String url = "https://www.inflearn.com/courses?order=search&s=" + search +
-			// "&page=" + page;
 			String url = "https://www.inflearn.com/courses?page=" + page + "&order=search&s=" + search;
 
-			Document doc = Jsoup.connect(url).get();
+			Document doc;
+			try {
+				doc = Jsoup.connect(url).get();
+			} catch (IOException e) {
+				e.printStackTrace();
+				continue;
+			}
 
 			// 전체 페이지 갯수 가져오기
 			Elements pagination_list = doc.select(".pagination-list li");
@@ -46,7 +50,13 @@ public class Inflearn {
 				String payflag = tr.select(".price.has-text-right.column.is-half").html();
 
 				// detail 페이지로 접근
-				Document detail_doc = Jsoup.connect(link).get();
+				Document detail_doc;
+				try {
+					detail_doc = Jsoup.connect(link).get();
+				} catch (IOException e) {
+					e.printStackTrace();
+					continue;
+				}
 				Element d_content = detail_doc.selectFirst("#description .body"); // 내용은 html 코드와 같이 통으로
 
 				// 임시 출력	

@@ -104,7 +104,7 @@ $(function(){
 	$("#addMyLecture").click(function(){
 		var MEMBER_CODE = ${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE};
 		var LECTURE_CODE = ${lecture_detail.LECTURE_CODE};
-		alert(MEMBER_CODE + " : " + LECTURE_CODE)
+		
 	    $.ajax({
 	        type: "POST",
 	        url: "/DEVCA/lecture/addmylectureajax.do",

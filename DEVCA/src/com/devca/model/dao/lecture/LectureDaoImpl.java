@@ -19,52 +19,28 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 	/*
 	 * crawling 관련
 	 */
+	// jobd_keywords select
+	@Override
+	public List<JOBD_KEYWORD> selectJobKeywordList() {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+
+		List<JOBD_KEYWORD> jobd_keywords = session.selectList(namespace + ".selectJobKeywordList");
+
+		session.close();
+
+		return jobd_keywords;
+	}
+
 	// jobd_keywords multiInsert
 	@Override
 	public int multiInsertJobdKeyword(ArrayList<JOBD_KEYWORD> jobd_keywords) {
-		int res = 0;
-
 		SqlSession session = getSqlSessionFactory().openSession(false);
 
 		Map<String, List<JOBD_KEYWORD>> map = new HashMap<String, List<JOBD_KEYWORD>>();
 		map.put("jobd_keywords", jobd_keywords);
 
-		res = session.insert(namespace + ".multiInsertJobdKeyword", map);
+		int res = session.insert(namespace + ".multiInsertJobdKeyword", map);
 		if (res == jobd_keywords.size()) {
-			session.commit();
-		}
-
-		session.close();
-
-		return res;
-	}
-
-	// job_rank_new 비우기
-	@Override
-	public int deleteJobRankList() {
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		int res = session.delete(namespace + ".deleteJobRankList");
-		if (res > 0) {
-			session.commit();
-		}
-		session.close();
-
-		return res;
-	}
-
-	// job_rank DB multiInsert
-	@Override
-	public int multiInsertJobRankList(List<JOB_RANK> job_rank) {
-		int res = 0;
-
-		SqlSession session = getSqlSessionFactory().openSession(false);
-
-		Map<String, List<JOB_RANK>> map = new HashMap<String, List<JOB_RANK>>();
-		map.put("job_rank", job_rank);
-
-		res = session.insert(namespace + ".multiInsertJobRank", map);
-		if (res == job_rank.size()) {
 			session.commit();
 		}
 
@@ -84,6 +60,56 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 		return jobRankList;
 	}
 
+	// job_rank DB multiInsert
+	@Override
+	public int multiInsertJobRankList(List<JOB_RANK> addJobRankList) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+
+		Map<String, List<JOB_RANK>> map = new HashMap<String, List<JOB_RANK>>();
+		map.put("addJobRankList", addJobRankList);
+
+		int res = session.insert(namespace + ".multiInsertJobRankList", map);
+		if (res == addJobRankList.size()) {
+			session.commit();
+		}
+
+		session.close();
+
+		return res;
+	}
+
+	// job_rank_Frequency 비우기
+	@Override
+	public int deleteJobRankFrequencyList() {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+
+		int res = session.delete(namespace + ".deleteJobRankFrequencyList");
+		if (res > 0) {
+			session.commit();
+		}
+		session.close();
+
+		return res;
+	}
+
+	// job_rank DB multiInsert
+	@Override
+	public int multiInsertJobRankFrequencyList(List<JOB_RANK> JobRankFrequencyList) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+
+		Map<String, List<JOB_RANK>> map = new HashMap<String, List<JOB_RANK>>();
+		map.put("JobRankFrequencyList", JobRankFrequencyList);
+
+		int res = session.insert(namespace + ".multiInsertJobRankFrequencyList", map);
+		if (res == JobRankFrequencyList.size()) {
+			session.commit();
+		}
+
+		session.close();
+
+		return res;
+	}
+	
 	// insert : crawling 한 강의 리스트를 db에 insert
 	@Override
 	public int multiInsertLecture(List<LECTURE> lectureList) {
@@ -118,6 +144,17 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 		return lectureList;
 	}
 
+	// 강의검색 자동완성
+	@Override
+	public List<LECTURE> selectLectureAutoCompleteList(String search) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+
+		List<LECTURE> lectureList = session.selectList(namespace + ".selectLectureAutoCompleteList", search);
+		session.close();
+
+		return lectureList;
+	}
+
 	// 강의 검색 리스트 선택
 	@Override
 	public List<LECTURE> selectLectureList(int no, String search) {
@@ -126,7 +163,7 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 		Map<String, Object> map = new HashMap<>();
 		map.put("no", no);
 		map.put("search", search);
-		
+
 		List<LECTURE> lectureList = session.selectList(namespace + ".selectLectureSearchList", map);
 		session.close();
 
@@ -255,7 +292,7 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 	}
 
 	// 풀스택추천 강의 리스트
-	private final String FullStack = "Git|Github|Maven|Linux|Java|JavaScript|HTML|CSS|ORM|Mybatis|BootStrap|Spring|WAS|'Oracle|MongoDB";
+	private final String FullStack = "Git|Github|Maven|Linux|Java|JavaScript|HTML|CSS|ORM|Mybatis|BootStrap|Spring|WAS|Oracle|MongoDB";
 
 	@Override
 	public List<LECTURE> selectFullStackList() {

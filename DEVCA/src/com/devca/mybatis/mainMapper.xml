@@ -10,7 +10,7 @@
 
 	<select id="getDeveloperBarChartData" resultType="JOB_RANK">
 		SELECT *
-		FROM JOB_RANK_NEW
+		FROM JOB_RANK_FREQUENCY
 		WHERE JOB_RANK_DIVISION = '개발자라면'
 		AND JOB_RANK_NUM != 0
 		ORDER BY JOB_RANK_NUM DESC
@@ -18,7 +18,7 @@
 	
 	<select id="getWebBarChartData" resultType="JOB_RANK">
 		SELECT *
-		FROM JOB_RANK_NEW
+		FROM JOB_RANK_FREQUENCY
 		WHERE JOB_RANK_DIVISION = '웹 지식'
 		AND JOB_RANK_NUM != 0
 		ORDER BY JOB_RANK_NUM DESC
@@ -26,7 +26,7 @@
 	
 	<select id="getServerBarChartData" resultType="JOB_RANK">
 		SELECT *
-		FROM JOB_RANK_NEW
+		FROM JOB_RANK_FREQUENCY
 		WHERE JOB_RANK_DIVISION = '서버'
 		AND JOB_RANK_NUM != 0
 		ORDER BY JOB_RANK_NUM DESC
@@ -34,7 +34,7 @@
 	
 	<select id="getLanguageBarChartData" resultType="JOB_RANK">
 		SELECT *
-		FROM JOB_RANK_NEW
+		FROM JOB_RANK_FREQUENCY
 		WHERE JOB_RANK_DIVISION = '언어'
 		AND JOB_RANK_NUM != 0
 		ORDER BY JOB_RANK_NUM DESC
@@ -42,7 +42,7 @@
 	
 	<select id="getDataBaseBarChartData" resultType="JOB_RANK">
 		SELECT *
-		FROM JOB_RANK_NEW
+		FROM JOB_RANK_FREQUENCY
 		WHERE JOB_RANK_DIVISION = '데이터베이스'
 		AND JOB_RANK_NUM != 0
 		ORDER BY JOB_RANK_NUM DESC
@@ -50,7 +50,7 @@
 	
 	<select id="getframeWorkBarChartData" resultType="JOB_RANK">
 		SELECT *
-		FROM JOB_RANK_NEW
+		FROM JOB_RANK_FREQUENCY
 		WHERE JOB_RANK_DIVISION LIKE '프레임워크%'
 		AND JOB_RANK_NUM != 0
 		ORDER BY JOB_RANK_NUM DESC

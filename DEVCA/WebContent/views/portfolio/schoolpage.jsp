@@ -115,7 +115,7 @@ label{
 		     </c:forEach>
 	      </div>
 	      <div class="controll-wrap">
-	      	<a href="#" class="back-button" onclick="location.href='/DEVCA/portfolio/sidelanguagepage.do?member_code=${sessionLoginMember.MEMBER_CODE }'">이전</a>
+	      	<a href="#" class="back-button" onclick="location.href='/DEVCA/portfolio/sidelanguagepage.do'">이전</a>
 	      	<input type="submit" class="next-button" value="다음"/>
 	      </div>
 	      </form>

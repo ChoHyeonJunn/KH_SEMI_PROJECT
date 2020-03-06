@@ -15,10 +15,6 @@
 section{
 	height: 100%;
 }
-article{
-	position: relative;
-	margin-left: 250px;
-}
 </style>
 <!-- END :: css -->
 
@@ -93,65 +89,67 @@ $(function(){
 <body>
 	
 	
-	<section>
-		<%@ include file="/views/form/privacysidebar.jsp"%>	
+	<section class="container-fluid">
+		<div class="row">
+	
+			<%@ include file="/views/form/privacysidebar.jsp"%>	
 		
-		<!-- START :: profile content -->
-		<article>
-		
-			<form id="pwResetHiddenForm" action="/DEVCA/member/privacypasswordupdate.do" method="post">
-				<input type="hidden" name="MEMBER_PW">
-				<input type="hidden" name="NEW_MEMBER_PW">
-			</form>
-			
-			<form id="pwResetForm" action="/DEVCA/member/privacypasswordupdate.do" method="post">
-				<div>
-					<div>
+			<!-- START :: profile content -->
+			<article class="col-md-10">
+				<div class="card p-4 my-3 bg-white">
+					
+					<form id="pwResetHiddenForm" action="/DEVCA/member/privacypasswordupdate.do" method="post">
+						<input type="hidden" name="MEMBER_PW">
+						<input type="hidden" name="NEW_MEMBER_PW">
+					</form>
+					
+					<form id="pwResetForm" action="/DEVCA/member/privacypasswordupdate.do" method="post">
+						
 						<label for="pw">*현재 비밀번호</label>
-					</div>
-					<div>
-						<input id="pw" type="password" name="MEMBER_PW" required="required" placeholder="password">
-					</div>
-					<div>
-						비밀번호를 잊으셨나요?
-						<a href="/DEVCA/member/privacypasswordresetpage.do">비밀번호 재설정</a>
-					</div>
-				</div>
+						<div class="input-group mb-3">
+							<input id="pw" class="form-control" type="password" name="MEMBER_PW" required="required" placeholder="current password">
+							<div class="input-group-prepend">				
+			       				<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+						</div>
+						<div>
+							비밀번호를 잊으셨나요?
+							<a class="card-link" href="/DEVCA/member/privacypasswordresetpage.do">비밀번호 재설정</a>
+						</div>						
+						
+						<div>
+							<hr>
+						</div>
+					
+						<label for="new_pw">*비밀번호 (비밀번호는 한 개 이상의 소문자와 숫자를 포함해야 하며, 7자 이상이어야 합니다.)</label>
+						<div class="input-group mb-3">
+							<input id="new_pw" class="form-control" type="password" name="NEW_MEMBER_PW" required="required" placeholder="new password">
+							<div class="input-group-prepend">				
+			       				<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+						</div>
+						
+						
+						<label for="new_pwChk">*비밀번호 확인</label>
+						<div class="input-group mb-3">
+							<input id="new_pwChk" class="form-control" type="password" name="NEW_MEMBER_PW_CHECK" required="required" placeholder="new password check">
+							<div class="input-group-prepend">				
+			       				<span class="input-group-text"><i class="fas fa-check"></i></span>
+							</div>
+						</div>
+						<div id="pw_confirm"></div>
+						
+						<div class="input-group mb-3">
+							<input id="SUBMIT" class="btn btn-block btn-lg" type="submit" value="비밀번호 변경">
+						</div>	
+						
+					</form>			
+						
 				
-				<div>
-					<div>
-						<label for="pw">*비밀번호</label>
-					</div>
-					<div>
-						<input id="new_pw" type="password" name="NEW_MEMBER_PW" required="required" placeholder="password">
-					</div>
-					<div>
-						비밀번호는 한 개 이상의 소문자와 숫자를 포함해야 하며, 7자 이상이어야 합니다.
-					</div>
 				</div>
-				
-				<div>
-					<div>
-						<label for="pwChk">*비밀번호 확인</label>
-					</div>
-					<div>
-						<input id="new_pwChk" type="password" name="NEW_MEMBER_PW_CHECK" required="required" placeholder="password">
-					</div>
-				</div>
-				<div id="pw_confirm"></div>
-				
-				<div>
-					<div>		
-						<input type="submit" value="변경 사항 저장" id="SUBMIT">
-					</div>
-				</div>
-			</form>			
-				
-			
-			
-		</article>	
-		<!-- END :: profile content -->	
-		
+			</article>	
+			<!-- END :: profile content -->	
+		</div>
 	</section>	
 	
 	<!-- FOOTER FORM -->		

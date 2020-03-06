@@ -15,10 +15,6 @@
 section{
 	height: 100%;
 }
-article{
-	position: relative;
-	margin-left: 250px;
-}
 </style>
 <!-- END :: css -->
 
@@ -31,76 +27,68 @@ article{
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <script type="text/javascript">
-
+$(function(){
+	
 	$("#check_module").click(function() {
-			var IMP = window.IMP; // 생략가능
-			IMP.init('imp96246324');
-			// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-			// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
-			IMP.request_pay({
-				pg : 'nictest04m', // version 1.1.0부터 지원.
-				/*
-				'kakao':카카오페이,
-				html5_inicis':이니시스(웹표준결제)
-				'nice':나이스페이
-				'jtnet':제이티넷
-				'uplus':LG유플러스
-				'danal':다날
-				'payco':페이코
-				'syrup':시럽페이
-				'paypal':페이팔
-				 */
-				pay_method : 'card',
-				/*
-				'samsung':삼성페이,
-				'card':신용카드,
-				'trans':실시간계좌이체,
-				'vbank':가상계좌,
-				'phone':휴대폰소액결제
-				 */
-				merchant_uid : 'merchant_' + new Date().getTime(),
-				/*
-				merchant_uid에 경우
-				https://docs.iamport.kr/implementation/payment
-				위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
-				참고하세요.
-				나중에 포스팅 해볼게요.
-				 */
-				name : '주문명:DEVCA 구독', // 
-				//결제창에서 보여질 이름
-				amount : 100,				
-				//가격
-				
-				buyer_email : 'ancsbbc@naver.com',	// session값 으로 입력
-				buyer_name : '조현준',	// session값 으로 입력
-				buyer_tel : '010-3919-9307', // session값 으로 입력
-				buyer_addr : '서울특별시 송파구 마천동',	// api 사용 입력
-				buyer_postcode : '123-456',	// api 사용 입력
-				
-				
-				m_redirect_url : 'https://localhost:8090/member/privacypayment.jsp'
-			/*
-			모바일 결제시,
-			결제가 끝나고 랜딩되는 URL을 지정
-			(카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
-			 */
-			}, function(rsp) {
-				console.log(rsp);
-				if (rsp.success) {
-					var msg = '결제가 완료되었습니다.';
-					msg += '고유ID : ' + rsp.imp_uid;
-					msg += '상점 거래ID : ' + rsp.merchant_uid;
-					msg += '결제 금액 : ' + rsp.paid_amount;
-					msg += '카드 승인번호 : ' + rsp.apply_num;
-				} else {
-					var msg = '결제에 실패하였습니다.';
-					msg += '에러내용 : ' + rsp.error_msg;
-				}
-				alert(msg);
-				console.log(msg);
-			});
-		});
+		IMP.init('imp96246324');
 
+		IMP.request_pay({
+			//pay_method : 'card', // 'card'만 지원됩니다.
+			merchant_uid : 'merchant_' + new Date().getTime(),
+			name : 'DEVCA 정기권 인증결제',
+			amount : 0, // 빌링키 발급만 진행하며 결제승인을 하지 않습니다.
+			customer_uid : '${sessionMember_profile.MEMBER_EMAIL}', //customer_uid 파라메터가 있어야 빌링키 발급을 시도합니다.
+			buyer_email : '${sessionMember_profile.MEMBER_EMAIL}',
+			buyer_name : '${sessionMember_profile.MEMBER_NAME}',
+			buyer_tel : '${sessionMember_profile.MEMBER_PHONE}'
+		}, function(rsp) {
+			if ( rsp.success ) {
+				console.log('빌링키 발급 성공');
+ 			 	$.ajax({
+			    	type: "POST",
+			    	url: "/DEVCA/member/privacypaymentpageRegular.do", // 서비스 웹서버
+			        data: {
+			        	customer_uid: '${sessionMember_profile.MEMBER_EMAIL}', // 카드(빌링키)와 1:1로 대응하는 값
+			        	merchant_uid: rsp.merchant_uid,
+			        	amount: '100',
+			        	schedule_at: new Date().getTime()		        	
+			    	},
+			        dataType: "JSON",
+
+					success: function(msg) {	
+						alert("결제 예약 성공");
+						
+						// ajax로 회원 등급 up
+		 			 	$.ajax({
+					    	type: "POST",
+					    	url: "/DEVCA/member/privacypaymentpageUpdateMemberRole.do", // 서비스 웹서버
+					        data: {
+					        	MEMBER_CODE: '${sessionMember_profile.MEMBER_CODE}'        	
+					    	},
+					        dataType: "JSON",
+
+							success: function(msg) {	
+								alert("DEVCA 구독 성공");								
+							},						
+							error : function(msg) {
+								alert("DEVCA 구독 실패");
+							}
+					 	}) 
+					},						
+					error : function(msg) {
+						alert("결제 예약 실패");
+					}
+			 	}) 
+
+			 	
+			} else {
+				console.log('빌링키 발급 실패');
+			}
+			console.log("최초인증결제 결과 : " + JSON.stringify(rsp))
+		});
+	});
+
+})
 </script>
 <!-- END :: JAVASCRIPT -->
 
@@ -113,45 +101,48 @@ article{
 <body>
 	
 	
-	<section>
-		<%@ include file="/views/form/privacysidebar.jsp"%>	
+	<section class="container-fluid">
+		<div class="row">
 		
-		<!-- START :: profile content -->
-		<article>
+			<%@ include file="/views/form/privacysidebar.jsp"%>	
 			
 			
-			<!-- 결제버튼 -->
-			<button id="check_module" type="button">아임 서포트 결제 모듈 테스트 해보기</button>
-			<!-- 결제버튼 -->
+			<!-- START :: profile content -->
+			<article class="col-md-10">
+				<div class="card p-4 my-3 bg-white">
+					
+					<c:if test="${sessionMember_profile.MEMBER_ROLE eq '1'}">
+						<!-- 결제버튼 -->
+						<div id="check_module" class="card p-4 my-3 bg-white text-center">
+							<h1 class="card-title">
+								<strong style="color: #862d86;">DEVCA</strong> PREMIUM
+							</h1>
+							<h4>
+								6개월 구독하기
+							</h4>
+						</div>
+						<!-- 결제버튼 -->
+					</c:if>
+					
+					<c:if test="${sessionMember_profile.MEMBER_ROLE eq '2'}">
+						
+						<!-- 결제버튼 -->
+						<div class="card p-4 my-3 bg-light text-center">
+							<h1 class="card-title">
+								<strong style="color: #862d86;">DEVCA</strong> PREMIUM
+							</h1>
+							<h4>
+								구독중입니다
+							</h4>
+						</div>
+						<!-- 결제버튼 -->
+					</c:if>
+					
+				</div>
+			</article>	
+			<!-- END :: profile content -->	
 			
-			
-			<form action="https://www.myservice.com/subscription/issue-billing"	method="post">
-				<div>
-					<label for="card_number">카드 번호 XXXX-XXXX-XXXX-XXXX</label> 
-					<input id="card_number" type="text" name="card_number">
-				</div>
-				<div>
-					<label for="expiry">카드 유효기간 YYYY-MM</label> 
-					<input id="expiry" type="text" name="expiry">
-				</div>
-				<div>
-					<label for="birth">생년월일 YYMMDD</label> 
-					<input id="birth" type="text" name="birth">
-				</div>
-				<div>
-					<label for="pwd_2digit">카드 비밀번호 앞 두자리 XX</label> 
-					<input id="pwd_2digit" type="text" name="pwd_2digit">
-				</div>
-				<input hidden type="text" value="gildong_0001_1234" name="customer_uid"> 
-				<input type="submit" value="결제하기">
-			</form>
-
-
-
-
-		</article>	
-		<!-- END :: profile content -->	
-		
+		</div>
 	</section>	
 	
 	<!-- FOOTER FORM -->		

@@ -3,8 +3,14 @@ package com.devca.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.security.InvalidKeyException;
 import java.security.PrivateKey;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -29,6 +35,13 @@ import com.devca.utility.email.Random;
 import com.devca.utility.rsa.RSA;
 import com.devca.utility.rsa.RSAUtil;
 import com.devca.utility.sha.SHA256_Util;
+import com.devca.utility.siot.IamportRestClient.IamportClient;
+import com.devca.utility.siot.IamportRestClient.exception.IamportResponseException;
+import com.devca.utility.siot.IamportRestClient.request.ScheduleData;
+import com.devca.utility.siot.IamportRestClient.request.ScheduleEntry;
+import com.devca.utility.siot.IamportRestClient.response.IamportResponse;
+import com.devca.utility.siot.IamportRestClient.response.Schedule;
+import com.google.gson.Gson;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -57,7 +70,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 				"privacypasswordresetemail.do", // 계정관리(비밀번호 재설정) 이메일 발신 처리
 				"privacypasswordresetemailpage.do", // 계정관리(비밀번호 재설정) 이메일을 통해 접근한 페이지
 				"privacypaymentpage.do", // 계정관리(결제관리) 페이지로 이동
-				//////////
+		//////////
 		})
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -65,6 +78,17 @@ public class MemberController extends HttpServlet {
 	HttpSession session;
 	MemberBiz biz = new MemberBizImpl();
 	RSAUtil rsaUtil = new RSAUtil();
+
+	// 아임포트 api key 설정
+	IamportClient client = new IamportClient("5977466163046719",
+			"xCXloO7UNQDhshr6FryjaKe7qxA2SPwpruKQiSL5IonaGOglgPEqATy0q93jYzIq3thml2s3rPe7EvtU");
+
+	private String getRandomMerchantUid() {
+		DateFormat df = new SimpleDateFormat("$$hhmmssSS");
+		int n = (int) (Math.random() * 100) + 1;
+
+		return df.format(new Date()) + "_" + n;
+	}
 
 	public MemberController() {
 		super();
@@ -131,6 +155,12 @@ public class MemberController extends HttpServlet {
 			doPrivacyPasswordResetEmailPage(request, response); // 계정관리(비밀번호 재설정) 이메일을 통해 접근한 페이지
 		} else if (command.endsWith("/privacypaymentpage.do")) {
 			doPrivacyPaymentPage(request, response); // 계정관리(결제관리) 페이지로 이동
+		} else if (command.endsWith("/privacypaymentpageRegular.do")) {
+			doPrivacyPaymentPageRegular(request, response); // 계정관리(결제관리) 정기결제 처리
+		} else if (command.endsWith("/privacypaymentpageUpdateMemberRole.do")) {
+			doPrivacyPaymentPageUpdateMemberRole(request, response); // 계정관리(결제관리) 정기결제 처리후 회원등급 up
+		} else if (command.endsWith("/searchMemberEmailName.do")) {
+			doSearchMemberEmailName(request, response); // email or name 검색 자동완성 ajax
 		} else {
 			doError(request, response); // 에러 처리
 		}
@@ -180,7 +210,7 @@ public class MemberController extends HttpServlet {
 				| UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
+
 		int res = biz.memberJoin(member);
 		if (res > 0) {
 			jsResponse("회원가입 성공", "/DEVCA/member/loginpage.do", response);
@@ -217,10 +247,10 @@ public class MemberController extends HttpServlet {
 
 			if (res > 0) {
 				// test 회원가입 후 바로 로그인
-				session = request.getSession();
-				session.setAttribute("loginKakao", kakao_member);
-				session.setAttribute("access_token", access_token);
-				jsResponse("KAKAO 회원가입 성공", "/DEVCA/main/mainpage.do", response);
+//				session = request.getSession();
+//				session.setAttribute("loginKakao", kakao_member);
+//				session.setAttribute("access_token", access_token);
+				jsResponse("KAKAO 회원가입 성공", "/DEVCA/main/loginpage.do", response);
 			} else {
 				jsResponse("KAKAO 회원가입 실패", "/DEVCA/member/joinpage.do", response);
 			}
@@ -240,9 +270,9 @@ public class MemberController extends HttpServlet {
 
 			if (res > 0) {
 				// test 회원가입 후 바로 로그인
-				session = request.getSession();
-				session.setAttribute("loginNaver", naver_member);
-				jsResponse("NAVER 회원가입 성공", "/DEVCA/main/mainpage.do", response);
+//				session = request.getSession();
+//				session.setAttribute("loginNaver", naver_member);
+				jsResponse("NAVER 회원가입 성공", "/DEVCA/main/loginpage.do", response);
 			} else {
 				jsResponse("NAVER 회원가입 실패", "/DEVCA/member/joinpage.do", response);
 			}
@@ -374,6 +404,8 @@ public class MemberController extends HttpServlet {
 				session.setAttribute("loginKakao", kakao_loginMember);
 				session.setAttribute("member_profile", member_profile);
 				session.setAttribute("access_token", access_token);
+				session.removeAttribute("RSAprivateKey");
+
 				jsResponse("로그인 성공", "/DEVCA/main/mainpage.do", response);
 			} else {
 				jsResponse("로그인 실패", "/DEVCA/member/loginpage.do", response);
@@ -391,6 +423,7 @@ public class MemberController extends HttpServlet {
 				session = request.getSession();
 				session.setAttribute("loginNaver", naver_loginMember);
 				session.setAttribute("member_profile", member_profile);
+				session.removeAttribute("RSAprivateKey");
 
 				jsResponse("로그인 성공", "/DEVCA/main/mainpage.do", response);
 			} else {
@@ -480,7 +513,7 @@ public class MemberController extends HttpServlet {
 
 	}
 
-	// 계정관리(정보) 수정처리
+	// 계정관리(정보: 이미지) 수정처리
 	@SuppressWarnings("unchecked")
 	private void doPrivacyProfileImageUpdate(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -709,6 +742,107 @@ public class MemberController extends HttpServlet {
 	private void doPrivacyPaymentPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		dispatch("/views/member/privacypaymentpage.jsp", request, response);
+	}
+
+	// 계정관리(결제) 정기결제 처리 (6개월)
+	private void doPrivacyPaymentPageRegular(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		JSONObject obj = new JSONObject();
+
+		String customer_uid = request.getParameter("customer_uid");
+//		String merchant_uid = request.getParameter("merchant_uid");
+		int amount = Integer.parseInt(request.getParameter("amount"));
+//		String schedule_at = request.getParameter("schedule_at");
+
+		ScheduleData schedule_data = new ScheduleData(customer_uid);
+
+		Calendar cal = Calendar.getInstance();
+
+		cal.add(Calendar.SECOND, 30);
+		Date d1 = cal.getTime();
+
+		cal.add(Calendar.SECOND, 30);
+		Date d2 = cal.getTime();
+
+		cal.add(Calendar.SECOND, 30);
+		Date d3 = cal.getTime();
+
+		cal.add(Calendar.SECOND, 30);
+		Date d4 = cal.getTime();
+
+		cal.add(Calendar.SECOND, 30);
+		Date d5 = cal.getTime();
+
+		cal.add(Calendar.SECOND, 30);
+		Date d6 = cal.getTime();
+
+		System.out.println("time : " + d1);
+		System.out.println("time : " + d2);
+		System.out.println("time : " + d3);
+		System.out.println("time : " + d4);
+		System.out.println("time : " + d5);
+		System.out.println("time : " + d6);
+		// System.out.println("customer_uid : " + customer_uid);
+
+		schedule_data.addSchedule(new ScheduleEntry(getRandomMerchantUid(), d1, BigDecimal.valueOf(100)));
+		schedule_data.addSchedule(new ScheduleEntry(getRandomMerchantUid(), d2, BigDecimal.valueOf(100)));
+		schedule_data.addSchedule(new ScheduleEntry(getRandomMerchantUid(), d3, BigDecimal.valueOf(100)));
+		schedule_data.addSchedule(new ScheduleEntry(getRandomMerchantUid(), d4, BigDecimal.valueOf(100)));
+		schedule_data.addSchedule(new ScheduleEntry(getRandomMerchantUid(), d5, BigDecimal.valueOf(100)));
+		schedule_data.addSchedule(new ScheduleEntry(getRandomMerchantUid(), d6, BigDecimal.valueOf(100)));
+
+		try {
+			IamportResponse<List<Schedule>> schedule_response = client.subscribeSchedule(schedule_data);
+			System.out.println("결제 예약 성공!");
+			obj.put("result", schedule_response.toString());
+			PrintWriter out = response.getWriter();
+			out.println(obj);
+
+		} catch (IamportResponseException | IOException e) {
+			e.printStackTrace();
+			System.out.println("결제 예약 실패!");
+			obj.put("result", "0");
+			PrintWriter out = response.getWriter();
+			out.println(obj);
+		}
+	}
+
+	// 계정관리(결제관리) 정기결제 처리후 회원등급 up
+	private void doPrivacyPaymentPageUpdateMemberRole(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int MEMBER_CODE = Integer.parseInt(request.getParameter("MEMBER_CODE"));
+
+		int res = biz.updateMemberRole(MEMBER_CODE);
+		
+		MEMBER_PROFILE member_profile = biz.selectMemberProfile(MEMBER_CODE);
+		
+		// 세션 수정
+		session = request.getSession();
+		session.removeAttribute("member_profile");
+		session.setAttribute("member_profile", member_profile);
+		
+		// ajax 응답
+		JSONObject obj = new JSONObject();
+		obj.put("res", res);
+		PrintWriter out = response.getWriter();
+		out.println(obj);
+
+	}
+
+	// email or name 검색 자동완성 ajax
+	private void doSearchMemberEmailName(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String EMAIL_NAME = request.getParameter("EMAIL_NAME");
+		int MY_MEMBER_CODE = 0;
+
+		if (request.getParameter("MY_MEMBER_CODE") != null && request.getParameter("MY_MEMBER_CODE") != "")
+			MY_MEMBER_CODE = Integer.parseInt(request.getParameter("MY_MEMBER_CODE"));
+
+		List<MEMBER_PROFILE> searchProfileList = biz.searchMemberEmailName(EMAIL_NAME, MY_MEMBER_CODE);
+
+		Gson gson = new Gson();
+		String jsonList = gson.toJson(searchProfileList);
+		PrintWriter out = response.getWriter();
+		out.println(jsonList);
 	}
 
 	// 에러 페이지

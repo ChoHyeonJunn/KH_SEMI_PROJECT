@@ -149,7 +149,7 @@ li{
 			      	</c:forEach>
 			      </div>
 			     <div class="action-wrap">
-			   		<a href="#" onclick="location.href='/DEVCA/portfolio/sideprofilepage.do?member_code=${sessionLoginMember.MEMBER_CODE }'">수정</a>
+			   		<a href="#" onclick="location.href='/DEVCA/portfolio/sideprofilepage.do'">수정</a>
 			   	 </div>
 	     	</div>
 	      </article>

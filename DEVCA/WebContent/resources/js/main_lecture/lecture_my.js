@@ -14,7 +14,7 @@ function recommend_swiper(){
 	});
 }				
 function selectMyList(MEMBER_CODE){
-	$.getJSON("/DEVCA/main/recommandlistajax.do", {MEMBER_CODE : MEMBER_CODE}, function(data){
+	$.getJSON("/DEVCA/main/mylistajax.do", {MEMBER_CODE : MEMBER_CODE}, function(data){
 		$.each(data, function(index, item){					
 			//swipe div
 			var swiper_slide = $("<div>").attr({

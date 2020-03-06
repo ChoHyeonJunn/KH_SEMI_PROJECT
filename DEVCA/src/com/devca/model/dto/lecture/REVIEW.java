@@ -1,8 +1,11 @@
 package com.devca.model.dto.lecture;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class REVIEW {
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
 	private int REVIEW_CODE;
 	private int MEMBER_CODE;
 	private int LECTURE_CODE;
@@ -82,8 +85,8 @@ public class REVIEW {
 		REVIEW_CONTENT = rEVIEW_CONTENT;
 	}
 
-	public Date getREVIEW_REGDATE() {
-		return REVIEW_REGDATE;
+	public String getREVIEW_REGDATE() {
+		return df.format(REVIEW_REGDATE);
 	}
 
 	public void setREVIEW_REGDATE(Date rEVIEW_REGDATE) {

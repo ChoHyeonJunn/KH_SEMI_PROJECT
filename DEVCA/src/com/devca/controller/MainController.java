@@ -20,9 +20,12 @@ import com.devca.model.biz.lecture.LectureBiz;
 import com.devca.model.biz.lecture.LectureBizImpl;
 import com.devca.model.biz.main.MainBiz;
 import com.devca.model.biz.main.MainBizImpl;
+import com.devca.model.biz.study.StudyBiz;
+import com.devca.model.biz.study.StudyBizImpl;
 import com.devca.model.dto.lecture.JOB_RANK;
 import com.devca.model.dto.lecture.LECTURE;
 import com.devca.model.dto.member.ROADMAP;
+import com.devca.model.dto.study.STUDY;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -40,7 +43,8 @@ public class MainController extends HttpServlet {
 
 	MainBiz biz = new MainBizImpl();
 	LectureBiz lectureBiz = new LectureBizImpl();
-
+	StudyBiz studyBiz = new StudyBizImpl();
+	
 	public MainController() {
 		super();
 	}
@@ -76,6 +80,8 @@ public class MainController extends HttpServlet {
 		 */
 		else if (command.endsWith("/recommandlistajax.do")) {
 			doRecommandListAjax(request, response); // 추천 강의 리스트 가져오기 ajax
+		} else if (command.endsWith("/mylistajax.do")) {
+			doMyListAjax(request, response); // 내 강의 리스트 가져오기 ajax
 		} else if (command.endsWith("/frontendlistajax.do")) {
 			doFrontEndListAjax(request, response); // 프론트 추천강의 리스트 가져오기 ajax
 		} else if (command.endsWith("/backendlistajax.do")) {
@@ -100,6 +106,10 @@ public class MainController extends HttpServlet {
 				|| session.getAttribute("loginNaver") != null) {
 			// 로그인 상태일 때
 			System.out.println("로그인 상태로 main 접근");
+			
+			List<STUDY> studyList = studyBiz.selectStudyList();
+			request.setAttribute("studyList", studyList);
+			
 			dispatch("/views/main/main.jsp", request, response);
 		} else {
 			// 미 로그인 상태일 때
@@ -233,12 +243,28 @@ public class MainController extends HttpServlet {
 
 		List<LECTURE> lectureList = lectureBiz.selectRecommandList(keyWordList);
 
-		for (int i = 0; i < lectureList.size(); i++) {
-			System.out.println("lecture[" + i + "]" + lectureList.get(i).getLECTURE_CODE());
-		}
+//		for (int i = 0; i < lectureList.size(); i++) {
+//			System.out.println("lecture[" + i + "]" + lectureList.get(i).getLECTURE_CODE());
+//		}
 
 		Gson gson = new Gson();
 		String jsonList = gson.toJson(lectureList);
+		PrintWriter out = response.getWriter();
+		out.println(jsonList);
+	}
+
+	// 내 강의 리스트 가져오기 ajax
+	private void doMyListAjax(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int MEMBER_CODE = Integer.parseInt(request.getParameter("MEMBER_CODE"));
+		
+		List<LECTURE> myList = lectureBiz.selectMyLectureList(MEMBER_CODE, 0);
+
+//		for (int i = 0; i < myList.size(); i++) {
+//			System.out.println("lecture[" + i + "]" + myList.get(i).getLECTURE_CODE());
+//		}
+
+		Gson gson = new Gson();
+		String jsonList = gson.toJson(myList);
 		PrintWriter out = response.getWriter();
 		out.println(jsonList);
 	}
@@ -247,9 +273,9 @@ public class MainController extends HttpServlet {
 	private void doFrontEndListAjax(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<LECTURE> frontEndList = lectureBiz.selectFrontEndList();
 
-		for (int i = 0; i < frontEndList.size(); i++) {
-			System.out.println("lecture[" + i + "]" + frontEndList.get(i).getLECTURE_CODE());
-		}
+//		for (int i = 0; i < frontEndList.size(); i++) {
+//			System.out.println("lecture[" + i + "]" + frontEndList.get(i).getLECTURE_CODE());
+//		}
 
 		Gson gson = new Gson();
 		String jsonList = gson.toJson(frontEndList);
@@ -261,9 +287,9 @@ public class MainController extends HttpServlet {
 	private void doBackEndListAjax(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<LECTURE> backEndList = lectureBiz.selectBackEndList();
 
-		for (int i = 0; i < backEndList.size(); i++) {
-			System.out.println("lecture[" + i + "]" + backEndList.get(i).getLECTURE_CODE());
-		}
+//		for (int i = 0; i < backEndList.size(); i++) {
+//			System.out.println("lecture[" + i + "]" + backEndList.get(i).getLECTURE_CODE());
+//		}
 
 		Gson gson = new Gson();
 		String jsonList = gson.toJson(backEndList);
@@ -275,9 +301,9 @@ public class MainController extends HttpServlet {
 	private void doFullStackListAjax(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<LECTURE> fullStackList = lectureBiz.selectFullStackList();
 
-		for (int i = 0; i < fullStackList.size(); i++) {
-			System.out.println("lecture[" + i + "]" + fullStackList.get(i).getLECTURE_CODE());
-		}
+//		for (int i = 0; i < fullStackList.size(); i++) {
+//			System.out.println("lecture[" + i + "]" + fullStackList.get(i).getLECTURE_CODE());
+//		}
 
 		Gson gson = new Gson();
 		String jsonList = gson.toJson(fullStackList);

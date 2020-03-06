@@ -1,5 +1,7 @@
 package com.devca.model.biz.member;
 
+import java.util.List;
+
 import com.devca.model.dao.member.MemberDao;
 import com.devca.model.dao.member.MemberDaoImpl;
 import com.devca.model.dto.member.KAKAO_MEMBER;
@@ -261,6 +263,24 @@ public class MemberBizImpl implements MemberBiz {
 		member.setMEMBER_PW(new SHA256_Util().encryptSHA256(member.getMEMBER_PW()));
 
 		return dao.updateMemerPassword(member);
+	}
+
+	// email or name 검색 자동완성 ajax
+	@Override
+	public List<MEMBER_PROFILE> searchMemberEmailName(String EMAIL_NAME, int MY_MEMBER_CODE) {
+		return dao.searchMemberEmailName(EMAIL_NAME, MY_MEMBER_CODE);
+	}
+
+	// email 로 멤버 정보 가져오기
+	@Override
+	public MEMBER getMEMBER_CODE(String MEMBER_EMAIL) {
+		return dao.getMEMBER_CODE(MEMBER_EMAIL);
+	}
+
+	// 정기결제 후 멤버 등급 up
+	@Override
+	public int updateMemberRole(int MEMBER_CODE) {
+		return dao.updateMemberRole(MEMBER_CODE);
 	}
 
 }

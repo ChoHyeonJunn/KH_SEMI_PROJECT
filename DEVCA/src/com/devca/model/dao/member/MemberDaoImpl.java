@@ -1,5 +1,9 @@
 package com.devca.model.dao.member;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.devca.model.dto.member.KAKAO_MEMBER;
@@ -246,6 +250,32 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		SqlSession session = getSqlSessionFactory().openSession(false);
 
 		int res = session.update(namespace + ".updateMemberPw", member);
+		if (res > 0)
+			session.commit();
+		session.close();
+		return res;
+	}
+
+	// email or name 검색 자동완성 ajax
+	@Override
+	public List<MEMBER_PROFILE> searchMemberEmailName(String EMAIL_NAME, int MY_MEMBER_CODE) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("EMAIL_NAME", EMAIL_NAME);
+		map.put("MY_MEMBER_CODE", MY_MEMBER_CODE);
+		List<MEMBER_PROFILE> searchProfileList = session.selectList(namespace + ".searchMemberEmailName", map);
+
+		session.close();
+		return searchProfileList;
+	}
+
+	// 정기결제 후 멤버 등급 up
+	@Override
+	public int updateMemberRole(int MEMBER_CODE) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+
+		int res = session.update(namespace + ".updateMemberRole", MEMBER_CODE);
 		if (res > 0)
 			session.commit();
 		session.close();

@@ -142,7 +142,7 @@
 						</div>
 					
 					<div>
-						<input type="button" class="btn btn-primary btn-lg" value="이전" onclick="location.href='/DEVCA/portfolio/sideskillpage.do?member_code=${sessionLoginMember.MEMBER_CODE }'"/>
+						<input type="button" class="btn btn-primary btn-lg" value="이전" onclick="location.href='/DEVCA/portfolio/sideskillpage.do'"/>
 						<input type="submit" class="btn btn-primary btn-lg" value="다음" style="float:right;"/>
 					</div>
 					</form>

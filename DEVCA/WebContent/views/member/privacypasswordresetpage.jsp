@@ -15,10 +15,6 @@
 section{
 	height: 100%;
 }
-article{
-	position: relative;
-	margin-left: 250px;
-}
 </style>
 <!-- END :: css -->
 
@@ -66,47 +62,47 @@ $(function(){
 <body>
 	
 	
-	<section>
-		<%@ include file="/views/form/privacysidebar.jsp"%>	
-		
-		<!-- START :: profile content -->
-		<article>
-		
-			<form action="/DEVCA/member/privacypasswordresetemail.do">
-				<input type="hidden" name="MEMBER_NAME" value="${sessionScope.loginMember.MEMBER_NAME }">
-				<div>
-					<div>
-						<h1>비밀번호 찾기</h1>
-						<div>
-							비밀번호를 재설정 할 이메일을 입력하세요. 자세한 안내가 담긴 메일을 보내드리겠습니다.
-						</div>
-					</div>
-					<div>
-						<label for="pw">*비밀번호를 재설정 할 이메일</label>
-					</div>
-					<div>
-						<input id="email" type="email" name="MEMBER_EMAIL" required="required" placeholder="이메일">
-					</div>
-					<div id="email_confirm"></div>	<!-- 경고문이 들어갈 공간 -->
-					
-				</div>				
-				<div>
-					<div>	
-						<input id="SUBMIT" type="submit" value="비밀번호 재설정 메일 보내기">
-					</div>
-				</div>	
-			</form>
-			<div>
-				<ul>
-					<li><a href="#">이용약관</a></li>
-					<li><a href="#">개인정보 처리방침</a></li>
-					<li><a href="#">FAQ/문의</a></li>
-				</ul>
-			</div>				
+	<section class="container-fluid">
+		<div class="row">
 			
-		</article>	
-		<!-- END :: profile content -->	
+			<%@ include file="/views/form/privacysidebar.jsp"%>	
 		
+			<!-- START :: profile content -->
+			<article class="col-md-10">
+				<div class="card p-4 my-3 bg-white">
+					
+					<h2 class="card-title">비밀번호 재설정</h2>
+					<h5 class="card-title">비밀번호를 재설정 할 이메일을 입력하세요. 자세한 안내가 담긴 메일을 보내드리겠습니다.</h5>
+					
+					<div class="card-body">		
+					
+						<form action="/DEVCA/member/privacypasswordresetemail.do">
+							
+							<input type="hidden" name="MEMBER_NAME" value="${sessionScope.loginMember.MEMBER_NAME }">
+					
+							
+							<label for="email">*비밀번호를 재설정 할 이메일</label>
+							<div class="input-group mb-3">
+								<input id="email" class="form-control" type="email" name="MEMBER_EMAIL" required="required" placeholder="example@example.com" autocomplete="email">
+								<div class="input-group-append">				
+				       				<span id="email_check_remove" class="input-group-text"><i class="fas fa-envelope"></i></span>
+								</div>
+							</div>			
+							<div id="email_confirm"></div>	<!-- 경고문이 들어갈 공간 -->	
+										
+									
+							<div class="input-group mb-3">
+								<input class="btn btn-block btn-lg" type="submit" value="비밀번호 재설정 메일 보내기" id="SUBMIT">
+							</div>
+							
+						</form>
+						
+						
+					</div>			
+				</div>
+			</article>	
+			<!-- END :: profile content -->	
+		</div>
 	</section>	
 	
 	<!-- FOOTER FORM -->		

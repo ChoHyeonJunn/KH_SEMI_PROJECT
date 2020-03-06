@@ -36,8 +36,7 @@
 		WHERE NAVER_ID = #{NAVER_ID}
 	</select>
 	
-	<select id="getMEMBER_CODE" parameterType="String"
-		resultType="MEMBER">
+	<select id="getMEMBER_CODE" parameterType="String" resultType="MEMBER">
 		SELECT *
 		FROM MEMBER
 		WHERE MEMBER_EMAIL = #{MEMBER_EMAIL}
@@ -138,6 +137,20 @@
 		SET MEMBER_PW = #{MEMBER_PW}
 		WHERE MEMBER_CODE = #{MEMBER_CODE}
 	</update>
+	
+	<update id="updateMemberRole" parameterType="int">
+		UPDATE MEMBER
+		SET MEMBER_ROLE = '2'
+		WHERE MEMBER_CODE = #{MEMBER_CODE}
+	</update>
+	
+	<select id="searchMemberEmailName" parameterType="map" resultType="MEMBER_PROFILE">
+		SELECT * 
+		FROM MEMBER JOIN MEMBER_PROFILE USING (MEMBER_CODE)
+		WHERE (REGEXP_LIKE(MEMBER_NAME, #{EMAIL_NAME})
+		OR REGEXP_LIKE(MEMBER_EMAIL, #{EMAIL_NAME}))
+		AND MEMBER_CODE != #{MY_MEMBER_CODE}
+	</select>
 </mapper>
 
 
