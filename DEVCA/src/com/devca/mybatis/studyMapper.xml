@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.devca.studyMapper">
+	
+	<select id="selectStudyList" resultType="STUDY">
+		SELECT *
+		FROM STUDY JOIN MEMBER USING(MEMBER_CODE) JOIN MEMBER_PROFILE USING(MEMBER_CODE)
+	</select>
+
+	<select id="selectStudyDetail" parameterType="int" resultType="STUDY">
+		SELECT *
+		FROM STUDY JOIN MEMBER USING(MEMBER_CODE) JOIN MEMBER_PROFILE USING(MEMBER_CODE)
+		WHERE STUDY_CODE = #{STUDY_CODE}
+	</select>
+	
+	<insert id="studyWrite" parameterType="STUDY">
+		INSERT INTO STUDY
+		VALUES(STUDY_CODE_SEQ.NEXTVAL,#{MEMBER_CODE},#{STUDY_TITLE},#{STUDY_CONTENT},#{STUDY_DATE},#{STUDY_PLACE_NAME},#{STUDY_LOGITUDE},#{STUDY_LATITUDE},#{STUDY_ADDRESS},0,0)
+	</insert>
+	
+	<update id="studyUpdate" parameterType="STUDY">
+		UPDATE STUDY SET
+		STUDY_TITLE = #{STUDY_TITLE},
+		STUDY_CONTENT = #{STUDY_CONTENT},
+		STUDY_LATITUDE = #{STUDY_LATITUDE},
+		STUDY_LOGITUDE = #{STUDY_LOGITUDE},
+		STUDY_ADDRESS = #{STUDY_ADDRESS}
+		WHERE STUDY_CODE = #{STUDY_CODE}
+	</update>
+	
+	<delete id="studyDelete" parameterType="int">
+		DELETE FROM STUDY
+		WHERE STUDY_CODE = #{STUDY_CODE}
+	</delete>
+	
+	
+	<insert id="applyStudy" parameterType="APPLY_STUDY">
+		INSERT INTO APPLY_STUDY
+		VALUES(#{STUDY_CODE},#{MEMBER_CODE},#{APPLY_STUDY_VERIFY},SYSDATE)
+	</insert>
+	
+	<select id="applyStudyList" parameterType="int" resultType="APPLY_STUDY">
+		SELECT * 
+		FROM APPLY_STUDY JOIN MEMBER USING(MEMBER_CODE) JOIN MEMBER_PROFILE USING(MEMBER_CODE)
+		WHERE STUDY_CODE = #{STUDY_CODE}
+		ORDER BY APPLY_STUDY_VERIFY
+	</select>
+	
+	<update id="approveApplyStudy" parameterType="APPLY_STUDY">
+		UPDATE APPLY_STUDY SET
+		APPLY_STUDY_VERIFY = #{APPLY_STUDY_VERIFY}
+		WHERE MEMBER_CODE = #{MEMBER_CODE} AND STUDY_CODE = #{STUDY_CODE}
+	</update>
+	
+	<delete id="excludeApplyStudy" parameterType="APPLY_STUDY">
+		DELETE 
+		FROM APPLY_STUDY
+		WHERE MEMBER_CODE = #{MEMBER_CODE} AND STUDY_CODE = #{STUDY_CODE}
+	</delete>
+	
+	<update id="changeStudyParticipants" parameterType="STUDY">
+		UPDATE STUDY SET
+		STUDY_PARTICIPANTS = #{STUDY_PARTICIPANTS}
+		WHERE STUDY_CODE = #{STUDY_CODE}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

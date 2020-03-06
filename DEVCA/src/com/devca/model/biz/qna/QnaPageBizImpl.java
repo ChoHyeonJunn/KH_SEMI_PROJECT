@@ -3,7 +3,7 @@ package com.devca.model.biz.qna;
 import java.util.List;
 
 import com.devca.model.dao.qna.QnaPageDaoImpl;
-import com.devca.model.dto.QNA_BOARD;
+import com.devca.model.dto.qna.QNA_BOARD;
 
 public class QnaPageBizImpl {
 

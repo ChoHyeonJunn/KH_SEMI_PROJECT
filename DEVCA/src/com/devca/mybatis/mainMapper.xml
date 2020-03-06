@@ -1,7 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.devca.mainMapper">
+	
+	<select id="selectRoadMap" parameterType="int" resultType="ROADMAP">
+		SELECT *
+		FROM ROADMAP
+		WHERE MEMBER_CODE = #{MEMBER_CODE}
+	</select>
 
+	<select id="getDeveloperBarChartData" resultType="JOB_RANK">
+		SELECT *
+		FROM JOB_RANK_FREQUENCY
+		WHERE JOB_RANK_DIVISION = '개발자라면'
+		AND JOB_RANK_NUM != 0
+		ORDER BY JOB_RANK_NUM DESC
+	</select>	
+	
+	<select id="getWebBarChartData" resultType="JOB_RANK">
+		SELECT *
+		FROM JOB_RANK_FREQUENCY
+		WHERE JOB_RANK_DIVISION = '웹 지식'
+		AND JOB_RANK_NUM != 0
+		ORDER BY JOB_RANK_NUM DESC
+	</select>
+	
+	<select id="getServerBarChartData" resultType="JOB_RANK">
+		SELECT *
+		FROM JOB_RANK_FREQUENCY
+		WHERE JOB_RANK_DIVISION = '서버'
+		AND JOB_RANK_NUM != 0
+		ORDER BY JOB_RANK_NUM DESC
+	</select>
+	
+	<select id="getLanguageBarChartData" resultType="JOB_RANK">
+		SELECT *
+		FROM JOB_RANK_FREQUENCY
+		WHERE JOB_RANK_DIVISION = '언어'
+		AND JOB_RANK_NUM != 0
+		ORDER BY JOB_RANK_NUM DESC
+	</select>
+	
+	<select id="getDataBaseBarChartData" resultType="JOB_RANK">
+		SELECT *
+		FROM JOB_RANK_FREQUENCY
+		WHERE JOB_RANK_DIVISION = '데이터베이스'
+		AND JOB_RANK_NUM != 0
+		ORDER BY JOB_RANK_NUM DESC
+	</select>
+	
+	<select id="getframeWorkBarChartData" resultType="JOB_RANK">
+		SELECT *
+		FROM JOB_RANK_FREQUENCY
+		WHERE JOB_RANK_DIVISION LIKE '프레임워크%'
+		AND JOB_RANK_NUM != 0
+		ORDER BY JOB_RANK_NUM DESC
+	</select>
+	
 
 </mapper>
 

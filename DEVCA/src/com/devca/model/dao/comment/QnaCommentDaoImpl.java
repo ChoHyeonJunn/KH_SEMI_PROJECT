@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.devca.model.dto.QNA_COMMENT;
+import com.devca.model.dto.qna.QNA_COMMENT;
 
 public class QnaCommentDaoImpl implements QnaCommentDao {
 

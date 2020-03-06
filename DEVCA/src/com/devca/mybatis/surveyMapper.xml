@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.devca.surveyMapper">
+
+   <select id="selectMySurvey" parameterType="int" resultType="SURVEY">
+      SELECT * FROM SURVEY
+      WHERE MEMBER_CODE = #{MEMBER_CODE}
+   </select>
+   
+   <insert id="insertMySurvey" parameterType="SURVEY">
+      INSERT INTO SURVEY
+      VALUES(SURVEY_SEQ.NEXTVAL,#{MEMBER_CODE},#{SURVEY_LANGUAGE},
+      #{SURVEY_POSITION},#{SURVEY_BASIC},#{SURVEY_SERVER},#{SURVEY_DATABASE},
+      #{SURVEY_FRAMEWORK},
+      #{SURVEY_CHECK_NON_MAJOR},#{SURVEY_BASIC_NON_MAJOR},
+      #{SURVEY_SERVER_NON_MAJOR},#{SURVEY_DATABASE_NON_MAJOR},
+      #{SURVEY_FRAMEWORK_NON_MAJOR},SYSDATE)
+   </insert>
+   <!-- 
+   <update id="survey_insert" parameterType="SURVEY">
+      UPDATE SURVEY
+      SET SURVEY_DATA = #{SURVEY_DATA}
+      WHERE MEMBER_CODE = #{MEMBER_CODE}
+      AND SURVEY_DATA = #{SURVEY_DATE}
+   </update>
+    -->
+   <delete id="deleteMySurvey" parameterType="map">
+      DELETE FROM SURVEY
+      WHERE MEMBER_CODE = #{MEMBER_CODE}
+      AND SURVEY_SEQ = #{SURVEY_SEQ}
+   </delete>
+
+</mapper>

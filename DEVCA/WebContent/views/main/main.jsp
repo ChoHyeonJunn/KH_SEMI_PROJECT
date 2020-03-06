@@ -14,8 +14,149 @@
 <style type="text/css">
 section{
 	width: 100%;
+	height: auto;
+}
+
+/* bootStrap */
+.card {
+	margin: 10% auto 100px auto;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	-webkit-transition: .25s box-shadow;
+	transition: .25s box-shadow;
+}
+.card:focus,
+.card:hover {
+	box-shadow: 5px 5px 3px 5px rgba(0, 0, 0, 0.30), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* CHART STYLE */
+#bar_chart_container, #roadMap_container{
+	position: relative;
+}
+#chartdiv_roadmap{
+	max-width: 80%;
 	height: 500px;
 }
+#chartdiv_job_rank {
+  max-width: 100%;
+  height: 500px;
+}
+#bar_chart_description, #roadMap_description{
+	padding: 0px;
+	margin: 0px;
+	
+	background-color: black;
+	color: white;
+	opacity: 0.7;
+	width: 20%;
+	height: 100%;
+	
+	position: absolute;
+	z-index: 100;
+	right: 0px;
+	top: 0px;
+}
+#myChart{
+   width: 100%;
+   height: 100%;
+}
+
+/* LECTURE STYLE */
+.swiper-container {
+	padding: 0px;
+	margin: 0px;
+	width:100%;
+	height: auto;
+}
+.swiper-slide {
+	padding: 0px;
+	margin: 0px;
+	text-align:center;
+	display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+	align-items:center; /* 위아래 기준 중앙정렬 */
+	justify-content:center; /* 좌우 기준 중앙정렬 */
+}
+.swiper-slide img {
+	padding: 0px;
+	margin: 0px;
+	max-width:100%;
+}
+
+.lecture{
+	float: left; 
+	padding: 0px;
+	margin: 0px; 
+	overflow: hidden;
+	width: 100%;
+	height: 400px;
+	border: 1px solid gray;
+	overflow: hidden;
+}
+.lecture:hover .lecture_back{
+	opacity: 0.8;
+}
+.lecture_back{
+	position: absolute;
+	width: 100%;
+	height: 400px;
+
+	padding: 0px;
+	margin: 0px;
+	background-color: black;
+	color: white;
+	opacity: 0;
+}
+.lecture_img_div{
+	padding: 0px;
+	margin: 0px;
+	width: 100%; 
+	height: 40%;
+}	
+.lecture_des_div{
+	padding: 0px;
+	margin: 0px;
+	width: 100%; 
+	height: 60%;
+	overflow: hidden;
+}
+
+/* kakaoMap */
+.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+.map_wrap {position:relative;width:100%;height:500px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+.bg_white {background:#fff;}
+#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+#menu_wrap .option{text-align: center;}
+#menu_wrap .option p {margin:10px 0;}  
+#menu_wrap .option button {margin-left:5px;}
+#placesList li {list-style: none;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+#placesList .item span {display: block;margin-top:4px;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .info .gray {color:#8a8a8a;}
+#placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+#placesList .info .tel {color:#009900;}
+#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+#placesList .item .marker_1 {background-position: 0 -10px;}
+#placesList .item .marker_2 {background-position: 0 -56px;}
+#placesList .item .marker_3 {background-position: 0 -102px}
+#placesList .item .marker_4 {background-position: 0 -148px;}
+#placesList .item .marker_5 {background-position: 0 -194px;}
+#placesList .item .marker_6 {background-position: 0 -240px;}
+#placesList .item .marker_7 {background-position: 0 -286px;}
+#placesList .item .marker_8 {background-position: 0 -332px;}
+#placesList .item .marker_9 {background-position: 0 -378px;}
+#placesList .item .marker_10 {background-position: 0 -423px;}
+#placesList .item .marker_11 {background-position: 0 -470px;}
+#placesList .item .marker_12 {background-position: 0 -516px;}
+#placesList .item .marker_13 {background-position: 0 -562px;}
+#placesList .item .marker_14 {background-position: 0 -608px;}
+#placesList .item .marker_15 {background-position: 0 -654px;}
+#pagination {margin:10px auto;text-align: center;}
+#pagination a {display:inline-block;margin-right:10px;}
+#pagination .on {font-weight: bold; cursor: default;color:#777;}
 </style>
 <!-- END :: css -->
 
@@ -25,7 +166,153 @@ section{
 
 <!-- START :: JAVASCRIPT -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<!-- kakaoMap -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dde3d6a6f398e8afdf7600f84f211532&libraries=services"></script>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/plugins/timeline.js"></script>
+<script src="https://www.amcharts.com/lib/4/plugins/bullets.js"></script>
+<script src="https://www.amcharts.com/lib/4/plugins/forceDirected.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/dark.js"></script>
+
+<!-- Chart code -->
+<script type="text/javascript" src="../resources/js/main_chart/bar.js"></script>
+<script type="text/javascript" src="../resources/js/main_chart/roadMap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<!-- SWIPER PAGING -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+
+<script type="text/javascript" src="../resources/js/main_lecture/lecture_recommend.js"></script>
+<script type="text/javascript" src="../resources/js/main_lecture/lecture_my.js"></script>
+<script type="text/javascript" src="../resources/js/main_lecture/lecture_frontend.js"></script>
+<script type="text/javascript" src="../resources/js/main_lecture/lecture_backend.js"></script>
+<script type="text/javascript" src="../resources/js/main_lecture/lecture_fullstack.js"></script>
+
+
+<!-- START :: JAVASCRIPT -->
 <script type="text/javascript">
+$(function(){
+	/* 
+	////// roadMap 관련 //////
+	*/
+	getRoadMapData('${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}');
+	
+	$("#roadMap_item_name").css("display","none")
+	$("#roadMap_item_remove_button").css("display","none")
+	// 로드맵에 추가하기 버튼 클릭시
+	$("#roadMap_item_add_button").click(function(){
+		var item = $("input[name='roadMap_new_item']").val();
+		if(item != ""){
+			addRoadMapData('${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}', item);
+		}
+	})
+	
+	// 지우기 버튼 클릭 시
+	$("#roadMap_item_remove_button").click(function(){
+		var item = $("#roadMap_item_name").text();
+		if(confirm("정말 지우시겠습니까?")){
+			removeRoadMapData('${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}', item);
+		}
+		
+	})
+	
+	/*
+	////// barChart 관련 //////
+	*/
+	getBarChartData('Developer');
+	$("#Developer").click(function(){
+		$(".nav-justified").find(".active").removeClass("active");
+		$(this).addClass("active")
+		
+		getBarChartData('Developer');
+	})
+	$("#Web").click(function(){
+		$(".nav-justified").find(".active").removeClass("active");
+		$(this).addClass("active")
+		
+		getBarChartData('Web');
+	})
+	$("#Server").click(function(){
+		$(".nav-justified").find(".active").removeClass("active");
+		$(this).addClass("active")
+		
+		getBarChartData('Server');
+	})
+	$("#Language").click(function(){
+		$(".nav-justified").find(".active").removeClass("active");
+		$(this).addClass("active")
+		
+		getBarChartData('Language');
+	})
+	$("#DataBase").click(function(){
+		$(".nav-justified").find(".active").removeClass("active");
+		$(this).addClass("active")
+		
+		getBarChartData('DataBase');
+	})
+	$("#frameWork").click(function(){
+		$(".nav-justified").find(".active").removeClass("active");
+		$(this).addClass("active")
+		
+		getBarChartData('frameWork');
+	})
+	
+	// barChart 라벨 클릭 이벤트
+	$("#bar_chart_description").css("display", "none");
+	$(document).on("click", "tspan", function(e){
+		var item_name = $(this).text();
+		alert($(this).text());
+		
+		$("#bar_chart_description").toggle(function(){
+			$(this).find("#bar_chart_item_name").text(item_name);
+		});
+	});
+	// 닫기 클릭시
+	$("#bar_chart_item_close").click(function(){
+		$("#bar_chart_description").toggle(300);
+	})
+	
+	// 로드맵에 추가하기 버튼 클릭시
+	$("#bar_chart_item_add_button").click(function(){
+		var item = $("#bar_chart_item_name").text();		
+		addRoadMapData('${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}', item);
+	})
+	
+	/*
+	////// 강의 관련 //////
+	*/
+	selectRecommandList('${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}');
+	selectMyList('${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}');
+	selectFrontEndList();
+	selectBackEndList();
+	selectFullStackList();
+})
+// roadMap 노드 클릭 시
+function roadMapNodeClick(item){
+	$("#roadMap_item_name").text(item)
+	if($("#roadMap_item_name").css("display") == "none"){
+		$("#roadMap_item_name").toggle()
+		$("#roadMap_item_remove_button").toggle()
+	}
+}
+// roadMap 링크 연결
+function linkBypass(selectedItem, Item){
+	linkRoadMapData('${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}', selectedItem, Item);
+}
+
+
+// barChart컬럼 클릭시 
+function barChartColumClick(onclickBarItem){
+	$("#bar_chart_description").toggle(function(){
+		$(this).find("#bar_chart_item_name").text(onclickBarItem);
+	});
+}
 
 </script>
 <!-- END :: JAVASCRIPT -->
@@ -38,40 +325,209 @@ section{
 
 </head>
 <body>	
-	<section>
-		<!-- 회원 전용 페이지 -->
-		<c:out value="${sessionLoginMember.MEMBER_NAME }"></c:out>
-		
-		<c:out value="${sessionLoginKakao.KAKAO_NICKNAME}"></c:out>
-		<c:out value="${sessionLoginKakao.KAKAO_ID}"></c:out>
-		
-		<c:set var="access_token" value="${sessionScope.access_token}"></c:set>
-		<c:out value="${access_token}"></c:out>
+	<section class="bg-light">		
 		<article id="roadmap">
-			로드맵		
+			
+			<div class="card my-3 bg-dark" style="width: 99%">
+				<!-- 구독자의 경우에 한해서 roadMap 서비스 제공 -->
+				<c:if test="${sessionMember_profile.MEMBER_ROLE eq '1'}">
+					<!-- 비 구독자 결제 페이지 이동 버튼 -->
+					<button type="button" onclick="location.href='/DEVCA/member/privacypaymentpage.do'">DEVCA 6개월 구독하러가기</button>
+				</c:if>
+				
+				<c:if test="${sessionMember_profile.MEMBER_ROLE eq '2'}">
+					<!-- 구독자의 경우 로드맵 서비스 제공 -->
+					<h5 class="card-title text-light p-3">
+						<c:out value="${sessionLoginMember.MEMBER_NAME}"></c:out>
+						<c:out value="${sessionLoginKakao.KAKAO_NICKNAME}"></c:out>
+						<c:out value="${sessionLoginNaver.NAVER_NICKNAME}"></c:out>
+						
+						님의 <strong id="roadMap_field"></strong> 로드맵
+					</h5>
+					
+					<div id="roadMap_container">
+						<div id="chartdiv_roadmap"></div>
+						
+						<span id="roadMap_description">
+							<div id="roadMap_item_name"></div>
+							<button id="roadMap_item_remove_button">지우기</button>
+							
+							<input type="text" name="roadMap_new_item">
+							<button id="roadMap_item_add_button">로드맵에 추가하기</button>
+						</span>			
+					</div>	
+				</c:if>
+			</div>
+			
+			
+			<div class="card p-4 my-3 bg-dark" style="width: 99%">
+			
+				<h5 class="card-title text-light p-3">기업의 기술 요구사항</h5>
+				<ul class="nav nav-tabs nav-justified text-light">
+  					<li class="nav-item">
+    					<a class="nav-link active" id="Developer">개발자라면</a>
+  					</li>
+  					<li class="nav-item">
+    					<a class="nav-link" id="Web">웹 지식</a>
+  					</li>
+  					<li class="nav-item">
+    					<a class="nav-link" id="Server">서버</a>
+  					</li>
+  					<li class="nav-item">
+    					<a class="nav-link" id="Language">언어</a>
+  					</li>
+  					<li class="nav-item">
+    					<a class="nav-link" id="DataBase">데이터베이스</a>
+  					</li>
+  					<li class="nav-item">
+    					<a class="nav-link" id="frameWork">프레임워크 & 라이브러리</a>
+  					</li>
+				</ul>
+				
+				<div id="bar_chart_container" class="bg-light">
+					<div id="chartdiv_job_rank">
+					</div>
+					
+					<span id="bar_chart_description">
+						<div id="bar_chart_item_name">					
+						</div>
+						
+						<button id="bar_chart_item_add_button">로드맵에 추가하기</button>
+						<button id="bar_chart_item_close">닫기</button>
+					</span>
+				</div>
+				<p class="text-light">위 차트는 programmers 와 saramIn 데이터를 참조합니다. </p>
+			</div>
 		</article>
-		<article id="persnoal">
-			<div>
-				프로필 정보
+		
+		<article id="persnoal" class="container-fluid">
+			<div class="row p-2">
+				<div class="col-sm-6 card p-4 my-3 bg-dark">
+					<div id="profile">
+						<h5 class="card-title text-light p-3">프로필 정보</h5>
+						
+						<div id="MyChart">
+							<%
+							   int[] data = (int[])request.getAttribute("data");
+							%>
+	            
+	            			<canvas id="myChart" width="500" height="200"></canvas>
+	            
+	            			<div>
+	            				<table>
+	            					<tbody>
+		            					<tr>
+							               <td>희망 직무   <hr></td>
+							            </tr>
+							            <tr>
+							               <td>주요 기술   <hr></td>
+							            </tr>
+							            <tr>
+							               <td>등록 항목   </td>
+							            </tr>
+					            	</tbody>
+					            </table>
+	            			</div>
+         				</div>
+						
+						
+					</div>
+				</div>
+				
+				<div class="col-sm-6 card p-4 my-3 bg-dark">
+					<div id="study">
+						<h5 class="card-title text-light p-3">스터디</h5>
+						
+						<div class="map_wrap">
+						    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+						
+						    <div id="menu_wrap" class="bg_white">
+						        <div class="option">
+						            <div>
+						                <form onsubmit="searchPlaces(); return false;">
+						                    키워드 : <input type="text" id="keyword" size="15"> 
+						                    <button type="submit">검색하기</button> 
+						                </form>
+						            </div>
+						        </div>
+						        <hr>
+						        <ul id="placesList"></ul>
+						        <div id="pagination"></div>
+						    </div>
+						</div>
+						
+						<!-- 내 위치정보를 정리해 놓을 HIDDEN INPUT -->
+						<input type="hidden" name="MEMBER_PROFILE_LATITUDE" value="<c:if test="${empty sessionMember_profile.MEMBER_PROFILE_LATITUDE}">33.450701</c:if>${sessionMember_profile.MEMBER_PROFILE_LATITUDE}">
+						<input type="hidden" name="MEMBER_PROFILE_LOGITUDE" value="<c:if test="${empty sessionMember_profile.MEMBER_PROFILE_LOGITUDE}">126.570667</c:if>${sessionMember_profile.MEMBER_PROFILE_LOGITUDE}">
+						
+					</div>	
+				</div>
 			</div>
-			<div>
-				학습 플래너
-			</div>		
-		</article><article id="lecture-board">
-			<div>
-				추천 강의
-			</div>
-			<div>
-				보관 강의
-			</div>
-			<div>
-				같은 포지션 인기강의
-			</div>
-			<div>
-				프론트앤드 인기강의
-			</div>
-			<div>
-				백엔드 인기강의
+		</article>
+		
+		<article id="lecture-board">
+		
+			<div class="card p-4 my-3 bg-dark" style="width: 99%">
+				<div>
+					<h5 class="card-title text-light p-3">추천강의</h5>
+					
+					<!-- 클래스명은 변경하면 안 됨 -->
+					<div class="swiper-container">
+						<div class="swiper-wrapper" id="recommand-wrapper">
+						</div>				
+						<!-- 네비게이션 버튼 -->
+						<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+						<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+					</div>
+				</div>
+				
+				<div>
+					보관 강의
+					<!-- 클래스명은 변경하면 안 됨 -->
+					<div class="swiper-container">
+						<div class="swiper-wrapper" id="my-wrapper">
+						</div>				
+						<!-- 네비게이션 버튼 -->
+						<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+						<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+					</div>
+				</div>
+				
+				<div>
+					프론트앤드 인기강의
+					<!-- 클래스명은 변경하면 안 됨 -->
+					<div class="swiper-container">
+						<div class="swiper-wrapper" id="frontend-wrapper">
+						</div>				
+						<!-- 네비게이션 버튼 -->
+						<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+						<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+					</div>
+				</div>
+				
+				<div>
+					백엔드 인기강의
+					<!-- 클래스명은 변경하면 안 됨 -->
+					<div class="swiper-container">
+						<div class="swiper-wrapper" id="backend-wrapper">
+						</div>				
+						<!-- 네비게이션 버튼 -->
+						<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+						<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+					</div>
+				</div>
+				
+				<div>
+					풀스택 인기강의
+					<!-- 클래스명은 변경하면 안 됨 -->
+					<div class="swiper-container">
+						<div class="swiper-wrapper" id="fullstack-wrapper">
+						</div>				
+						<!-- 네비게이션 버튼 -->
+						<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+						<div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+					</div>
+				</div>
 			</div>
 		</article>
 		
@@ -80,4 +536,327 @@ section{
 	<!-- FOOTER FORM -->	
 	<%@ include file="/views/form/footer.jsp"%>
 </body>
+
+<!-- START :: KAKAO MAP -->
+<script>
+// 마커를 담을 배열입니다
+var markers = [];
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+	center: new kakao.maps.LatLng($("input[name='MEMBER_PROFILE_LATITUDE']").val(), $("input[name='MEMBER_PROFILE_LOGITUDE']").val()), //지도의 중심좌표.
+        level: 3 // 지도의 확대 레벨
+    };  
+
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+///////////////////내 위치 마커////////////////////////
+var MyimageSrc =  <c:choose>
+					<c:when test="${not empty study.MEMBER_PROFILE_IMAGE_S_NAME}">'../resources/images/profileupload/${study.MEMBER_PROFILE_IMAGE_S_NAME }'</c:when>
+			   		<c:otherwise>'../resources/images/add.png'</c:otherwise>
+				</c:choose>	, // 마커이미지의 주소입니다    
+				MyimageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+				MyimageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+//마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+var MymarkerImage = new kakao.maps.MarkerImage(MyimageSrc, MyimageSize, MyimageOption),
+MymarkerPosition = new kakao.maps.LatLng($("input[name='MEMBER_PROFILE_LATITUDE']").val(), $("input[name='MEMBER_PROFILE_LOGITUDE']").val()); // 마커가 표시될 위치입니다
+
+//마커를 생성합니다
+var Mymarker = new kakao.maps.Marker({
+position: MymarkerPosition,
+image: MymarkerImage // 마커이미지 설정 
+});
+
+//마커가 지도 위에 표시되도록 설정합니다
+Mymarker.setMap(map);  
+
+
+///////////////////스터디 위치 list 마커////////////////////////
+function displayStudyList(){
+	var jsonArray = new Array();
+	<c:forEach items="${studyList}" var="study">
+		console.log('${study.STUDY_TITLE}' + '${study.STUDY_LATITUDE}' + '${study.STUDY_LOGITUDE}')
+
+		var json = new Object();
+		
+		json.title = '${study.STUDY_TITLE}'
+		json.latlng = new kakao.maps.LatLng('${study.STUDY_LATITUDE}', '${study.STUDY_LOGITUDE}')
+		json.study_code = '${study.STUDY_CODE}'
+		
+		jsonArray.push(json);
+	</c:forEach>
+	var positions = jsonArray;
+
+	//마커 이미지의 이미지 주소입니다
+	var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+	    
+	for (var i = 0; i < positions.length; i ++) {
+	    // 이미지 마커 표시
+		var imageSize = new kakao.maps.Size(24, 35);  // 마커 이미지의 이미지 크기 입니다  
+	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  // 마커 이미지를 생성합니다  
+	    var marker = new kakao.maps.Marker({  // 마커를 생성합니다
+	        map: map, // 마커를 표시할 지도
+	        position: positions[i].latlng, // 마커를 표시할 위치
+	        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+	        image : markerImage // 마커 이미지 
+	    });
+	    
+	    // 인포윈도우에 제목 표시
+	    var iwContent = '<div><a href="/DEVCA/study/studydetailpage.do?STUDY_CODE=' + positions[i].study_code + '">'
+	    					+ positions[i].title +
+	    				'</a></div>',
+	    iwPosition = new kakao.maps.LatLng(positions[i].latlng, positions[i].title); //인포윈도우 표시 위치입니다
+
+		// 인포윈도우를 생성합니다
+		var Sinfowindow = new kakao.maps.InfoWindow({
+		    position : iwPosition, 
+		    content : iwContent 
+		});
+		marker.setMap(map);
+		Sinfowindow.open(map, marker); 
+	}
+
+}
+
+// 장소 검색 객체를 생성합니다
+var ps = new kakao.maps.services.Places();  
+
+// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+// 키워드로 장소를 검색합니다
+//searchPlaces();
+displayStudyList();
+
+// 키워드 검색을 요청하는 함수입니다
+function searchPlaces() {
+
+    var keyword = document.getElementById('keyword').value;
+
+    if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        alert('키워드를 입력해주세요!');
+        return false;
+    }
+
+    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+    ps.keywordSearch( keyword, placesSearchCB); 
+}
+
+// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+function placesSearchCB(data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+
+        // 정상적으로 검색이 완료됐으면
+        // 검색 목록과 마커를 표출합니다
+        displayPlaces(data);
+
+        // 페이지 번호를 표출합니다
+        displayPagination(pagination);
+
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+
+        alert('검색 결과가 존재하지 않습니다.');
+        return;
+
+    } else if (status === kakao.maps.services.Status.ERROR) {
+
+        alert('검색 결과 중 오류가 발생했습니다.');
+        return;
+
+    }
+}
+
+// 검색 결과 목록과 마커를 표출하는 함수입니다
+function displayPlaces(places) {
+
+    var listEl = document.getElementById('placesList'), 
+    menuEl = document.getElementById('menu_wrap'),
+    fragment = document.createDocumentFragment(), 
+    bounds = new kakao.maps.LatLngBounds(), 
+    listStr = '';
+    
+    // 검색 결과 목록에 추가된 항목들을 제거합니다
+    removeAllChildNods(listEl);
+
+    // 지도에 표시되고 있는 마커를 제거합니다
+    removeMarker();    
+    
+	///////////////////검색결과 마커 표시////////////////////////
+    for ( var i=0; i<places.length; i++ ) {
+
+        // 마커를 생성하고 지도에 표시합니다
+        var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+            marker = addMarker(placePosition, i), 
+            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(placePosition);
+
+        // 마커와 검색결과 항목에 mouseover 했을때
+        // 해당 장소에 인포윈도우에 장소명을 표시합니다
+        // mouseout 했을 때는 인포윈도우를 닫습니다
+        (function(marker, title) {
+            kakao.maps.event.addListener(marker, 'mouseover', function() {
+            	infowindow.close();
+                displayInfowindow(marker, title);
+            });
+            kakao.maps.event.addListener(marker, 'mouseout', function() {                
+            });
+
+            itemEl.onmouseover =  function () {
+                infowindow.close();
+                displayInfowindow(marker, title);
+            };
+            itemEl.onmouseout =  function () {
+            };
+            
+        })(marker, places[i].place_name);
+
+        fragment.appendChild(itemEl);
+    }
+
+    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+    listEl.appendChild(fragment);
+    menuEl.scrollTop = 0;
+
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    map.setBounds(bounds);
+    
+    // 스터디리스트를 표시합니다.
+    displayStudyList();
+}
+
+// 검색결과 항목을 Element로 반환하는 함수입니다
+function getListItem(index, places) {
+
+    var el = document.createElement('li'),
+    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+                '<div class="info">' +
+                '   <h5>' + places.place_name + '</h5>';
+
+    if (places.road_address_name) {
+        itemStr += '    <span>' + places.road_address_name + '</span>' +
+                    '   <span class="jibun gray">' +  places.address_name  + '</span>';
+    } else {
+        itemStr += '    <span>' +  places.address_name  + '</span>'; 
+    }
+                 
+      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+                '</div>';           
+
+    el.innerHTML = itemStr;
+    el.className = 'item';
+
+    return el;
+}
+
+// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+function addMarker(position, idx, title) {
+    var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+        imgOptions =  {
+            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        },
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+        marker = new kakao.maps.Marker({
+            position: position, // 마커의 위치
+            image: markerImage 
+        });
+
+    marker.setMap(map); // 지도 위에 마커를 표출합니다
+    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+    return marker;
+}
+
+// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+function removeMarker() {
+    for ( var i = 0; i < markers.length; i++ ) {
+        markers[i].setMap(null);
+    }   
+    markers = [];
+}
+
+// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+function displayPagination(pagination) {
+    var paginationEl = document.getElementById('pagination'),
+        fragment = document.createDocumentFragment(),
+        i; 
+
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild (paginationEl.lastChild);
+    }
+
+    for (i=1; i<=pagination.last; i++) {
+        var el = document.createElement('a');
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i===pagination.current) {
+            el.className = 'on';
+        } else {
+            el.onclick = (function(i) {
+                return function() {
+                    pagination.gotoPage(i);
+                }
+            })(i);
+        }
+
+        fragment.appendChild(el);
+    }
+    paginationEl.appendChild(fragment);
+}
+
+// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+// 인포윈도우에 장소명을 표시합니다
+function displayInfowindow(marker, title) {
+    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
+}
+
+ // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {   
+    while (el.hasChildNodes()) {
+        el.removeChild (el.lastChild);
+    }
+}
+</script>
+<!-- END :: KAKAO MAP -->
+
+<!-- START :: MYCHART.JS -->
+<script type="text/javascript">
+      var ctx = document.getElementById("myChart");
+      var myRadarChart = new Chart(ctx, {
+       type: 'radar',
+       data: {
+          labels: ['경력', '프로젝트', '학력', '외국어', '활동', '수상/자격증','출판/논문/특허'],
+               datasets: [{
+                  label: '내 프로필',
+                   data: [<%=data[0]%>, <%=data[1]%>, <%=data[2]%>, <%=data[3]%>, <%=data[4]%>, <%=data[5]%>, <%=data[6]%>]
+               }]
+       },
+       options: options ={
+             responsive: false,
+                  scale: {
+                      angleLines: {
+                          display: true
+                      },
+                      ticks: {
+                          suggestedMin: 0,
+                          suggestedMax: 3,
+                          stepSize: 1
+                      }
+                  }
+          }
+      });
+</script>
+<!-- END :: MYCHART.JS -->
 </html>

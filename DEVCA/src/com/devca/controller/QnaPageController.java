@@ -1,8 +1,6 @@
 package com.devca.controller;
 
 import java.io.IOException;
-
-
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -15,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.devca.model.biz.qna.QnaPageBizImpl;
-import com.devca.model.dto.QNA_BOARD;
+import com.devca.model.dto.qna.QNA_BOARD;
 
 @WebServlet(//
 		name = "qnapage", // Controller Mapping name
 		//
 		urlPatterns = { "qnalist.do", // qna 페이지로 이동
 				"qnadetail.do", "qnawriteform.do", "qnawriteres.do", "qnaupdateform.do", "qnaupdateres.do",
-				"qnadelete.do", "answerform.do", "answerres.do", })
+				"qnadelete.do", "answerform.do", "answerres.do", "faqpage.do" })
 public class QnaPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HttpSession session;
@@ -41,31 +39,28 @@ public class QnaPageController extends HttpServlet {
 		// QNA 페이지로 이동
 		if (command.endsWith("/qnalist.do")) {
 			doQnaList(request, response);
-		}
-		else if (command.endsWith("/qnadetail.do")) {
+		} else if (command.endsWith("/qnadetail.do")) {
 			doQnaDetail(request, response);
 		}
 		// STUDY 페이지로 이동
 		else if (command.endsWith("/qnawriteform.do")) {
 			doQnaWriteForm(request, response);
-		}
-		else if (command.endsWith("/qnawriteres.do")) {
+		} else if (command.endsWith("/qnawriteres.do")) {
 			doQnaWriteRes(request, response);
-		}
-		else if (command.endsWith("/qnaupdateform.do")) {
+		} else if (command.endsWith("/qnaupdateform.do")) {
 			doQnaUpdateForm(request, response);
-		}
-		else if (command.endsWith("/qnaupdateres.do")) {
+		} else if (command.endsWith("/qnaupdateres.do")) {
 			doQnaUpdateRes(request, response);
-		}
-		else if (command.endsWith("/qnadelete.do")) {
+		} else if (command.endsWith("/qnadelete.do")) {
 			doQnaDelete(request, response);
-		}
-		else if (command.endsWith("/answerform.do")) {
+		} else if (command.endsWith("/answerform.do")) {
 			doAnswerForm(request, response);
-		}
-		else if (command.endsWith("/answerres.do")) {
+		} else if (command.endsWith("/answerres.do")) {
 			doAnswerRes(request, response);
+		}
+		// FAQ 페이지로 이동
+		else if (command.endsWith("/faqpage.do")) {
+			doFaqPage(request, response);
 		}
 		// error 페이지로 이동
 		else {
@@ -91,7 +86,8 @@ public class QnaPageController extends HttpServlet {
 		dispatch("/views/qna/qnadetail.jsp", request, response);
 	}
 
-	private void doQnaWriteForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void doQnaWriteForm(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		dispatch("/views/qna/qnawriteform.jsp", request, response);
 	}
@@ -174,6 +170,12 @@ public class QnaPageController extends HttpServlet {
 			jsResponse("답변 작성 성공", "/DEVCA/qnapage/qnalist.do", response);
 			jsResponse("답변 작성 실패", "/DEVCA/qnapage/answerform.do?QNA_BOARD_NO=" + parentboardno, response);
 		}
+	}
+
+	private void doFaqPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		dispatch("/views/qna/faqpage.jsp", request, response);
 	}
 
 	private void doError(HttpServletRequest request, HttpServletResponse response)

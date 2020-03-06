@@ -10,7 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.devca.model.dto.QNA_BOARD;
+import com.devca.model.dto.qna.QNA_BOARD;
 
 public class QnaPageDaoImpl implements QnaPageDao {
 

@@ -2,7 +2,7 @@ package com.devca.model.dao.comment;
 
 import java.util.List;
 
-import com.devca.model.dto.QNA_COMMENT;
+import com.devca.model.dto.qna.QNA_COMMENT;
 public interface QnaCommentDao {
 
 	// 게시글 별 댓글 리스트

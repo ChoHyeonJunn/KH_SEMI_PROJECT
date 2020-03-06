@@ -12,66 +12,69 @@
 		<servlet-name>main</servlet-name>
 		<servlet-class>com.devca.controller.MainController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>main</servlet-name>
 		<url-pattern>/main/*</url-pattern>
 	</servlet-mapping>
-	
+
+
 	<servlet>
 		<servlet-name>member</servlet-name>
 		<servlet-class>com.devca.controller.MemberController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>member</servlet-name>
 		<url-pattern>/member/*</url-pattern>
 	</servlet-mapping>
-		
+
+
 	<servlet>
 		<servlet-name>portfolio</servlet-name>
 		<servlet-class>com.devca.controller.PortfolioController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>portfolio</servlet-name>
 		<url-pattern>/portfolio/*</url-pattern>
 	</servlet-mapping>
+	
+	
 	<servlet>
 		<servlet-name>lecture</servlet-name>
 		<servlet-class>com.devca.controller.LectureController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>lecture</servlet-name>
 		<url-pattern>/lecture/*</url-pattern>
 	</servlet-mapping>
-	<servlet>
-		<servlet-name>board</servlet-name>
-		<servlet-class>com.devca.controller.BoardController</servlet-class>
-	</servlet>
 
+
+	<servlet>
+		<servlet-name>study</servlet-name>
+		<servlet-class>com.devca.controller.StudyController</servlet-class>
+	</servlet>
 	<servlet-mapping>
-		<servlet-name>board</servlet-name>
-		<url-pattern>/board/*</url-pattern>
+		<servlet-name>study</servlet-name>
+		<url-pattern>/study/*</url-pattern>
 	</servlet-mapping>
+	
+	
 	<servlet>
 		<servlet-name>qnapage</servlet-name>
 		<servlet-class>com.devca.controller.QnaPageController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>qnapage</servlet-name>
 		<url-pattern>/qnapage/*</url-pattern>
 	</servlet-mapping>
-	
-		<servlet>
+
+
+	<servlet>
 		<servlet-name>qnacomment</servlet-name>
 		<servlet-class>com.devca.controller.QnaCommentController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>qnacomment</servlet-name>
 		<url-pattern>/qnacomment/*</url-pattern>
 	</servlet-mapping>
+	
 </web-app>

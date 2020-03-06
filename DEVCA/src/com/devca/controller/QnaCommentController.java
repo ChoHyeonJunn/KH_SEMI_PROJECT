@@ -19,7 +19,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.devca.model.biz.comment.QnaCommentBizImpl;
-import com.devca.model.dto.QNA_COMMENT;
+import com.devca.model.dto.qna.QNA_COMMENT;
 import com.google.gson.Gson;
 
 @WebServlet(//

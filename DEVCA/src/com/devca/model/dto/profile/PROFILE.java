@@ -1,0 +1,121 @@
+package com.devca.model.dto.profile;
+
+public class PROFILE{
+	
+	/* 프로필 테이블 변수 */ 
+	private int PROFILE_SEQ;
+	private int MEMBER_CODE;
+	private int PROFILE_CAREER_SEQ;
+	private int PROFILE_PERFORMANCE_SEQ;
+	private int PROFILE_PROJECT_SEQ;
+	private int PROFILE_SKILL_ONE;
+	private int PROFILE_LANGUAGE;
+	private int PROFILE_CERTIFICATE_SEQ;
+	private int PROFILE_ACADEMY_BACKGROUND_SEQ;
+	private int PROFILE_STORAGE_SEQ;
+	private int PROFILE_LINE_OF_WORK;
+	private int PROFILE_INCOME;
+	
+	public PROFILE() {
+		super();
+	}
+
+	public int getPROFILE_SEQ() {
+		return PROFILE_SEQ;
+	}
+
+	public void setPROFILE_SEQ(int pROFILE_SEQ) {
+		PROFILE_SEQ = pROFILE_SEQ;
+	}
+
+	public int getMEMBER_CODE() {
+		return MEMBER_CODE;
+	}
+
+	public void setMEMBER_CODE(int mEMBER_CODE) {
+		MEMBER_CODE = mEMBER_CODE;
+	}
+
+	public int getPROFILE_CAREER_SEQ() {
+		return PROFILE_CAREER_SEQ;
+	}
+
+	public void setPROFILE_CAREER_SEQ(int pROFILE_CAREER_SEQ) {
+		PROFILE_CAREER_SEQ = pROFILE_CAREER_SEQ;
+	}
+
+	public int getPROFILE_PERFORMANCE_SEQ() {
+		return PROFILE_PERFORMANCE_SEQ;
+	}
+
+	public void setPROFILE_PERFORMANCE_SEQ(int pROFILE_PERFORMANCE_SEQ) {
+		PROFILE_PERFORMANCE_SEQ = pROFILE_PERFORMANCE_SEQ;
+	}
+
+	public int getPROFILE_PROJECT_SEQ() {
+		return PROFILE_PROJECT_SEQ;
+	}
+
+	public void setPROFILE_PROJECT_SEQ(int pROFILE_PROJECT_SEQ) {
+		PROFILE_PROJECT_SEQ = pROFILE_PROJECT_SEQ;
+	}
+
+	public int getPROFILE_SKILL_ONE() {
+		return PROFILE_SKILL_ONE;
+	}
+
+	public void setPROFILE_SKILL_ONE(int pROFILE_SKILL_ONE) {
+		PROFILE_SKILL_ONE = pROFILE_SKILL_ONE;
+	}
+
+	public int getPROFILE_LANGUAGE() {
+		return PROFILE_LANGUAGE;
+	}
+
+	public void setPROFILE_LANGUAGE(int pROFILE_LANGUAGE) {
+		PROFILE_LANGUAGE = pROFILE_LANGUAGE;
+	}
+
+	public int getPROFILE_CERTIFICATE_SEQ() {
+		return PROFILE_CERTIFICATE_SEQ;
+	}
+
+	public void setPROFILE_CERTIFICATE_SEQ(int pROFILE_CERTIFICATE_SEQ) {
+		PROFILE_CERTIFICATE_SEQ = pROFILE_CERTIFICATE_SEQ;
+	}
+
+	public int getPROFILE_ACADEMY_BACKGROUND_SEQ() {
+		return PROFILE_ACADEMY_BACKGROUND_SEQ;
+	}
+
+	public void setPROFILE_ACADEMY_BACKGROUND_SEQ(int pROFILE_ACADEMY_BACKGROUND_SEQ) {
+		PROFILE_ACADEMY_BACKGROUND_SEQ = pROFILE_ACADEMY_BACKGROUND_SEQ;
+	}
+
+	public int getPROFILE_STORAGE_SEQ() {
+		return PROFILE_STORAGE_SEQ;
+	}
+
+	public void setPROFILE_STORAGE_SEQ(int pROFILE_STORAGE_SEQ) {
+		PROFILE_STORAGE_SEQ = pROFILE_STORAGE_SEQ;
+	}
+
+	public int getPROFILE_LINE_OF_WORK() {
+		return PROFILE_LINE_OF_WORK;
+	}
+
+	public void setPROFILE_LINE_OF_WORK(int pROFILE_LINE_OF_WORK) {
+		PROFILE_LINE_OF_WORK = pROFILE_LINE_OF_WORK;
+	}
+
+	public int getPROFILE_INCOME() {
+		return PROFILE_INCOME;
+	}
+
+	public void setPROFILE_INCOME(int pROFILE_INCOME) {
+		PROFILE_INCOME = pROFILE_INCOME;
+	}
+	
+	
+	
+}

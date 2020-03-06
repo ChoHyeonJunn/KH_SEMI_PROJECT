@@ -1,7 +1,8 @@
 package com.devca.model.biz.qna;
 
 import java.util.List;
-import com.devca.model.dto.QNA_BOARD;
+
+import com.devca.model.dto.qna.QNA_BOARD;
 
 public interface QnaPageBiz {
 	public List<QNA_BOARD> selectList();

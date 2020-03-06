@@ -48,7 +48,7 @@ section{
 				<p>나의 스킬에 맞는 정보를 찾아드립니다.</p>
 			</div>
 			<div>
-				<button onclick="#">스킬 체크해보기</button>
+				<button onclick="location.href='/DEVCA/main/survey.do'">스킬 체크해보기</button>
 			</div>
 		</div>
 		
