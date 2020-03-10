@@ -21,6 +21,12 @@ public class WORK {
 		INCOME = iNCOME;
 	}
 
+	public WORK(int wORK_MEMBER_CODE, String lINE_OF_WORK, String iNCOME) {
+		WORK_MEMBER_CODE = wORK_MEMBER_CODE;
+		LINE_OF_WORK = lINE_OF_WORK;
+		INCOME = iNCOME;	
+	}
+
 	public int getWORK_MEMBER_CODE() {
 		return WORK_MEMBER_CODE;
 	}

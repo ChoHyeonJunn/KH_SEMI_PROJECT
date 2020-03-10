@@ -12,6 +12,7 @@
 
 <!-- START :: css -->
 <link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
+<link href="/DEVCA/resources/css/kakaomap.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
 section{
@@ -24,43 +25,6 @@ section{
 	border: 1px solid gray;
 	border-radius: 30%;	
 }
-
-.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
-.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {position:relative;width:100%;height:500px;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
-.bg_white {background:#fff;}
-#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
-#menu_wrap .option{text-align: center;}
-#menu_wrap .option p {margin:10px 0;}  
-#menu_wrap .option button {margin-left:5px;}
-#placesList li {list-style: none;}
-#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
-#placesList .item span {display: block;margin-top:4px;}
-#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-#placesList .item .info{padding:10px 0 10px 55px;}
-#placesList .info .gray {color:#8a8a8a;}
-#placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
-#placesList .info .tel {color:#009900;}
-#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
-#placesList .item .marker_1 {background-position: 0 -10px;}
-#placesList .item .marker_2 {background-position: 0 -56px;}
-#placesList .item .marker_3 {background-position: 0 -102px}
-#placesList .item .marker_4 {background-position: 0 -148px;}
-#placesList .item .marker_5 {background-position: 0 -194px;}
-#placesList .item .marker_6 {background-position: 0 -240px;}
-#placesList .item .marker_7 {background-position: 0 -286px;}
-#placesList .item .marker_8 {background-position: 0 -332px;}
-#placesList .item .marker_9 {background-position: 0 -378px;}
-#placesList .item .marker_10 {background-position: 0 -423px;}
-#placesList .item .marker_11 {background-position: 0 -470px;}
-#placesList .item .marker_12 {background-position: 0 -516px;}
-#placesList .item .marker_13 {background-position: 0 -562px;}
-#placesList .item .marker_14 {background-position: 0 -608px;}
-#placesList .item .marker_15 {background-position: 0 -654px;}
-#pagination {margin:10px auto;text-align: center;}
-#pagination a {display:inline-block;margin-right:10px;}
-#pagination .on {font-weight: bold; cursor: default;color:#777;}
 </style>
 <!-- END :: css -->
 
@@ -82,76 +46,85 @@ section{
 <body>
 	
 	<section>
-  		<h1>STUDY :: LIST</h1>
-  		
-  		<div class="map_wrap">
-		    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-		
-		    <div id="menu_wrap" class="bg_white">
-		        <div class="option">
-		            <div>
-		                <form onsubmit="searchPlaces(); return false;">
-		                    키워드 : <input type="text" id="keyword" size="15"> 
-		                    <button type="submit">검색하기</button> 
-		                </form>
-		            </div>
-		        </div>
-		        <hr>
-		        <ul id="placesList"></ul>
-		        <div id="pagination"></div>
-		    </div>
-		</div>
-  		
-  		<c:if test="${not empty sessionLoginMember.MEMBER_CODE || not empty sessionLoginKakao.MEMBER_CODE || not empty sessionLoginNaver.MEMBER_CODE}">
-			<input type="button" value="글쓰기" onclick="location.href='/DEVCA/study/studywritepage.do'">
-		</c:if>
-  		<div>
-  			<c:choose>
-				
-				<c:when test="${empty studyList }">
-					<div>
-						----스터디가 존재하지 않습니다.----		
-					</div>				
-				</c:when>
-				
-				<c:otherwise>
-				
-					<c:forEach var="study" items="${studyList}">
-						<div>
-							<span>
-								<img id="profile_image" src="
-												<c:choose>
-													<c:when test="${not empty study.MEMBER_PROFILE_IMAGE_S_NAME}">../resources/images/profileupload/${study.MEMBER_PROFILE_IMAGE_S_NAME }</c:when>
-													<c:otherwise>../resources/images/add.png</c:otherwise>
-												</c:choose>	
-												">
-							</span>
-							<span>
-								${study.MEMBER_NAME}
-							</span>
-							<span>
-								${study.MEMBER_EMAIL}
-							</span>
-							<span>
-								<a href="/DEVCA/study/studydetailpage.do?STUDY_CODE=${study.STUDY_CODE}">${study.STUDY_TITLE}</a>
-							</span>
-							<span>
-								${study.STUDY_PARTICIPANTS}명 참여중
-							</span>
-							<span>
-								${study.STUDY_DATE}
-								${study.STUDY_PLACE_NAME}
-								${study.STUDY_PLACE_NAME}
-								${study.STUDY_ADDRESS}
-							</span>
-						</div>
-					</c:forEach>	
+		<div class="card p-4 my-3 bg-white">		
+	  		
+	  		<div class="map_wrap">
+			    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+			
+			    <div id="menu_wrap" class="bg_white">
+			        <div class="option">
+			            <div>
+			                <form onsubmit="searchPlaces(); return false;">
+			                    키워드 : <input type="text" id="keyword" size="15"> 
+			                    <button type="submit">검색하기</button> 
+			                </form>
+			            </div>
+			        </div>
+			        <hr>
+			        <ul id="placesList"></ul>
+			        <div id="pagination"></div>
+			    </div>
+			</div>
+	  			
+	  		<h1 class="card-title">STUDY :: LIST</h1>
+	  		
+	  		<c:if test="${not empty sessionLoginMember.MEMBER_CODE || not empty sessionLoginKakao.MEMBER_CODE || not empty sessionLoginNaver.MEMBER_CODE}">
+				<input class="btn btn-lg" type="button" value="글쓰기" onclick="location.href='/DEVCA/study/studywritepage.do'" style="width: 100px;">
+			</c:if>
+	  		<div>
+	  			<c:choose>
+					
+					<c:when test="${empty studyList }">
+						<div class="card p-4 my-3 bg-white">			
+							----스터디가 존재하지 않습니다.----		
+						</div>				
+					</c:when>
+					
+					<c:otherwise>
+					
+						<c:forEach var="study" items="${studyList}">
+							<div class="card p-4 my-3 bg-white" onclick="location.href='/DEVCA/study/studydetailpage.do?STUDY_CODE=${study.STUDY_CODE}'" style="cursor: pointer;">
+								<div class="row">								
 										
-				</c:otherwise>
-				
-			</c:choose>	
-  		</div>	
-		
+									<div class="col-md-2">
+										<div class="row">
+											<div class="col-md-3">
+												<img id="profile_image" src="
+																<c:choose>
+																	<c:when test="${not empty study.MEMBER_PROFILE_IMAGE_S_NAME}">../resources/images/profileupload/${study.MEMBER_PROFILE_IMAGE_S_NAME }</c:when>
+																	<c:otherwise>../resources/images/add.png</c:otherwise>
+																</c:choose>	
+																">
+											</div>
+											<div class="col-md-9">
+												<strong>${study.MEMBER_NAME}</strong>
+												<br>
+												<strong>${study.MEMBER_EMAIL}</strong>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-5">
+										<h5><a class="card-link" href="/DEVCA/study/studydetailpage.do?STUDY_CODE=${study.STUDY_CODE}">${study.STUDY_TITLE}</a></h5>
+									</div>
+									<div class="col-md-1">
+										${study.STUDY_PARTICIPANTS}명 참여중
+									</div>
+									<div class="col-md-1">
+										${study.STUDY_DATE}
+									</div>
+									<div class="col-md-3">
+										${study.STUDY_PLACE_NAME}
+										(${study.STUDY_ADDRESS})
+									</div>
+								</div>	
+							</div>
+						</c:forEach>	
+											
+					</c:otherwise>
+					
+				</c:choose>	
+	  		</div>	
+		</div>
 	</section>
 	
 	<!-- FOOTER FORM -->	
@@ -183,7 +156,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 
 ///////////////////내 위치 마커////////////////////////
 var MyimageSrc =  <c:choose>
-					<c:when test="${not empty study.MEMBER_PROFILE_IMAGE_S_NAME}">'../resources/images/profileupload/${study.MEMBER_PROFILE_IMAGE_S_NAME }'</c:when>
+					<c:when test="${not empty sessionMember_profile.MEMBER_PROFILE_IMAGE_S_NAME}">'../resources/images/profileupload/${sessionMember_profile.MEMBER_PROFILE_IMAGE_S_NAME }'</c:when>
 			   		<c:otherwise>'../resources/images/add.png'</c:otherwise>
 				</c:choose>	, // 마커이미지의 주소입니다    
 				MyimageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
@@ -214,6 +187,7 @@ function displayStudyList(){
 		json.title = '${study.STUDY_TITLE}'
 		json.latlng = new kakao.maps.LatLng('${study.STUDY_LATITUDE}', '${study.STUDY_LOGITUDE}')
 		json.study_code = '${study.STUDY_CODE}'
+		json.STUDY_PARTICIPANTS = '${study.STUDY_PARTICIPANTS}'
 		
 		jsonArray.push(json);
 	</c:forEach>
@@ -232,23 +206,30 @@ function displayStudyList(){
 	        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 	        image : markerImage // 마커 이미지 
 	    });
-	    
+		// 마커가 지도 위에 표시되도록 설정합니다
+	    marker.setMap(map);
+		
 	    // 인포윈도우에 제목 표시
-	    var iwContent = '<div><a href="/DEVCA/study/studydetailpage.do?STUDY_CODE=' + positions[i].study_code + '">'
-	    					+ positions[i].title +
-	    				'</a></div>',
-	    iwPosition = new kakao.maps.LatLng(positions[i].latlng, positions[i].title); //인포윈도우 표시 위치입니다
+	    var content = '<div class="customoverlay">'
+	    					+ '<a href="/DEVCA/study/studydetailpage.do?STUDY_CODE=' + positions[i].study_code + '">'
+	    					+ positions[i].title + ':' + positions[i].STUDY_PARTICIPANTS + '명 참여중'
+	    					+ '</a>' +
+	    			  '</div>';
 
 		// 인포윈도우를 생성합니다
-		var Sinfowindow = new kakao.maps.InfoWindow({
-		    position : iwPosition, 
-		    content : iwContent 
+		var customOverlay = new kakao.maps.CustomOverlay({
+			map: map,
+		    position : positions[i].latlng, 
+		    content : content,
+		    yAnchor: -1
 		});
-		marker.setMap(map);
-		Sinfowindow.open(map, marker); 
+		customOverlay.setMap(map);
 	}
 
 }
+
+
+///////////////////장소 검색으로 위치 설정////////////////////////
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  

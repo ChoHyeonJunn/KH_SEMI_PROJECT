@@ -16,29 +16,8 @@
 <%@ include file="/views/form/header.jsp"%>
 
 <!-- START :: css -->
-<link href="/DEVCA/resources/css/master.css" rel="stylesheet"
-	type="text/css">
+<link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
 <!-- END :: css -->
-
-
-<!-- bootstrap -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-<!--Fontawesome CDN-->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-	crossorigin="anonymous">
-
-<!-- end bootstrap --!>
-
 
 <!-- START :: set JSTL variable -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -47,11 +26,11 @@
 <!-- START :: JAVASCRIPT -->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	
-	
+
+
 
 <script type="text/javascript">
-
+	
 </script>
 
 
@@ -92,15 +71,19 @@
 							</c:forEach> <a
 									href="/DEVCA/qnapage/qnadetail.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }">${QNA_BOARD.QNA_TITLE }</a>
 								</td>
-								<td>${QNA_BOARD.QNA_WRITER }</td>
+								<td>${QNA_BOARD.MEMBER_NAME }/${QNA_BOARD.MEMBER_EMAIL }</td>
 								<td>${QNA_BOARD.QNA_DATE }</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
 				<tr>
-					<td colspan="4"><input type="button" class="btn" value="글쓰기"
-						onclick="location.href='/DEVCA/qnapage/qnawriteform.do'" /></td>
+					<c:if
+						test="${not empty sessionLoginMember.MEMBER_CODE || not empty sessionLoginKakao.MEMBER_CODE || not empty sessionLoginNaver.MEMBER_CODE}">
+						<td colspan="4"><input type="button" value="글쓰기"
+							onclick="location.href='/DEVCA/qnapage/qnawriteform.do'" /></td>
+					</c:if>
+
 				</tr>
 			</table>
 		</div>

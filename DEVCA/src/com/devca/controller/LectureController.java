@@ -23,8 +23,8 @@ import com.devca.model.dto.lecture.LECTURE;
 import com.devca.model.dto.lecture.REVIEW;
 import com.devca.model.dto.member.KAKAO_MEMBER;
 import com.devca.model.dto.member.MEMBER;
-import com.devca.model.dto.member.MEMBER_PROFILE;
 import com.devca.model.dto.member.NAVER_MEMBER;
+import com.devca.utility.string.HtmlString;
 import com.google.gson.Gson;
 
 @WebServlet(//
@@ -136,6 +136,10 @@ public class LectureController extends HttpServlet {
 		System.out.println(no + "번째 scroll selectList");
 
 		List<LECTURE> lectureList = biz.selectLectureList(no);
+		// payFlag 에서 html 태그 제거
+		for (LECTURE lecture : lectureList)
+			lecture.setLECTURE_PAYFLAG(HtmlString.removeTag(lecture.getLECTURE_PAYFLAG()));
+
 		for (int i = 0; i < lectureList.size(); i++) {
 			System.out.println("lecture[" + i + "]" + lectureList.get(i).getLECTURE_CODE());
 		}
@@ -147,11 +151,12 @@ public class LectureController extends HttpServlet {
 	}
 
 	// 강의 검색 자동완성
-	private void doLectureSearchAutoComplete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void doLectureSearchAutoComplete(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		String search = request.getParameter("search");
 
 		List<LECTURE> lectureList = biz.selectLectureAutoCompleteList(search);
-		
+
 		Gson gson = new Gson();
 		String jsonList = gson.toJson(lectureList);
 		PrintWriter out = response.getWriter();
@@ -167,6 +172,10 @@ public class LectureController extends HttpServlet {
 		System.out.println(no + "번째 scroll selectList");
 
 		List<LECTURE> lectureList = biz.selectLectureList(no, search);
+		// payFlag 에서 html 태그 제거
+		for (LECTURE lecture : lectureList)
+			lecture.setLECTURE_PAYFLAG(HtmlString.removeTag(lecture.getLECTURE_PAYFLAG()));
+
 		for (int i = 0; i < lectureList.size(); i++) {
 			System.out.println("lecture[" + i + "]" + lectureList.get(i).getLECTURE_CODE());
 		}
@@ -177,7 +186,7 @@ public class LectureController extends HttpServlet {
 		out.println(jsonList);
 	}
 
-	// 강의 리스트 페이지로 이동
+	// 내강의 리스트 페이지로 이동
 	private void doMyLectureListPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		dispatch("/views/lecture/mylecturelist.jsp", request, response);
@@ -203,6 +212,10 @@ public class LectureController extends HttpServlet {
 		System.out.println(no + "번째 scroll selectList");
 
 		List<LECTURE> lectureList = biz.selectMyLectureList(MEMBER_CODE, no);
+		// payFlag 에서 html 태그 제거
+		for (LECTURE lecture : lectureList)
+			lecture.setLECTURE_PAYFLAG(HtmlString.removeTag(lecture.getLECTURE_PAYFLAG()));
+
 		for (int i = 0; i < lectureList.size(); i++) {
 			System.out.println("lecture[" + i + "]" + lectureList.get(i).getLECTURE_CODE());
 		}
@@ -245,8 +258,11 @@ public class LectureController extends HttpServlet {
 	// 만료된 강의 삭제
 	private void doDeleteMyGarbageLecture(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int LECTURE_CODE = Integer.parseInt(request.getParameter("LECTURE_CODE"));
-
-		int res = biz.deleteMyGarbageLecture(LECTURE_CODE);
+		int MEMBER_CODE = Integer.parseInt(request.getParameter("MEMBER_CODE"));
+		
+		System.out.println(MEMBER_CODE+" : "+LECTURE_CODE);
+		
+		int res = biz.deleteMyGarbageLecture(LECTURE_CODE, MEMBER_CODE);
 
 		JSONObject json = new JSONObject();
 		json.put("res", res);
@@ -310,7 +326,8 @@ public class LectureController extends HttpServlet {
 		lecture.setLECTURE_RATE(Double.toString(
 				(Double.parseDouble(lecture.getLECTURE_RATE()) * REVIEW_COUNT + Double.parseDouble(REVIEW_RATE))
 						/ (REVIEW_COUNT + 1)));
-
+		lecture.setLECTURE_READCOUNT(lecture.getLECTURE_READCOUNT() + 1); // READCOUNT는 후기의 갯수로 사용,,,
+		System.out.println(lecture.getLECTURE_READCOUNT());
 		int Rres = biz.updateRate(lecture);
 
 		if (res > 0 && Rres > 0) {
@@ -357,6 +374,8 @@ public class LectureController extends HttpServlet {
 			lecture.setLECTURE_RATE(Double.toString(
 					(Double.parseDouble(lecture.getLECTURE_RATE()) * REVIEW_COUNT - REVIEW_RATE) / (REVIEW_COUNT - 1)));
 		}
+
+		lecture.setLECTURE_READCOUNT(lecture.getLECTURE_READCOUNT() - 1); // READCOUNT는 후기의 갯수로 사용,,,
 
 		int Rres = biz.updateRate(lecture);
 

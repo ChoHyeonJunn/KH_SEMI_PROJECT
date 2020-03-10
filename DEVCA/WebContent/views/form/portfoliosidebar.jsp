@@ -63,9 +63,6 @@
          
          <ul class="list-group">
          	<li class="list-group-item">
-				<a href="#">로드맵</a>
-         	</li>
-         	<li class="list-group-item">
            		<a href="/DEVCA/portfolio/surveypage.do">설문조사</a>
            	</li>
          </ul>

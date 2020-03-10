@@ -69,8 +69,10 @@ public class QnaCommentController extends HttpServlet {
 
 			jsonObj.put("COMMENT_NO", comlist.get(i).getCOMMENT_NO());
 			jsonObj.put("COMMENT_BOARD_NO", comlist.get(i).getCOMMENT_BOARD_NO());
-			jsonObj.put("COMMENT_WRITER", comlist.get(i).getCOMMENT_WRITER());
 			jsonObj.put("COMMENT_CONTENT", comlist.get(i).getCOMMENT_CONTENT());
+			jsonObj.put("MEMBER_NAME", comlist.get(i).getMEMBER_NAME());
+			
+			jsonObj.put("MEMBER_EMAIL", comlist.get(i).getMEMBER_EMAIL());
 
 			jsonObj.put("COMMENT_DATE", comlist.get(i).getCOMMENT_DATE().toString());
 
@@ -94,9 +96,9 @@ public class QnaCommentController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		QNA_COMMENT QNA_COMMENT = new QNA_COMMENT();
-
+	
 		QNA_COMMENT.setCOMMENT_BOARD_NO(Integer.parseInt(request.getParameter("COMMENT_BOARD_NO")));
-		QNA_COMMENT.setCOMMENT_WRITER(request.getParameter("COMMENT_WRITER"));
+		QNA_COMMENT.setMEMBER_CODE(Integer.parseInt(request.getParameter("MEMBER_CODE")));
 		QNA_COMMENT.setCOMMENT_CONTENT(request.getParameter("COMMENT_CONTENT"));
 
 		int res = cbiz.insertComment(QNA_COMMENT);
@@ -152,18 +154,14 @@ public class QnaCommentController extends HttpServlet {
 	private void doQnaSubComment(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
-		
-		int parentcommentno = Integer.parseInt(request.getParameter("parentcommentno"));
-		int COMMENT_BOARD_NO = Integer.parseInt(request.getParameter("COMMENT_BOARD_NO"));
-		
-		System.out.println(COMMENT_BOARD_NO);
-		
+	
 
 		QNA_COMMENT QNA_COMMENT = new QNA_COMMENT();
-		QNA_COMMENT.setCOMMENT_NO(parentcommentno);
-		QNA_COMMENT.setCOMMENT_BOARD_NO(COMMENT_BOARD_NO);
-		QNA_COMMENT.setCOMMENT_WRITER(request.getParameter("COMMENT_WRITER"));
+		QNA_COMMENT.setCOMMENT_NO(Integer.parseInt(request.getParameter("parentcommentno")));
+		QNA_COMMENT.setCOMMENT_BOARD_NO(Integer.parseInt(request.getParameter("COMMENT_BOARD_NO")));
+		QNA_COMMENT.setMEMBER_CODE(Integer.parseInt(request.getParameter("MEMBER_CODE")));
 		QNA_COMMENT.setCOMMENT_CONTENT(request.getParameter("COMMENT_CONTENT"));
+		QNA_COMMENT.setMEMBER_CODE(Integer.parseInt(request.getParameter("MEMBER_CODE")));
 		QNA_COMMENT.setCOMMENT_GROUP_NO(Integer.parseInt(request.getParameter("COMMENT_GROUP_NO")));
 		QNA_COMMENT.setCOMMENT_GROUP_ORDER(Integer.parseInt(request.getParameter("COMMENT_GROUP_ORDER")));
 		QNA_COMMENT.setCOMMENT_GROUP_DEPTH(Integer.parseInt(request.getParameter("COMMENT_GROUP_DEPTH")));
@@ -173,7 +171,7 @@ public class QnaCommentController extends HttpServlet {
 			out.println("true");
 			out.close();
 		} else {
-			out.println("false" + parentcommentno);
+			out.println("false");
 			out.close();
 		}
 	}

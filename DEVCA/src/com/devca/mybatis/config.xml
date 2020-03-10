@@ -25,10 +25,8 @@
 		<typeAlias type="com.devca.model.dto.study.APPLY_STUDY" alias="APPLY_STUDY" />
 		
 		<typeAlias type="com.devca.model.dto.profile.CAREER" alias="CAREER" />
-		<typeAlias type="com.devca.model.dto.profile.CAREER_DETAIL" alias="CAREER_DETAIL" />
 		<typeAlias type="com.devca.model.dto.profile.CERTIFICATE" alias="CERTIFICATE" />
 		<typeAlias type="com.devca.model.dto.profile.LANGUAGE" alias="LANGUAGE" />
-		<typeAlias type="com.devca.model.dto.profile.LANGUAGE_CERTIFICATE" alias="LANGUAGE_CERTIFICATE" />
 		<typeAlias type="com.devca.model.dto.profile.PROJECT" alias="PROJECT" />
 		<typeAlias type="com.devca.model.dto.profile.SCHOOL" alias="SCHOOL" />
 		<typeAlias type="com.devca.model.dto.profile.SKILL" alias="SKILL" />
@@ -57,10 +55,8 @@
 		<mapper resource="com/devca/mybatis/reviewMapper.xml" />
 		<mapper resource="com/devca/mybatis/studyMapper.xml" />
 		<mapper resource="com/devca/mybatis/careerMapper.xml"/>
-		<mapper resource="com/devca/mybatis/career_detailMapper.xml"/>
 		<mapper resource="com/devca/mybatis/projectMapper.xml"/>
 		<mapper resource="com/devca/mybatis/languageMapper.xml"/>
-		<mapper resource="com/devca/mybatis/languagecertificateMapper.xml"/>
 		<mapper resource="com/devca/mybatis/skillMapper.xml"/>
 		<mapper resource="com/devca/mybatis/schoolMapper.xml"/>
 		<mapper resource="com/devca/mybatis/actionMapper.xml"/>

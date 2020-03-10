@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.devca.model.biz.qna.QnaPageBizImpl;
+import com.devca.model.dto.member.MEMBER;
 import com.devca.model.dto.qna.QNA_BOARD;
 
 @WebServlet(//
@@ -94,10 +95,10 @@ public class QnaPageController extends HttpServlet {
 
 	private void doQnaWriteRes(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
-		String QNA_WRITER = request.getParameter("QNA_WRITER");
 		String QNA_TITLE = request.getParameter("QNA_TITLE");
 		String QNA_CONTENT = request.getParameter("QNA_CONTENT");
-		QNA_BOARD QNA_BOARD = new QNA_BOARD(QNA_WRITER, QNA_TITLE, QNA_CONTENT);
+		int MEMBER_CODE = Integer.parseInt(request.getParameter("MEMBER_CODE"));
+		QNA_BOARD QNA_BOARD = new QNA_BOARD(QNA_TITLE, QNA_CONTENT, MEMBER_CODE);
 
 		int res = biz.insert(QNA_BOARD);
 		if (res > 0) {
@@ -155,14 +156,14 @@ public class QnaPageController extends HttpServlet {
 	private void doAnswerRes(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
 		int parentboardno = Integer.parseInt(request.getParameter("parentboardno"));
-		String QNA_WRITER = request.getParameter("QNA_WRITER");
 		String QNA_TITLE = request.getParameter("QNA_TITLE");
 		String QNA_CONTENT = request.getParameter("QNA_CONTENT");
+		int MEMBER_CODE = Integer.parseInt(request.getParameter("MEMBER_CODE"));
 		QNA_BOARD QNA_BOARD = new QNA_BOARD();
 		QNA_BOARD.setQNA_BOARD_NO(parentboardno);
-		QNA_BOARD.setQNA_WRITER(QNA_WRITER);
 		QNA_BOARD.setQNA_TITLE(QNA_TITLE);
 		QNA_BOARD.setQNA_CONTENT(QNA_CONTENT);
+		QNA_BOARD.setMEMBER_CODE(MEMBER_CODE);
 
 		int res = biz.answerProc(QNA_BOARD);
 

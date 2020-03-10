@@ -25,8 +25,8 @@ public class LanguageBizImpl implements LanguageBiz {
 	}
 
 	@Override
-	public int language_delete(int language_seq, int profile_seq) {
-		return dao.language_delete(language_seq, profile_seq);
+	public int language_delete(int member_code) {
+		return dao.language_delete(member_code);
 	}
 
 	@Override
@@ -45,5 +45,6 @@ public class LanguageBizImpl implements LanguageBiz {
 		// TODO Auto-generated method stub
 		return dao.language_count(member_code);
 	}
+
 
 }

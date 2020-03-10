@@ -12,6 +12,9 @@ public interface MainBiz {
 	// 로드맵 데이터 추가 요청처리
 	public int addRoadMapData(int MEMBER_CODE, String item);
 
+	// 로드맵 중분류 추가 요청처리
+	int addRoadMapCategory(int MEMBER_CODE, String item);
+
 	// 로드맵 데이터 삭제 요청처리
 	public int removeRoadMapData(int mEMBER_CODE, String item);
 

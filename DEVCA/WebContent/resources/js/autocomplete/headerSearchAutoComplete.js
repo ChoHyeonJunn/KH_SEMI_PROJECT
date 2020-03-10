@@ -37,15 +37,16 @@ function headerSearchAutoComplete(){
 			return false;
 		}
 	}).autocomplete("instance")._renderItem = function(ul, item){
-		var li_item = $("<div>");
+		var li_item = $("<div>").attr({"class":"my-auto"});
 		var img = $("<img>").attr({
-						"style" : "width: 50px; height: 30px;",
+						"class" : "m-1",
+						"style" : "width: 50px; height: 30px; border-radius: 5px;",
 						"src" :  item.image
 					})
 		var link = $("<a>").attr({
 						"href" : "/DEVCA/lecture/lecturedetailpage.do?lecture_code=" + item.link
 					})
-		var title = $("<span>").text(item.label);
+		var title = $("<span>").attr({"class":"mx-2"}).text(item.label);
 		li_item.append(link.append(img)).append(title)
 						
 		return $("<li>").append(li_item).appendTo(ul);

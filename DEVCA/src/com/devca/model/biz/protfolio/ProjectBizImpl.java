@@ -25,8 +25,8 @@ public class ProjectBizImpl implements ProjectBiz {
 	}
 
 	@Override
-	public int project_delete(int project_seq, int profile_seq) {
-		return dao.project_delete(project_seq, profile_seq);
+	public int project_delete(int member_code) {
+		return dao.project_delete(member_code);
 	}
 
 	@Override
@@ -39,6 +39,11 @@ public class ProjectBizImpl implements ProjectBiz {
 	public int project_count(int member_code) {
 		// TODO Auto-generated method stub
 		return dao.project_count(member_code);
+	}
+
+	@Override
+	public int project_count_row(int member_code) {
+		return dao.project_count_row(member_code);
 	}
 
 }

@@ -30,6 +30,8 @@
 <!-- START :: css -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
+<link href="/DEVCA/resources/css/kakaomap.css" rel="stylesheet" type="text/css">
+
 <style type="text/css">
 #headerSearchSubmitButton{
 	cursor: pointer;
@@ -154,23 +156,23 @@ function searchSubmit(){
 
 	<!-- Navbar links -->			  
 	<div class="collapse navbar-collapse bg-dark" id="collapsibleNavbar">
-		<ul class="navbar-nav">
+		<ul class="navbar-nav list-group-horizontal">
 			<li class="nav-item">
-				<a class="nav-link" href="/DEVCA/lecture/lecturelistpage.do">강의게시물</a>
+				<strong><a class="nav-link px-5 py-4" href="/DEVCA/lecture/lecturelistpage.do">LECTURE</a></strong>
 			</li>
 			<c:if test="${not empty sessionLoginMember || not empty sessionLoginKakao || not empty sessionLoginNaver}">
 				<li class="nav-item">
-		        	<a class="nav-link" href="/DEVCA/lecture/mylecturelistpage.do">찜한 강의</a>
+		        	<a class="nav-link mx-5 px-5 py-4" href="/DEVCA/lecture/mylecturelistpage.do">MY LECTURE</a>
 		     	</li>
 	      	</c:if>
 	      	<li class="nav-item">
-	        	<a class="nav-link" href="/DEVCA/study/studylistpage.do">스터디</a>
+	        	<a class="nav-link mx-5 px-5 py-4" href="/DEVCA/study/studylistpage.do">STUDY</a>
 	      	</li>
 	      	<li class="nav-item">
-	        	<a class="nav-link" href="/DEVCA/qnapage/qnalist.do">Q&A</a>
+	        	<a class="nav-link mx-5 px-5 py-4" href="/DEVCA/qnapage/qnalist.do">Q&A</a>
 	      	</li>
 	      	<li class="nav-item">
-	        	<a class="nav-link" href="/DEVCA/qnapage/faqpage.do">FAQ</a>
+	        	<a class="nav-link mx-5 px-5 py-4" href="/DEVCA/qnapage/faqpage.do">FAQ</a>
 	      	</li>
 	    </ul>
 	</div>

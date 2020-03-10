@@ -63,6 +63,9 @@ public class WorkDaoImpl extends SqlMapConfig implements WorkDao {
 	public int work_delete(int member_code) {
 		SqlSession session = getSqlSessionFactory().openSession(false);
 		int work_res = session.delete(namespace+".work_delete",member_code);
+		if(work_res > 0) {
+			session.commit();
+		}
 		session.close();
 		return work_res;
 	}

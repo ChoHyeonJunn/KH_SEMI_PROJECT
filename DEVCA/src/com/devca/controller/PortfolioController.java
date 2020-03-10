@@ -16,14 +16,10 @@ import com.devca.model.biz.protfolio.ActionBiz;
 import com.devca.model.biz.protfolio.ActionBizImpl;
 import com.devca.model.biz.protfolio.CareerBiz;
 import com.devca.model.biz.protfolio.CareerBizImpl;
-import com.devca.model.biz.protfolio.CareerDetailBiz;
-import com.devca.model.biz.protfolio.CareerDetailBizImpl;
 import com.devca.model.biz.protfolio.CertificateBiz;
 import com.devca.model.biz.protfolio.CertificateBizImpl;
 import com.devca.model.biz.protfolio.LanguageBiz;
 import com.devca.model.biz.protfolio.LanguageBizImpl;
-import com.devca.model.biz.protfolio.LanguageCertificateBiz;
-import com.devca.model.biz.protfolio.LanguageCertificateBizImpl;
 import com.devca.model.biz.protfolio.ProjectBiz;
 import com.devca.model.biz.protfolio.ProjectBizImpl;
 import com.devca.model.biz.protfolio.SchoolBiz;
@@ -40,10 +36,8 @@ import com.devca.model.dto.member.NAVER_MEMBER;
 import com.devca.model.dto.member.SURVEY;
 import com.devca.model.dto.profile.ACTION_DTO;
 import com.devca.model.dto.profile.CAREER;
-import com.devca.model.dto.profile.CAREER_DETAIL;
 import com.devca.model.dto.profile.CERTIFICATE;
 import com.devca.model.dto.profile.LANGUAGE;
-import com.devca.model.dto.profile.LANGUAGE_CERTIFICATE;
 import com.devca.model.dto.profile.PROJECT;
 import com.devca.model.dto.profile.SCHOOL;
 import com.devca.model.dto.profile.SKILL;
@@ -79,11 +73,9 @@ public class PortfolioController extends HttpServlet {
 
 	HttpSession session;
 	CareerBiz careerbiz = new CareerBizImpl();
-	CareerDetailBiz careerdetailbiz = new CareerDetailBizImpl();
 	ProjectBiz projectbiz = new ProjectBizImpl();
 	SkillBiz skillbiz = new SkillBizImpl();
 	LanguageBiz languagebiz = new LanguageBizImpl();
-	LanguageCertificateBiz langcertbiz = new LanguageCertificateBizImpl();
 	SchoolBiz schoolbiz = new SchoolBizImpl();
 	ActionBiz actionbiz = new ActionBizImpl();
 	CertificateBiz certificatebiz = new CertificateBizImpl();
@@ -164,17 +156,34 @@ public class PortfolioController extends HttpServlet {
 
 		List<CAREER> careerList = careerbiz.career_select(member_code);
 		request.setAttribute("careerList", careerList);
-		int careerdate[] = careerbiz.career_date(member_code);
-		int year = careerdate[0];
-		int month = careerdate[1];
-		System.out.println(year);
-		System.out.println(month);
-		request.setAttribute("careerdate_year", year);
-		request.setAttribute("careerdate_month", month);
-		CAREER CAREER_SEQ = careerbiz.career_select_seq(member_code);
-		int career_seq = CAREER_SEQ.getCAREER_SEQ();
-		List<CAREER_DETAIL> career_detailList = careerdetailbiz.career_detail_select(career_seq);
-		request.setAttribute("careerdetailList", career_detailList);
+		if(careerList.isEmpty()||careerList.get(0).getDAY_OF_ENTRY()!=null) {
+			int career_year = 0;
+			int year = 0;
+			int month = 0;
+			int career_month = 0;
+			int[] careerdate = new int[2];
+			
+			for(int i =0; i< careerList.size();i++) {
+				careerdate = careerbiz.career_date(member_code,careerList.get(i).getCAREER_SEQ());
+				year = careerdate[0];
+				month = careerdate[1];
+				career_year = career_year + year;
+				career_month = career_month + month;
+				System.out.println("년수:"+career_year);
+				System.out.println("개월수 :"+career_month);
+				if(career_month >11) {
+					career_year++;
+					career_month = career_month - 12;
+					System.out.println("개월 년으로 치환"+career_month);
+				}
+			}
+		
+		System.out.println("경력 년수 : "+career_year);
+		System.out.println("경력 년수 : "+career_month);
+		request.setAttribute("careerdate_year", career_year);
+		request.setAttribute("careerdate_month", career_month);
+		}
+		
 		List<PROJECT> project_List = projectbiz.project_select(member_code);
 		request.setAttribute("projectList", project_List);
 		List<SKILL> skillList = skillbiz.skill_select(member_code);
@@ -189,8 +198,6 @@ public class PortfolioController extends HttpServlet {
 		request.setAttribute("certificateList", certificateList);
 		List<WORK> workList = workbiz.work_select(member_code);
 		request.setAttribute("workList", workList);
-
-		dispatch("/views/portfolio/preview.jsp", request, response);
 
 		dispatch("/views/portfolio/preview.jsp", request, response);
 	}
@@ -209,26 +216,64 @@ public class PortfolioController extends HttpServlet {
 			member_code = ((NAVER_MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
 		}
 		int res = 0;
+		int cnt = 0;
 		// 직군 연봉 데이터 저장
-		int work_seq = Integer.parseInt(request.getParameter("work_seq"));
-		String work_name = request.getParameter("work_name");
-		String income = request.getParameter("income");
-
-		WORK work = new WORK(member_code, work_seq, work_name, income);
-
-		res = workbiz.work_update(work);
-
+		res = workbiz.work_delete(member_code);
+		if(res > 0) {
+			System.out.println("삭제완료");
+		}
+		res = 0;
+		String[] work_count = request.getParameterValues("work_count");
+		String[] work_name = request.getParameterValues("work_name");
+		String[] income = request.getParameterValues("income");
+		WORK work_dto = null;
+		
+		System.out.println(work_count.length);
+		for(int i = 0; i < work_count.length; i++) {
+			work_dto = new WORK(member_code,work_name[i],income[i]);
+			
+			res = workbiz.work_insert(work_dto);
+			if(res > 0) {
+				cnt++;
+			}
+			res = 0;
+		}
+		System.out.println("직군/연봉 데이터 저장중");
 		// 직군 연봉 데이터 저장 종료
-		if (res > 0) {
+		if (cnt == work_count.length) {
+			System.out.println("직군/연봉 데이터 저장성공");
+
+
 			List<CAREER> careerList = careerbiz.career_select(member_code);
 			request.setAttribute("careerList", careerList);
-			int careerdate[] = careerbiz.career_date(member_code);
-			int year = careerdate[0];
-			int month = careerdate[1];
-			System.out.println(year);
-			System.out.println(month);
-			request.setAttribute("careerdate_year", year);
-			request.setAttribute("careerdate_month", month);
+			if(careerList.isEmpty()||careerList.get(0).getDAY_OF_ENTRY()!=null) {
+				int career_year = 0;
+				int year = 0;
+				int month = 0;
+				int career_month = 0;
+				int[] careerdate = new int[2];
+				
+				for(int i =0; i< careerList.size();i++) {
+					careerdate = careerbiz.career_date(member_code,careerList.get(i).getCAREER_SEQ());
+					year = careerdate[0];
+					month = careerdate[1];
+					career_year = career_year + year;
+					career_month = career_month + month;
+					System.out.println("년수:"+career_year);
+					System.out.println("개월수 :"+career_month);
+					if(career_month >11) {
+						career_year++;
+						career_month = career_month - 12;
+						System.out.println("개월 년으로 치환"+career_month);
+					}
+				}
+			
+			System.out.println("경력 년수 : "+career_year);
+			System.out.println("경력 년수 : "+career_month);
+			request.setAttribute("careerdate_year", career_year);
+			request.setAttribute("careerdate_month", career_month);
+			}
+			
 			List<PROJECT> project_List = projectbiz.project_select(member_code);
 			request.setAttribute("projectList", project_List);
 			List<SKILL> skillList = skillbiz.skill_select(member_code);
@@ -293,19 +338,32 @@ public class PortfolioController extends HttpServlet {
 			member_code = ((NAVER_MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
 		}
 		int res = 0;
+		int cnt = 0;
+		res = certificatebiz.certificate_delete(member_code);
+		if(res > 0) {
+			System.out.println("자격증 테이블 삭제 성공");
+		}
 		// 자격증 데이터 > DB 저장 시작
-		int certificate_seq = Integer.parseInt(request.getParameter("certificate_seq"));
-		String certificate_name = request.getParameter("certificate_name");
-		String certificate_start_date = request.getParameter("certificate_start_date");
-		String certificate_link = request.getParameter("certificate_link");
-		String certificate_ex_text = request.getParameter("certificate_ex_text");
-
-		CERTIFICATE certificate = new CERTIFICATE(member_code, certificate_seq, certificate_name,
-				certificate_start_date, certificate_link, certificate_ex_text);
-
-		res = certificatebiz.certificate_update(certificate);
+		String[] certificate_count = request.getParameterValues("certificate_count");
+		String[] certificate_name = request.getParameterValues("certificate_name");
+		String[] certificate_start_date = request.getParameterValues("certificate_start_date");
+		String[] certificate_link = request.getParameterValues("certificate_link");
+		String[] certificate_ex_text = request.getParameterValues("certificate_ex_text");
+		CERTIFICATE certificate = null;
+		for(int i = 0; i < certificate_count.length; i++) {
+			certificate = new CERTIFICATE(member_code, certificate_name[i],
+					certificate_start_date[i], certificate_link[i], certificate_ex_text[i]);
+			
+			res = certificatebiz.certificate_insert(certificate);
+			
+			if(res > 0) {
+				cnt++;
+			}
+			res = 0;
+		}
+		
 		// 자격증 데이터 > DB 저장 종료
-		if (res > 0) {
+		if (cnt == certificate_count.length) {
 			// 뉴비 진입시 테이블 생성용
 			int work_count = workbiz.work_count(member_code);
 			// 경력 번호로 상세 항목 테이블 참조
@@ -343,6 +401,15 @@ public class PortfolioController extends HttpServlet {
 		}
 		// 뉴비 진입시 테이블 생성용
 		List<CERTIFICATE> certificateList = certificatebiz.certificate_select(member_code);
+			String[] date = new String[certificateList.size()];
+			for(int i =0; i < certificateList.size();i++) {
+				System.out.println(certificateList.get(i).getCERTIFICATE_DATE());
+				if(certificateList.get(i).getCERTIFICATE_DATE()!=null) {
+				date[i] = certificateList.get(i).getCERTIFICATE_DATE().substring(0, 10);
+				System.out.println("시분초 제거"+date[i]);
+				certificateList.get(i).setCERTIFICATE_DATE(date[i]);
+				}
+			}
 		request.setAttribute("certificateList", certificateList);
 		dispatch("/views/portfolio/certificatepage.jsp", request, response);
 	}
@@ -362,21 +429,27 @@ public class PortfolioController extends HttpServlet {
 			member_code = ((NAVER_MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
 		}
 		int res = 0;
-
+		int cnt = 0;
+		actionbiz.action_delete(member_code);
 		// 활동 데이터 > DB 저장 시작
-		int action_seq = Integer.parseInt(request.getParameter("action_seq"));
-		String action_name = request.getParameter("action_name");
-		String action_start_date = request.getParameter("action_start_date");
-		String action_end_date = request.getParameter("action_end_date");
-		String action_link = request.getParameter("action_link");
-		String action_ex_text = request.getParameter("action_ex_text");
-
-		ACTION_DTO action = new ACTION_DTO(action_seq, member_code, action_name, action_start_date, action_end_date,
-				action_link, action_ex_text);
-
-		res = actionbiz.action_update(action);
+		String[] action_count = request.getParameterValues("action_count"); // 테이블 생성 갯수
+		String[] action_name = request.getParameterValues("action_name");
+		String[] action_start_date = request.getParameterValues("action_start_date");
+		String[] action_end_date = request.getParameterValues("action_end_date");
+		String[] action_link = request.getParameterValues("action_link");
+		String[] action_ex_text = request.getParameterValues("action_ex_text");
+		ACTION_DTO action = null;
+		for(int i = 0; i < action_count.length; i++) {
+			action = new ACTION_DTO(member_code,action_name[i],action_start_date[i],action_end_date[i],action_link[i],action_ex_text[i]);
+			res = actionbiz.action_insert(action);
+			if(res > 0) {
+				cnt++;
+			}
+			res = 0;
+		}
 		// 활동 데이터 > DB 저장 종료
-		if (res > 0) {
+		if (cnt == action_count.length) {
+			System.out.println("활동 데이터 저장 성공");
 			// 뉴비 진입시 테이블 생성용
 			int certificate_count = certificatebiz.certificate_count(member_code);
 			// 경력 번호로 상세 항목 테이블 참조
@@ -385,6 +458,16 @@ public class PortfolioController extends HttpServlet {
 			}
 			// 뉴비 진입시 테이블 생성용
 			List<CERTIFICATE> certificateList = certificatebiz.certificate_select(member_code);
+			String[] date = new String[certificateList.size()];
+			
+			for(int i =0; i < certificateList.size();i++) {
+				System.out.println(certificateList.get(i).getCERTIFICATE_DATE());
+				if(certificateList.get(i).getCERTIFICATE_DATE()!=null) {
+				date[i] = certificateList.get(i).getCERTIFICATE_DATE().substring(0, 10);
+				System.out.println("시분초 제거"+date[i]);
+				certificateList.get(i).setCERTIFICATE_DATE(date[i]);
+				}
+			}
 			request.setAttribute("certificateList", certificateList);
 			dispatch("/views/portfolio/certificatepage.jsp", request, response);
 		} else {
@@ -416,6 +499,22 @@ public class PortfolioController extends HttpServlet {
 		// 뉴비 진입시 테이블 생성용
 
 		List<ACTION_DTO> actionList = actionbiz.action_select(member_code);
+		String[] start_dates = new String[actionList.size()];
+		String[] end_dates = new String[actionList.size()];
+		for(int i =0; i < actionList.size();i++) {
+			System.out.println(actionList.get(i).getACTION_START_DATE());
+			System.out.println(actionList.get(i).getACTION_END_DATE());
+			if(actionList.get(i).getACTION_START_DATE()!=null) {
+				start_dates[i] = actionList.get(i).getACTION_START_DATE().substring(0, 10);
+				System.out.println("시분초 제거"+start_dates[i]);
+				actionList.get(i).setACTION_START_DATE(start_dates[i]);
+			}
+			if(actionList.get(i).getACTION_END_DATE()!=null) {
+				end_dates[i] = actionList.get(i).getACTION_END_DATE().substring(0, 10);
+				System.out.println("시분초 제거"+end_dates[i]);
+				actionList.get(i).setACTION_END_DATE(end_dates[i]);
+			}
+		}
 		request.setAttribute("actionList", actionList);
 
 		dispatch("/views/portfolio/actionpage.jsp", request, response);
@@ -445,8 +544,14 @@ public class PortfolioController extends HttpServlet {
 		String degree = request.getParameter("degree");
 		String start_date = request.getParameter("start_date");
 		String end_date = request.getParameter("end_date");
-		double mycredit = Double.parseDouble(request.getParameter("mycredit"));
-		double maxcredit = Double.parseDouble(request.getParameter("maxcredit"));
+		double mycredit = 0;
+		double maxcredit = 0;
+		if(request.getParameter("mycredit") != "") {
+			mycredit = Double.parseDouble(request.getParameter("mycredit"));
+		}
+		if(request.getParameter("maxcredit") != "") {
+			maxcredit = Double.parseDouble(request.getParameter("maxcredit"));
+		}
 		String othertext = request.getParameter("othertext");
 
 		school = new SCHOOL(member_code, school_seq, schoolname, major, degree, start_date, end_date, mycredit,
@@ -464,6 +569,22 @@ public class PortfolioController extends HttpServlet {
 			// 뉴비 진입시 테이블 생성용
 
 			List<ACTION_DTO> actionList = actionbiz.action_select(member_code);
+			String[] start_dates = new String[actionList.size()];
+			String[] end_dates = new String[actionList.size()];
+			for(int i =0; i < actionList.size();i++) {
+				System.out.println(actionList.get(i).getACTION_START_DATE());
+				System.out.println(actionList.get(i).getACTION_END_DATE());
+				if(actionList.get(i).getACTION_START_DATE()!=null) {
+					start_dates[i] = actionList.get(i).getACTION_START_DATE().substring(0, 10);
+					System.out.println("시분초 제거"+start_dates[i]);
+					actionList.get(i).setACTION_START_DATE(start_dates[i]);
+				}
+				if(actionList.get(i).getACTION_END_DATE()!=null) {
+					end_dates[i] = actionList.get(i).getACTION_END_DATE().substring(0, 10);
+					System.out.println("시분초 제거"+end_dates[i]);
+					actionList.get(i).setACTION_END_DATE(end_dates[i]);
+				}
+			}
 			request.setAttribute("actionList", actionList);
 			dispatch("/views/portfolio/actionpage.jsp", request, response);
 		} else {
@@ -494,8 +615,24 @@ public class PortfolioController extends HttpServlet {
 		}
 		// 뉴비 진입시 테이블 생성용
 		List<SCHOOL> schoolList = schoolbiz.school_select(member_code);
+		
+		String[] start_dates = new String[schoolList.size()];
+		String[] end_dates = new String[schoolList.size()];
+		for(int i =0; i < schoolList.size();i++) {
+			System.out.println(schoolList.get(i).getSCHOOL_OF_START());
+			System.out.println(schoolList.get(i).getSCHOOL_OF_END());
+			if(schoolList.get(i).getSCHOOL_OF_START()!=null) {
+				start_dates[i] = schoolList.get(i).getSCHOOL_OF_START().substring(0, 10);
+				System.out.println("시분초 제거"+start_dates[i]);
+				schoolList.get(i).setSCHOOL_OF_START(start_dates[i]);
+			}
+			if(schoolList.get(i).getSCHOOL_OF_END()!=null) {
+				end_dates[i] = schoolList.get(i).getSCHOOL_OF_END().substring(0, 10);
+				System.out.println("시분초 제거"+end_dates[i]);
+				schoolList.get(i).setSCHOOL_OF_END(end_dates[i]);
+			}
+		}
 		request.setAttribute("schoolList", schoolList);
-
 		dispatch("/views/portfolio/schoolpage.jsp", request, response);
 	}
 
@@ -514,42 +651,37 @@ public class PortfolioController extends HttpServlet {
 		if (session.getAttribute("loginNaver") != null) {
 			member_code = ((NAVER_MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
 		}
-		int language_seq = Integer.parseInt(request.getParameter("language_seq"));
-
-		System.out.println("member_code :" + member_code);
-		System.out.println("language :" + language_seq);
-		String language_name = request.getParameter("language");
-		System.out.println("language_name :" + language_name);
-		if (language_name == ("other")) {
-			language_name = request.getParameter("otherlanguage");
-			System.out.println("기타_language_name :" + language_name);
-		}
-
-		LANGUAGE language_dto = new LANGUAGE();
-		language_dto.setLANGUAGE_SEQ(language_seq);
-		language_dto.setLANGUAGE_MEMBER_CODE(member_code);
-		language_dto.setLANGUAGE(language_name);
-		int language_res = 0;
-		language_res = languagebiz.language_update(language_dto);
-		// 어학 시험 테이블
-		String[] languagecertificate_seq = request.getParameterValues("languagecertificate_seq");
-		String[] language_certificate_name = request.getParameterValues("language_name");
-		String[] language_certificate_grade = request.getParameterValues("language_grade");
 		int res = 0;
-		LANGUAGE_CERTIFICATE LANGUAGE_CERTIFICATE_DTO = null;
-		for (int i = 0; i < language_certificate_name.length; i++) {
-			System.out.println("language_certificate_name :" + language_certificate_name[i]);
-			System.out.println("language_certificate_grade :" + language_certificate_grade[i]);
-			System.out.println("언어시험 번호: " + Integer.parseInt(languagecertificate_seq[i]));
-			LANGUAGE_CERTIFICATE_DTO = new LANGUAGE_CERTIFICATE();
-			LANGUAGE_CERTIFICATE_DTO.setLANGUAGE_SEQ(language_seq);
-			LANGUAGE_CERTIFICATE_DTO.setLANGUAGE_CERTIFICATE_SEQ(Integer.parseInt(languagecertificate_seq[i]));
-			LANGUAGE_CERTIFICATE_DTO.setLANGUAGE_CERTIFICATE_NAME(language_certificate_name[i]);
-			LANGUAGE_CERTIFICATE_DTO.setLANGUAGE_CERTIFICATE_GRADE(language_certificate_grade[i]);
-			res = langcertbiz.language_certificate_update(LANGUAGE_CERTIFICATE_DTO);
+		int cnt = 0;
+		res = languagebiz.language_delete(member_code);
+		if(res > 0) {
+			System.out.println("외국어테이블 데이터 삭제완료");
 		}
-
-		if (res > 0 && language_res > 0) {
+		res = 0;
+		String[] language_count = request.getParameterValues("language_count");
+		String[] language_otherLanguage = request.getParameterValues("otherlanguage");
+		String[] language = request.getParameterValues("otherselect");
+		String[] language_name = request.getParameterValues("language_name");
+		String[] language_grade = request.getParameterValues("language_grade");
+		LANGUAGE lang = null;
+		for(int i =0;i< language_count.length;i++) {
+			if(language[i]==("other")) {
+				lang = new LANGUAGE(member_code,language[i],language_otherLanguage[i],language_name[i],language_grade[i]);
+				System.out.println("other:"+lang);
+			}else {
+				lang = new LANGUAGE(member_code,language[i],null,language_name[i],language_grade[i]);
+				System.out.println("language:"+lang);
+			}
+			res = languagebiz.language_insert(lang);
+			
+			if(res > 0) {
+				cnt++;
+			}
+			res = 0;
+		}
+		
+		
+		if (cnt == language_count.length) {
 
 			// 뉴비 진입시 테이블 생성용
 			int school_count = schoolbiz.school_count(member_code);
@@ -558,8 +690,24 @@ public class PortfolioController extends HttpServlet {
 				schoolbiz.school_insert_new(member_code);
 			}
 			// 뉴비 진입시 테이블 생성용
-			List<SCHOOL> school_list = schoolbiz.school_select(member_code);
-			request.setAttribute("schoolList", school_list);
+			List<SCHOOL> schoolList = schoolbiz.school_select(member_code);
+			String[] start_dates = new String[schoolList.size()];
+			String[] end_dates = new String[schoolList.size()];
+			for(int i =0; i < schoolList.size();i++) {
+				System.out.println(schoolList.get(i).getSCHOOL_OF_START());
+				System.out.println(schoolList.get(i).getSCHOOL_OF_END());
+				if(schoolList.get(i).getSCHOOL_OF_START()!=null) {
+					start_dates[i] = schoolList.get(i).getSCHOOL_OF_START().substring(0, 10);
+					System.out.println("시분초 제거"+start_dates[i]);
+					schoolList.get(i).setSCHOOL_OF_START(start_dates[i]);
+				}
+				if(schoolList.get(i).getSCHOOL_OF_END()!=null) {
+					end_dates[i] = schoolList.get(i).getSCHOOL_OF_END().substring(0, 10);
+					System.out.println("시분초 제거"+end_dates[i]);
+					schoolList.get(i).setSCHOOL_OF_END(end_dates[i]);
+				}
+			}
+			request.setAttribute("schoolList", schoolList);
 
 			dispatch("/views/portfolio/schoolpage.jsp", request, response);
 		} else {
@@ -585,31 +733,22 @@ public class PortfolioController extends HttpServlet {
 		}
 		int language_seq = 0;
 		LANGUAGE language = null;
-		int language_certificate_count = 0;
+		// 외국어 테이블 정보 조회
 		// 뉴비 진입시 테이블 생성용
 		int language_count = languagebiz.language_count(member_code);
 		// 경력 번호로 상세 항목 테이블 참조
 		if (language_count == 0) {
-			languagebiz.language_insert_new(member_code);
-		}
-		language = languagebiz.language_select_seq(member_code);
-		language_seq = language.getLANGUAGE_SEQ();
-		language_certificate_count = langcertbiz.language_certificate_count(language_seq);
-		System.out.println(language_certificate_count);
-		System.out.println(language_seq);
-		if (language_certificate_count == 0) {
-			System.out.println(language_seq);
-			langcertbiz.language_certificate_insert_new(language_seq);
+			languagebiz.language_insert_new(member_code); // 경력 테이블 생성
 		}
 		// 뉴비 진입시 테이블 생성용
 		List<LANGUAGE> languageList = languagebiz.language_select(member_code);
-		List<LANGUAGE_CERTIFICATE> langcertList = langcertbiz.language_certificate_select(language_seq);
+		
 		request.setAttribute("languageList", languageList);
-		request.setAttribute("langcertList", langcertList);
 
 		dispatch("/views/portfolio/languagepage.jsp", request, response);
-
 	}
+
+
 
 	// 기술 > 외국어 페이지
 	private void doLanguagePage(HttpServletRequest request, HttpServletResponse response)
@@ -632,10 +771,6 @@ public class PortfolioController extends HttpServlet {
 		SKILL skill_dto = null;
 		String[] skill_name = request.getParameterValues("skill_name");
 		if (skill_name != null) {
-			System.out.println(member_code);
-			for (int j = 0; j < skill_name.length; j++) {
-				System.out.println(skill_name[j]);
-			}
 			for (int i = 0; i < skill_name.length; i++) {
 				skill_dto = new SKILL();
 				skill_dto.setSKILL_MEMBER_CODE(member_code);
@@ -657,12 +792,8 @@ public class PortfolioController extends HttpServlet {
 				}
 				// 뉴비 진입시 테이블 생성용
 				List<LANGUAGE> languageList = languagebiz.language_select(member_code);
-				LANGUAGE language = languagebiz.language_select_seq(member_code);
-				int language_seq = language.getLANGUAGE_SEQ();
-				List<LANGUAGE_CERTIFICATE> langcertList = langcertbiz.language_certificate_select(language_seq);
 
 				request.setAttribute("languageList", languageList);
-				request.setAttribute("langcertList", langcertList);
 
 				dispatch("/views/portfolio/languagepage.jsp", request, response);
 			} else {
@@ -680,10 +811,8 @@ public class PortfolioController extends HttpServlet {
 			List<LANGUAGE> languageList = languagebiz.language_select(member_code);
 			LANGUAGE language = languagebiz.language_select_seq(member_code);
 			int language_seq = language.getLANGUAGE_SEQ();
-			List<LANGUAGE_CERTIFICATE> langcertList = langcertbiz.language_certificate_select(language_seq);
 
 			request.setAttribute("languageList", languageList);
-			request.setAttribute("langcertList", langcertList);
 
 			dispatch("/views/portfolio/languagepage.jsp", request, response);
 		}
@@ -720,7 +849,7 @@ public class PortfolioController extends HttpServlet {
 
 	}
 
-	// 주요 기술 페이지
+	// 프로젝트 > 주요 기술 페이지
 	private void doSkillPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		session = request.getSession();
@@ -734,28 +863,65 @@ public class PortfolioController extends HttpServlet {
 		if (session.getAttribute("loginNaver") != null) {
 			member_code = ((NAVER_MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
 		}
-		int project_seq = Integer.parseInt(request.getParameter("project_seq"));
-
-		String project_name = request.getParameter("project_name");
-		int create_year = Integer.parseInt(request.getParameter("create_year"));
-		String project_oneline_ex = request.getParameter("project_oneline_ex");
-		String project_team = request.getParameter("project_team");
-		int project_member = Integer.parseInt(request.getParameter("project_member"));
-		String project_usestack = request.getParameter("project_usestack");
-		String project_detail = request.getParameter("project_detail");
-		String project_storage_link = request.getParameter("project_storage_link");
-
-		String Website = request.getParameter("Website");
-		String Android = request.getParameter("Android");
-		String iOS = request.getParameter("iOS");
-
-		PROJECT PROJECT_DTO = new PROJECT(member_code, project_seq, project_name, create_year, project_oneline_ex,
-				project_team, project_member, project_usestack, project_detail, project_storage_link, Website, Android,
-				iOS);
-
-		int project_res = projectbiz.project_update(PROJECT_DTO);
-
-		if (project_res > 0) {
+		int res = 0;
+		int cnt = 0;
+		System.out.println(member_code);
+		res = projectbiz.project_delete(member_code);
+		if(res > 0) {
+			System.out.println("삭제성공");
+		}
+		String[] project_count = request.getParameterValues("project_count");
+		String[] project_name = request.getParameterValues("project_name");
+		String[] create_year_str = request.getParameterValues("create_year");
+		int[] create_year= new int[project_count.length];
+		for(int i = 0; i < project_count.length;i++) {
+			create_year[i] = Integer.parseInt(create_year_str[i]);
+			System.out.println("project_name"+project_name[i]);
+			System.out.println("create_year"+create_year[i]);
+		}
+		
+		String[] project_oneline_ex = request.getParameterValues("project_oneline_ex");
+		String[] project_team = request.getParameterValues("project_team");
+		String[] project_member_count = request.getParameterValues("project_member");
+		String[] project_usestack = request.getParameterValues("project_usestack");
+		String[] project_detail = request.getParameterValues("project_detail");
+		String[] project_storage_link = request.getParameterValues("project_storage_link");
+		String[] Website = request.getParameterValues("Website");
+		String[] Android = request.getParameterValues("Android");
+		String[] iOS = request.getParameterValues("iOS");
+		int[] project_member = new int[project_count.length];
+		for(int i = 0; i < project_count.length;i++) {
+			if(project_member_count[i] == null && project_member_count[i] == "") {
+				project_member[i] = 1;
+			}else {
+				project_member[i] = Integer.parseInt(project_member_count[i]);
+			}
+			System.out.println("oneline_ex"+project_oneline_ex[i]);
+			System.out.println("team"+project_team[i]);
+			System.out.println("**member"+project_count[i]);
+			System.out.println("usestack"+project_usestack[i]);
+			System.out.println("detail"+project_detail[i]);
+			System.out.println("link"+project_storage_link[i]);
+			System.out.println("web"+Website[i]);
+			System.out.println("iOS"+iOS[i]);
+			System.out.println("Android"+Android[i]);
+		}
+		
+		PROJECT PROJECT_DTO = null;
+		for(int i = 0; i < project_count.length;i++) {
+			PROJECT_DTO = new PROJECT(member_code, project_name[i], create_year[i], project_oneline_ex[i],
+					project_team[i], project_member[i], project_usestack[i], project_detail[i], project_storage_link[i], Website[i], Android[i],
+					iOS[i]);
+			
+			res = projectbiz.project_insert(PROJECT_DTO);
+			System.out.println("res :"+res);
+			if(res >0 ) {
+				cnt++;
+				System.out.println("cnt :"+cnt);
+			}
+			res = 0;
+		}
+		if (cnt == project_count.length) {
 			// 멤버코드로 스킬페이지 테이블 참조
 			// 뉴비 진입시 테이블 생성용
 			int skill_count = skillbiz.skill_count(member_code);
@@ -774,7 +940,7 @@ public class PortfolioController extends HttpServlet {
 
 	}
 
-	// 개인 프로젝트 페이지
+	// 경력 > 개인 프로젝트 페이지
 	private void doProjectPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -789,39 +955,40 @@ public class PortfolioController extends HttpServlet {
 		if (session.getAttribute("loginNaver") != null) {
 			member_code = ((NAVER_MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
 		}
-		// 멤버코드로 상세 항목 테이블 번호 참조
-		CAREER career_seq_dto = careerbiz.career_select_seq(member_code);
-		int career_seq = career_seq_dto.getCAREER_SEQ();
-
+		int career_res = 0;
+		int cnt = 0;
+		
+		careerbiz.career_delete(member_code);
+		System.out.println("경력 삭제");
+		String[] profile_count = request.getParameterValues("profile_count");
 		// career_table 값 업데이트
-		String COMPANY_NAME = request.getParameter("COMPANYNAME");
-		String DUTY = request.getParameter("DUTY");
-		String DAY_OF_ENTRY = request.getParameter("DAY_OF_ENTRY");
-		String DATE_OF_DEPARTURE = request.getParameter("DATE_OF_DEPARTURE");
-		String STACK = request.getParameter("STACK");
-		String LINK = request.getParameter("LINK");
-		String EXPLANATION = request.getParameter("EXPLANATION");
-
-		CAREER CAREER_DTO = new CAREER(member_code, career_seq, COMPANY_NAME, DUTY, DAY_OF_ENTRY, DATE_OF_DEPARTURE,
-				STACK, LINK, EXPLANATION);
-
-		int career_update_res = careerbiz.career_update(CAREER_DTO);
-
-		// career_detail_table 값 업데이트
-		int career_detail_seq = Integer.parseInt(request.getParameter("CAREER_SEQ"));
-		String PERFORMANCE = request.getParameter("PERFORMANCE");
-		String START_DATE = request.getParameter("START_DATE");
-		String END_DATE = request.getParameter("END_DATE");
-		String DETAIL_CONTEXT = request.getParameter("DETAIL_CONTEXT");
-
-		CAREER_DETAIL CAREER_DETAIL_DTO = new CAREER_DETAIL(career_detail_seq, career_seq, PERFORMANCE, START_DATE,
-				END_DATE, DETAIL_CONTEXT);
-
-		int career_detail_update_res = careerdetailbiz.career_detail_update(CAREER_DETAIL_DTO);
-
-		if (career_update_res > 0 && career_detail_update_res > 0) {
+		String[] COMPANY_NAME = request.getParameterValues("COMPANYNAME");
+		String[] DUTY = request.getParameterValues("DUTY");
+		String[] DAY_OF_ENTRY = request.getParameterValues("DAY_OF_ENTRY");
+		String[] DATE_OF_DEPARTURE = request.getParameterValues("DATE_OF_DEPARTURE");
+		String[] STACK = request.getParameterValues("STACK");
+		String[] LINK = request.getParameterValues("LINK");
+		String[] EXPLANATION = request.getParameterValues("EXPLANATION");
+		String[] PERFORMANCE = request.getParameterValues("PERFORMANCE");
+		String[] START_DATE = request.getParameterValues("START_DATE");
+		String[] END_DATE = request.getParameterValues("END_DATE");
+		String[] DETAIL_CONTEXT = request.getParameterValues("DETAIL_CONTEXT");
+		CAREER CAREER_DTO = null;
+		
+		for(int i = 0; i< profile_count.length;i++) {
+			CAREER_DTO = new CAREER(member_code, COMPANY_NAME[i], DUTY[i], DAY_OF_ENTRY[i], DATE_OF_DEPARTURE[i],
+					STACK[i],PERFORMANCE[i],START_DATE[i],END_DATE[i],DETAIL_CONTEXT[i] ,LINK[i], EXPLANATION[i]);
+			
+			career_res = careerbiz.career_insert(CAREER_DTO);
+			if (career_res > 0) {
+				cnt++;
+				System.out.println(cnt);
+			}
+			career_res = 0;
+		}
+		if (cnt == profile_count.length) {
 			// 뉴비 진입시 테이블 생성용
-			int project_count = projectbiz.project_count(member_code);
+			int project_count = projectbiz.project_count_row(member_code);
 			if (project_count == 0) {
 				projectbiz.project_insert_new(member_code); // 경력 테이블 생성
 			}
@@ -836,6 +1003,7 @@ public class PortfolioController extends HttpServlet {
 
 	}
 
+	// 사이드바 > 개인 프로젝트 페이지
 	private void doSideProjectPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -851,7 +1019,7 @@ public class PortfolioController extends HttpServlet {
 			member_code = ((NAVER_MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
 		}
 		// 뉴비 진입시 테이블 생성용
-		int project_count = projectbiz.project_count(member_code);
+		int project_count = projectbiz.project_count_row(member_code);
 		if (project_count == 0) {
 			projectbiz.project_insert_new(member_code); // 경력 테이블 생성
 		}
@@ -865,6 +1033,7 @@ public class PortfolioController extends HttpServlet {
 
 	}
 
+	// 사이드바 > 경력 페이지
 	private void doSideProfilePage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		session = request.getSession();
@@ -878,13 +1047,42 @@ public class PortfolioController extends HttpServlet {
 		if (session.getAttribute("loginNaver") != null) {
 			member_code = ((NAVER_MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
 		}
-		CAREER CAREER_SEQ = careerbiz.career_select_seq(member_code);
-		int career_seq = CAREER_SEQ.getCAREER_SEQ();
 
+		int count = careerbiz.career_count(member_code);
+		if (count == 0) {
+			careerbiz.career_insert_new(member_code); // 경력 테이블 생성
+		}
 		List<CAREER> careerList = careerbiz.career_select(member_code);
-		List<CAREER_DETAIL> career_detailList = careerdetailbiz.career_detail_select(career_seq);
-
-		request.setAttribute("career_detailList", career_detailList);
+		String[] start_dates = new String[careerList.size()];
+		String[] end_dates = new String[careerList.size()];
+		String[] end_day = new String[careerList.size()];
+		String[] entry_day = new String[careerList.size()];
+		for(int i =0; i < careerList.size();i++) {
+			System.out.println(careerList.get(i).getDAY_OF_ENTRY());
+			System.out.println(careerList.get(i).getDATE_OF_DEPARTURE());
+			System.out.println(careerList.get(i).getSTART_DATE());
+			System.out.println(careerList.get(i).getEND_DATE());
+			if(careerList.get(i).getDAY_OF_ENTRY()!=null) {
+				entry_day[i] = careerList.get(i).getDAY_OF_ENTRY().substring(0, 10);
+				System.out.println("시분초 제거"+entry_day[i]);
+				careerList.get(i).setDAY_OF_ENTRY(entry_day[i]);
+			}
+			if(careerList.get(i).getDATE_OF_DEPARTURE()!=null) {
+				end_day[i] = careerList.get(i).getDATE_OF_DEPARTURE().substring(0, 10);
+				System.out.println("시분초 제거"+end_day[i]);
+				careerList.get(i).setDATE_OF_DEPARTURE(end_day[i]);
+			}
+			if(careerList.get(i).getSTART_DATE()!=null) {
+				start_dates[i] = careerList.get(i).getSTART_DATE().substring(0, 10);
+				System.out.println("시분초 제거"+start_dates[i]);
+				careerList.get(i).setSTART_DATE(start_dates[i]);
+			}
+			if(careerList.get(i).getEND_DATE()!=null) {
+				end_dates[i] = careerList.get(i).getEND_DATE().substring(0, 10);
+				System.out.println("시분초 제거"+end_dates[i]);
+				careerList.get(i).setEND_DATE(end_dates[i]);
+			}
+		}
 		request.setAttribute("careerList", careerList);
 
 		dispatch("/views/portfolio/portfoliopage.jsp", request, response);
@@ -906,25 +1104,46 @@ public class PortfolioController extends HttpServlet {
 			member_code = ((NAVER_MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
 		}
 
-		// 뉴비 진입시 테이블 생성용
-		int CAREER_COUNT = careerbiz.career_count(member_code);
-		// 경력 번호로 상세 항목 테이블 참조
-		if (CAREER_COUNT == 0) {
-			careerbiz.career_insert_new(member_code); // 경력 테이블 생성
-		}
-		CAREER CAREER_SEQ = careerbiz.career_select_seq(member_code);
-		int career_seq = CAREER_SEQ.getCAREER_SEQ();
-		int CAREER_DETAIL_COUNT = careerdetailbiz.career_detail_count(career_seq);
-		if (CAREER_DETAIL_COUNT == 0) {
-			careerdetailbiz.career_detail_insert_new(member_code); // 경력 상세 항목 테이블 생성
-		}
-		// 뉴비 진입시 테이블 생성용
-
+			// 뉴비 진입시 테이블 생성용
+				int CAREER_COUNT = careerbiz.career_count(member_code);
+				// 경력 번호로 상세 항목 테이블 참조
+				if (CAREER_COUNT == 0) {
+					careerbiz.career_insert_new(member_code); // 경력 테이블 생성
+				}
+			// 뉴비 진입시 테이블 생성용
+		
 		// 멤버코드로 경력페이지 테이블 참조
 		List<CAREER> careerList = careerbiz.career_select(member_code);
-		List<CAREER_DETAIL> career_detailList = careerdetailbiz.career_detail_select(career_seq);
-
-		request.setAttribute("career_detailList", career_detailList);
+		String[] start_dates = new String[careerList.size()];
+		String[] end_dates = new String[careerList.size()];
+		String[] end_day = new String[careerList.size()];
+		String[] entry_day = new String[careerList.size()];
+		for(int i =0; i < careerList.size();i++) {
+			System.out.println(careerList.get(i).getDAY_OF_ENTRY());
+			System.out.println(careerList.get(i).getDATE_OF_DEPARTURE());
+			System.out.println(careerList.get(i).getSTART_DATE());
+			System.out.println(careerList.get(i).getEND_DATE());
+			if(careerList.get(i).getDAY_OF_ENTRY()!=null) {
+				entry_day[i] = careerList.get(i).getDAY_OF_ENTRY().substring(0, 10);
+				System.out.println("시분초 제거"+entry_day[i]);
+				careerList.get(i).setDAY_OF_ENTRY(entry_day[i]);
+			}
+			if(careerList.get(i).getDATE_OF_DEPARTURE()!=null) {
+				end_day[i] = careerList.get(i).getDATE_OF_DEPARTURE().substring(0, 10);
+				System.out.println("시분초 제거"+end_day[i]);
+				careerList.get(i).setDATE_OF_DEPARTURE(end_day[i]);
+			}
+			if(careerList.get(i).getSTART_DATE()!=null) {
+				start_dates[i] = careerList.get(i).getSTART_DATE().substring(0, 10);
+				System.out.println("시분초 제거"+start_dates[i]);
+				careerList.get(i).setSTART_DATE(start_dates[i]);
+			}
+			if(careerList.get(i).getEND_DATE()!=null) {
+				end_dates[i] = careerList.get(i).getEND_DATE().substring(0, 10);
+				System.out.println("시분초 제거"+end_dates[i]);
+				careerList.get(i).setEND_DATE(end_dates[i]);
+			}
+		}
 		request.setAttribute("careerList", careerList);
 
 		dispatch("/views/portfolio/portfoliopage.jsp", request, response);

@@ -13,12 +13,10 @@
 
 <!-- START :: css -->
 <link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
+<link href="/DEVCA/resources/css/kakaomap.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
-section{
-	width: 100%;
-	height: auto;
-}
+
 #profile_image{
 	widht: 50px;
 	height: 50px;
@@ -72,22 +70,29 @@ section{
 <!-- START :: JAVASCRIPT -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dde3d6a6f398e8afdf7600f84f211532&libraries=services"></script>
-<!-- include libraries(jQuery, bootstrap) -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 
-<!-- include summernote css/js-->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-
+<!-- summernote including -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
+    
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#summernote').summernote({
-		 height: 300,                 // set editor height
+		 height: 400,                 // set editor height
          minHeight: null,             // set minimum height of editor
          maxHeight: null,             // set maximum height of editor
-         focus: true                  // set focus to editable area after initializing summernote
+         focus: false,                  // set focus to editable area after initializing summernote
+         
+         toolbar: [
+           ['style', ['style']],
+           ['font', ['bold', 'underline', 'clear']],
+           ['color', ['color']],
+           ['para', ['ul', 'ol', 'paragraph']],
+           ['table', ['table']],
+           ['insert', ['link', 'picture', 'video']],
+           ['view', ['fullscreen', 'codeview', 'help']]
+         ]
 	});
 
 	
@@ -104,9 +109,8 @@ $(document).ready(function() {
 		$("#studyWriteForm input[name='STUDY_LATITUDE']").val(y);
 		$("#studyWriteForm input[name='STUDY_LOGITUDE']").val(x);
 		
-		alert(place_name)
 		$("#showPlace").empty();
-		$("#showPlace").append($("<div>").text("스터디 위치 : " + place_name));
+		$("#showPlace").append($("<div>").text("스터디 위치 : " + place_name + "(" + address_name + ")"));
 	})
 	
 });
@@ -117,46 +121,61 @@ $(document).ready(function() {
 <body>
 
 	<section>
-		<h1>스터디 팀 만들기</h1>
-		<form id="studyWriteForm" action="/DEVCA/study/studywrite.do" action="POST">
-			<input type="hidden" name="MEMBER_CODE" value="${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}">
-			
-			<input type="hidden" name="STUDY_PLACE_NAME">
-			<input type="hidden" name="STUDY_ADDRESS">
-			
-			<input type="hidden" name="STUDY_LATITUDE">
-			<input type="hidden" name="STUDY_LOGITUDE">
-					
-			<input type="text" name="STUDY_TITLE" required="required" placeholder="스터디이름">
-			<input type="date" name="STUDY_DATE" required="required"> 
-			<textarea id="summernote" name="STUDY_CONTENT" rows="10" cols="60" required="required"></textarea>
-				
-
+	
+		<div class="card p-4 my-3 bg-white">
 		
-	  		<div class="map_wrap">
-	  			<div id="showPlace"></div>
-			    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+			<h1 class="card-title">스터디 팀 만들기</h1>
 			
-			    <div id="menu_wrap" class="bg_white">
-			        <div class="option">
-			            <div>
-			                    키워드 : <input type="text" id="keyword" size="15"> 
-			          		<button type="button" onclick="searchPlaces(); return false;">검색하기</button> 
-			            </div>
-			        </div>
-			        <hr>
-			        <ul id="placesList"></ul>
-			        <div id="pagination"></div>
-			    </div>
-			</div>
+			<div class="row">
 			
-			
-			<input type="submit" value="등록"> 
-			<input type="button" value="취소" onclick="location.href='/DEVCA/study/studylistpage.do'">
-		</form>
-
+				<div class="col-md-8">
+					<form id="studyWriteForm" action="/DEVCA/study/studywrite.do" action="POST">
+						<input type="hidden" name="MEMBER_CODE" value="${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}">
 						
-
+						<input type="hidden" name="STUDY_PLACE_NAME">
+						<input type="hidden" name="STUDY_ADDRESS">
+						
+						<input type="hidden" name="STUDY_LATITUDE">
+						<input type="hidden" name="STUDY_LOGITUDE">
+						
+						<div class="row">
+							<div class="col-md-9">
+								<input class="form-control form-control-lg" type="text" name="STUDY_TITLE" required="required" placeholder="스터디이름">
+							</div>
+							<div class="col-md-3">
+								<input class="form-control form-control-lg" type="date" name="STUDY_DATE" required="required"> 
+							</div>
+						</div>		
+						
+						<textarea id="summernote" name="STUDY_CONTENT" required="required"></textarea>				
+						
+						<input class="btn" type="submit" value="등록"> 
+						<input class="btn" type="button" value="취소" onclick="location.href='/DEVCA/study/studylistpage.do'">
+					</form>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="map_wrap">
+					    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+					
+					    <div id="menu_wrap" class="bg_white">
+					        <div class="option">
+					            <div>
+					                    키워드 : <input type="text" id="keyword" size="15"> 
+					          		<button type="button" onclick="searchPlaces(); return false;">검색하기</button> 
+					            </div>
+					        </div>
+					        <hr>
+					        <ul id="placesList"></ul>
+					        <div id="pagination"></div>
+					    </div>
+					    
+					</div>
+					
+			  		<div id="showPlace" class="card-link"></div>
+				</div>
+			</div>						
+		</div>
 	</section>
 	
 	<!-- FOOTER FORM -->
@@ -164,8 +183,8 @@ $(document).ready(function() {
 	
 	
 	<!-- 내 위치정보를 정리해 놓을 HIDDEN INPUT -->
-	<input type="hidden" name="MEMBER_PROFILE_LATITUDE" value="<c:if test="${empty member.MEMBER_PROFILE_LATITUDE}">33.450701</c:if>${member.MEMBER_PROFILE_LATITUDE}">
-	<input type="hidden" name="MEMBER_PROFILE_LOGITUDE" value="<c:if test="${empty member.MEMBER_PROFILE_LOGITUDE}">126.570667</c:if>${member.MEMBER_PROFILE_LOGITUDE}">
+	<input type="hidden" name="MEMBER_PROFILE_LATITUDE" value="<c:if test="${empty sessionMember_profile.MEMBER_PROFILE_LATITUDE}">33.450701</c:if>${sessionMember_profile.MEMBER_PROFILE_LATITUDE}">
+	<input type="hidden" name="MEMBER_PROFILE_LOGITUDE" value="<c:if test="${empty sessionMember_profile.MEMBER_PROFILE_LOGITUDE}">126.570667</c:if>${sessionMember_profile.MEMBER_PROFILE_LOGITUDE}">
 	
 </body>
 
@@ -186,7 +205,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 
 ///////////////////내 위치 마커////////////////////////
 var MyimageSrc =  <c:choose>
-					<c:when test="${not empty study.MEMBER_PROFILE_IMAGE_S_NAME}">'../resources/images/profileupload/${study.MEMBER_PROFILE_IMAGE_S_NAME }'</c:when>
+					<c:when test="${not empty sessionMember_profile.MEMBER_PROFILE_IMAGE_S_NAME}">'../resources/images/profileupload/${sessionMember_profile.MEMBER_PROFILE_IMAGE_S_NAME }'</c:when>
 			   		<c:otherwise>'../resources/images/add.png'</c:otherwise>
 				</c:choose>	, // 마커이미지의 주소입니다    
 				MyimageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
@@ -218,31 +237,61 @@ var clickMarker = new kakao.maps.Marker({
 kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
 	
     // 클릭한 위도, 경도 정보를 가져옵니다 
-    var latlng = mouseEvent.latLng;    
-    // 마커 위치를 클릭한 위치로 옮깁니다
-    clickMarker.setPosition(latlng);
+    var latlng = mouseEvent.latLng;  
     
-    //인포윈도우 생성
-  	var iwContent = "<div onclick='saveLoc("+latlng.getLat()+","+latlng.getLng()+");'>위치 저장하기</div>";
-   	var iwPosition = new kakao.maps.LatLng(latlng.getLat(), latlng.getLng());
-   
-	infowindow.setContent(iwContent);
-	infowindow.setPosition(iwPosition);
-	infowindow.open(map, clickMarker);   
+    // 클릭한 위치의 address 얻어오기
+    searchDetailAddrFromCoords(latlng, function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+        	var detailAddr = !!result[0].road_address ? result[0].road_address.address_name : '';
+            detailAddr += result[0].address.address_name;
+            
+            
+            // 마커 위치를 클릭한 위치로 옮깁니다
+            clickMarker.setPosition(latlng);
+            clickMarker.setMap(map);
+            
+            
+            //인포윈도우 생성
+          	var iwContent = "<div onclick='saveLoc("+latlng.getLat()+","+latlng.getLng()+",\""+detailAddr+"\");'>"+detailAddr+" : 위치 저장하기</div>";
+           	var iwPosition = new kakao.maps.LatLng(latlng.getLat(), latlng.getLng());
+           
+        	infowindow.setContent(iwContent);
+        	infowindow.setPosition(iwPosition);
+        	infowindow.open(map, clickMarker);   
 
-   	kakao.maps.event.addListener(clickMarker, 'dragend', function(){
-		infowindow.close();
-		infowindow.open(map, clickMarker);
-   	})    
+           	kakao.maps.event.addListener(clickMarker, 'dragend', function(){
+        		infowindow.close();
+        		infowindow.open(map, clickMarker);
+           	}) 
+        }   
+    });
+    
+   
 });
 
-function saveLoc(lat, lng){
+function saveLoc(lat, lng, detailAddr){
 	$("#studyWriteForm input[name='STUDY_LATITUDE']").val(lat);
 	$("#studyWriteForm input[name='STUDY_LOGITUDE']").val(lng);
+	$("#studyWriteForm input[name='STUDY_ADDRESS']").val(detailAddr);
 	
 	$("#showPlace").empty();
-	$("#showPlace").append($("<div>").text("스터디 위치 : 알수 없음"));
+	$("#showPlace").append($("<div>").text("스터디 위치 : " + detailAddr));
 }
+//주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+function searchAddrFromCoords(coords, callback) {
+    // 좌표로 행정동 주소 정보를 요청합니다
+    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+}
+function searchDetailAddrFromCoords(coords, callback) {
+    // 좌표로 법정동 상세 주소 정보를 요청합니다
+    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+}
+
+
+
+
+
 ///////////////////장소 검색으로 위치 설정////////////////////////
 
 // 장소 검색 객체를 생성합니다

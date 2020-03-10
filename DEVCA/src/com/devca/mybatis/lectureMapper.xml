@@ -104,9 +104,10 @@
 		WHERE ROWNUM BETWEEN #{no} AND #{no}+19
 	</select>
 	
-	<delete id="deleteMyGarbageLecture">
+	<delete id="deleteMyGarbageLecture" parameterType="map">
 		DELETE FROM MYLECTURE
-		WHERE LECTURE_CODE = #{LECTURE_CODE}
+		WHERE MEMBER_CODE = #{MEMBER_CODE}
+		AND LECTURE_CODE = #{LECTURE_CODE}
 	</delete>
 	
 	<insert id="addMyLecture" parameterType="map">
@@ -122,7 +123,8 @@
 	
 	<update id="updateRate" parameterType="LECTURE">
 		UPDATE LECTURE SET
-		LECTURE_RATE = #{LECTURE_RATE}
+		LECTURE_RATE = #{LECTURE_RATE},
+		LECTURE_READCOUNT = #{LECTURE_READCOUNT}
 		WHERE LECTURE_CODE = #{LECTURE_CODE}
 	</update>
 	

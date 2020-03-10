@@ -44,6 +44,34 @@ public class MainBizImpl implements MainBiz {
 		return memberDao.updateRoadMap(newRoadMap);
 	}
 
+	// 로드맵 중분류 추가 요청처리
+	@SuppressWarnings("deprecation")
+	@Override
+	public int addRoadMapCategory(int MEMBER_CODE, String item) {
+		ROADMAP roadmap = dao.getRoadMapData(MEMBER_CODE);
+		JsonParser parser = new JsonParser();
+
+
+		JsonArray addChild = new JsonArray();
+		JsonObject temp = new JsonObject();
+		temp.addProperty("name", "기술을 추가하세요");
+		temp.addProperty("value", "3");
+		addChild.add(temp);
+		
+		JsonObject addItem = new JsonObject();
+		addItem.addProperty("name", item);
+		addItem.add("children", addChild);
+
+		JsonArray roadMapData = (JsonArray) parser.parse(roadmap.getROADMAP_TECH());
+		roadMapData.add(addItem);
+
+		ROADMAP newRoadMap = new ROADMAP();
+		newRoadMap.setMEMBER_CODE(MEMBER_CODE);
+		newRoadMap.setROADMAP_TECH(roadMapData.toString());
+
+		return memberDao.updateRoadMap(newRoadMap);
+	}
+	
 	// 로드맵 데이터 삭제 요청처리
 	@SuppressWarnings("deprecation")
 	@Override

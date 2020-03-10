@@ -22,7 +22,7 @@ public class ProjectDaoImpl extends SqlMapConfig implements ProjectDao {
 	@Override
 	public int project_insert(PROJECT dto) {
 		SqlSession session = getSqlSessionFactory().openSession(false);
-		int res = session.update(namespace+".project_update",dto);
+		int res = session.insert(namespace+".project_insert",dto);
 		if(res > 0) {
 			session.commit();
 		}
@@ -41,13 +41,9 @@ public class ProjectDaoImpl extends SqlMapConfig implements ProjectDao {
 		return res;
 	}
 	@Override
-	public int project_delete(int project_seq, int profile_seq) {
-		Map<String,Integer> map = new HashMap<String,Integer>();
-		map.put("PROJECT_SEQ",project_seq);
-		map.put("PROFILE_SEQ", profile_seq);
-		
+	public int project_delete(int member_code) {
 		SqlSession session = getSqlSessionFactory().openSession(false);
-		int res = session.delete(namespace+".project_delete",map);
+		int res = session.delete(namespace+".project_delete",member_code);
 		if(res > 0) {
 			session.commit();
 		}
@@ -68,6 +64,12 @@ public class ProjectDaoImpl extends SqlMapConfig implements ProjectDao {
 	public int project_count(int member_code) {
 		SqlSession session = getSqlSessionFactory().openSession(false);
 		int res = session.selectOne(namespace+".project_count",member_code);
+		return res;
+	}
+	@Override
+	public int project_count_row(int member_code) {
+		SqlSession session = getSqlSessionFactory().openSession(false);
+		int res = session.selectOne(namespace+".project_count_row",member_code);
 		return res;
 	}
 

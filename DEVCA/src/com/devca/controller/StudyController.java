@@ -145,7 +145,6 @@ public class StudyController extends HttpServlet {
 
 		String STUDY_PLACE_NAME = request.getParameter("STUDY_PLACE_NAME");
 		String STUDY_ADDRESS = request.getParameter("STUDY_ADDRESS");
-
 		String STUDY_LATITUDE = request.getParameter("STUDY_LATITUDE");
 		String STUDY_LOGITUDE = request.getParameter("STUDY_LOGITUDE");
 
@@ -191,19 +190,29 @@ public class StudyController extends HttpServlet {
 			throws ServletException, IOException {
 		int STUDY_CODE = Integer.parseInt(request.getParameter("STUDY_CODE"));
 		int MEMBER_CODE = Integer.parseInt(request.getParameter("MEMBER_CODE"));
+		
 		String STUDY_TITLE = request.getParameter("STUDY_TITLE");
 		String STUDY_CONTENT = request.getParameter("STUDY_CONTENT");
+		String STUDY_DATE = request.getParameter("STUDY_DATE");
 
+		String STUDY_PLACE_NAME = request.getParameter("STUDY_PLACE_NAME");
+		String STUDY_ADDRESS = request.getParameter("STUDY_ADDRESS");
+		String STUDY_LATITUDE = request.getParameter("STUDY_LATITUDE");
+		String STUDY_LOGITUDE = request.getParameter("STUDY_LOGITUDE");
+		
 		STUDY study = new STUDY();
 
 		study.setSTUDY_CODE(STUDY_CODE);
-		study.setMEMBER_CODE(MEMBER_CODE);
+		study.setMEMBER_CODE(MEMBER_CODE);		
+		
 		study.setSTUDY_TITLE(STUDY_TITLE);
 		study.setSTUDY_CONTENT(STUDY_CONTENT);
-
-		study.setSTUDY_LATITUDE("");
-		study.setSTUDY_LOGITUDE("");
-		study.setSTUDY_ADDRESS("");
+		study.setSTUDY_DATE(STUDY_DATE);
+		
+		study.setSTUDY_PLACE_NAME((STUDY_PLACE_NAME != null) ? STUDY_PLACE_NAME : "");
+		study.setSTUDY_ADDRESS((STUDY_ADDRESS != null) ? STUDY_ADDRESS : "");
+		study.setSTUDY_LATITUDE((STUDY_LATITUDE != null) ? STUDY_LATITUDE : "");
+		study.setSTUDY_LOGITUDE((STUDY_LOGITUDE != null) ? STUDY_LOGITUDE : "");
 
 		int res = biz.studyUpdate(study);
 

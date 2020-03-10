@@ -140,34 +140,7 @@ public class LectureBizImpl implements LectureBiz {
 	// 강의 리스트 crawling
 	@Override
 	public int crawlingLectureList() {
-		List<JOB_RANK> job_rank = dao.selectJobRankList(); // JOB_RANK 에 기재된 기술스택
-		int res = 0;
-		// res = dao.multiInsertLecture(Inflearn.inflearnCrawling("github"));
-
-		for (int i = 62; i < 63; i++) {
-			ArrayList<LECTURE> lectureList = Inflearn.inflearnCrawling(job_rank.get(i).getJOB_RANK_STACK());
-			if (lectureList.size() > 0) {
-				try {
-					res += dao.multiInsertLecture(lectureList);
-				} catch (Exception e) {
-					e.printStackTrace();
-					continue;
-				}
-			}
-
-			System.out.println(job_rank.get(i).getJOB_RANK_STACK() + " : " + res + " 개 insert 됨!");
-		}
-
-//		for (JOB_RANK job : job_rank) {
-//			ArrayList<LECTURE> lectureList = Inflearn.inflearnCrawling(job.getJOB_RANK_STACK());
-//			if (lectureList.size() > 0) {
-//				res += dao.multiInsertLecture(lectureList);
-//			}
-//
-//			System.out.println(job.getJOB_RANK_STACK() + " : " + res + " 개 insert 됨!");
-//		}
-
-		return res;
+		return Inflearn.inflearnCrawlingWithoutSearching();
 	}
 
 	// 강의 리스트 선택
@@ -214,8 +187,8 @@ public class LectureBizImpl implements LectureBiz {
 
 	// 내 강의 삭제
 	@Override
-	public int deleteMyGarbageLecture(int LECTURE_CODE) {
-		return dao.deleteMyGarbageLecture(LECTURE_CODE);
+	public int deleteMyGarbageLecture(int LECTURE_CODE, int MEMBER_CODE) {
+		return dao.deleteMyGarbageLecture(LECTURE_CODE, MEMBER_CODE);
 	}
 
 	/*

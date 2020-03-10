@@ -12,9 +12,11 @@ public interface ProjectBiz {
 	
 	public int project_update(PROJECT dto);
 	
-	public int project_delete(int project_seq, int profile_seq);
+	public int project_delete(int member_code);
 	
 	public int project_insert_new(int member_code);
 	
 	public int project_count(int member_code);
+	
+	public int project_count_row(int member_code);
 }

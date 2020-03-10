@@ -64,6 +64,9 @@ public class CertificateDaoImpl extends SqlMapConfig implements CertificateDao {
 	public int certificate_delete(int member_code) {
 		SqlSession session = getSqlSessionFactory().openSession(false);
 		int certificate_res = session.delete(namespace+".certificate_delete",member_code);
+		if(certificate_res > 0) {
+			session.commit();
+		}
 		session.close();
 		return certificate_res;
 	}

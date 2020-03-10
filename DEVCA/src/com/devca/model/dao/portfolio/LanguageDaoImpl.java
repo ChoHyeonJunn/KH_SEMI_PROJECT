@@ -40,13 +40,9 @@ public class LanguageDaoImpl extends SqlMapConfig implements LanguageDao {
 		return res;
 	}
 	@Override
-	public int language_delete(int language_seq, int profile_seq) {
-		Map<String,Integer> map = new HashMap<String,Integer>();
-		map.put("LANGUAGE_SEQ",language_seq);
-		map.put("PROFILE_SEQ", profile_seq);
-		
+	public int language_delete(int member_code) {
 		SqlSession session = getSqlSessionFactory().openSession(false);
-		int res = session.update(namespace+".language_delete",map);
+		int res = session.delete(namespace+".language_delete",member_code);
 		if(res > 0) {
 			session.commit();
 		}

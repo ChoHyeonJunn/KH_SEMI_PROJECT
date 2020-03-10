@@ -14,6 +14,9 @@ public interface MemberBiz {
 	// 회원가입
 	public int memberJoin(MEMBER member);
 
+	// 로드맵 데이터 입력
+	public int insertRoadMapData(int MEMBER_CODE, String position);
+
 	// 카카오 회원가입
 	public int kakaoJoin(KAKAO_MEMBER kakao_member);
 

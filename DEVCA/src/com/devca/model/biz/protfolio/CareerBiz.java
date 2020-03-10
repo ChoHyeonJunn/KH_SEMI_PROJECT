@@ -13,13 +13,13 @@ public interface CareerBiz {
 	
 	public int career_update(CAREER dto);
 	
-	public int career_delete(int profile_seq, int career_seq);
+	public int career_delete(int member_code);
 	
 	public int career_count(int member_code);
 	
 	public int career_insert_new(int member_code);
 
-	public int[] career_date(int member_code);
+	public int[] career_date(int member_code, int career_seq);
 	
 }
 

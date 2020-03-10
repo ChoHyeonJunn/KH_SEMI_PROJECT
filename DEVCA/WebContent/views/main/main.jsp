@@ -11,27 +11,16 @@
 <%@ include file="/views/form/header.jsp"%>
 
 <!-- START :: css -->
+<link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
+
 <style type="text/css">
-section{
-	width: 100%;
-	height: auto;
-}
-
-/* bootStrap */
-.card {
-	margin: 10% auto 100px auto;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-	-webkit-transition: .25s box-shadow;
-	transition: .25s box-shadow;
-}
-.card:focus,
-.card:hover {
-	box-shadow: 5px 5px 3px 5px rgba(0, 0, 0, 0.30), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-}
-
 /* CHART STYLE */
 #bar_chart_container, #roadMap_container{
 	position: relative;
+}
+#bar_chart_item_description{
+	height: 300px;
+	overflow: scroll;
 }
 #chartdiv_roadmap{
 	max-width: 80%;
@@ -47,8 +36,8 @@ section{
 	
 	background-color: black;
 	color: white;
-	opacity: 0.7;
-	width: 20%;
+	opacity: 0.9;
+	width: 25%;
 	height: 100%;
 	
 	position: absolute;
@@ -82,81 +71,80 @@ section{
 	max-width:100%;
 }
 
-.lecture{
-	float: left; 
-	padding: 0px;
-	margin: 0px; 
-	overflow: hidden;
+/* lecture container */
+.lecture, .lecture_back{
+	float: left;
 	width: 100%;
-	height: 400px;
-	border: 1px solid gray;
-	overflow: hidden;
-}
-.lecture:hover .lecture_back{
-	opacity: 0.8;
+	height: 350px;
 }
 .lecture_back{
 	position: absolute;
-	width: 100%;
-	height: 400px;
-
-	padding: 0px;
-	margin: 0px;
-	background-color: black;
 	color: white;
+	background-color: black;
 	opacity: 0;
+	z-index: 1;
 }
+.lecture:hover .lecture_back{
+	opacity: 0.9;
+}
+
+/* lecture contant */
 .lecture_img_div{
-	padding: 0px;
-	margin: 0px;
 	width: 100%; 
 	height: 40%;
 }	
 .lecture_des_div{
-	padding: 0px;
-	margin: 0px;
 	width: 100%; 
 	height: 60%;
-	overflow: hidden;
+	position: relative;
+}
+.lecture_additional_des{
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
 }
 
-/* kakaoMap */
-.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
-.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {position:relative;width:100%;height:500px;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
-.bg_white {background:#fff;}
-#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
-#menu_wrap .option{text-align: center;}
-#menu_wrap .option p {margin:10px 0;}  
-#menu_wrap .option button {margin-left:5px;}
-#placesList li {list-style: none;}
-#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
-#placesList .item span {display: block;margin-top:4px;}
-#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-#placesList .item .info{padding:10px 0 10px 55px;}
-#placesList .info .gray {color:#8a8a8a;}
-#placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
-#placesList .info .tel {color:#009900;}
-#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
-#placesList .item .marker_1 {background-position: 0 -10px;}
-#placesList .item .marker_2 {background-position: 0 -56px;}
-#placesList .item .marker_3 {background-position: 0 -102px}
-#placesList .item .marker_4 {background-position: 0 -148px;}
-#placesList .item .marker_5 {background-position: 0 -194px;}
-#placesList .item .marker_6 {background-position: 0 -240px;}
-#placesList .item .marker_7 {background-position: 0 -286px;}
-#placesList .item .marker_8 {background-position: 0 -332px;}
-#placesList .item .marker_9 {background-position: 0 -378px;}
-#placesList .item .marker_10 {background-position: 0 -423px;}
-#placesList .item .marker_11 {background-position: 0 -470px;}
-#placesList .item .marker_12 {background-position: 0 -516px;}
-#placesList .item .marker_13 {background-position: 0 -562px;}
-#placesList .item .marker_14 {background-position: 0 -608px;}
-#placesList .item .marker_15 {background-position: 0 -654px;}
-#pagination {margin:10px auto;text-align: center;}
-#pagination a {display:inline-block;margin-right:10px;}
-#pagination .on {font-weight: bold; cursor: default;color:#777;}
+/* 내 강의에 추가하기 이미지 */
+.add_my_lecture_img_container{
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	width: 100%;
+}
+.add_my_lecture_img{
+	width: 30px;
+	height: 30px;
+	-webkit-filter: opacity(.9) drop-shadow(0 0 0 white);
+	filter: opacity(50%) drop-shadow(0px 0px 0px white) contrast(0%);
+	cursor: pointer;
+}
+.add_my_lecture_img:hover{
+	width: 32px;
+	height: 32px;
+	-webkit-filter: opacity(.9) drop-shadow(0 0 0 white);
+	filter: opacity(50%) drop-shadow(0px 0px 0px yellow) contrast(0%);
+	cursor: pointer;
+}
+
+/* 별점 */
+.star-rating { 
+	width:80px; 
+}
+.star-rating , .star-rating span { 
+	display:inline-flex; 
+	height:15px; 
+	overflow:hidden;
+	background:url(../resources/images/star.png)no-repeat; 
+	background-size: 80px 30px;
+}
+.star-rating span{ 
+	background-position:left bottom; 
+	line-height:0; 
+	vertical-align:top; 
+}
+.hr{
+	background-color: white;
+}
 </style>
 <!-- END :: css -->
 
@@ -188,6 +176,7 @@ section{
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
 
+<script type="text/javascript" src="../resources/js/main_lecture/fillMainLectureList.js"></script>
 <script type="text/javascript" src="../resources/js/main_lecture/lecture_recommend.js"></script>
 <script type="text/javascript" src="../resources/js/main_lecture/lecture_my.js"></script>
 <script type="text/javascript" src="../resources/js/main_lecture/lecture_frontend.js"></script>
@@ -212,7 +201,13 @@ $(function(){
 			addRoadMapData('${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}', item);
 		}
 	})
-	
+	// 카테고리 추가하기 버튼 클릭시
+	$("#roadMap_category_add_button").click(function(){
+		var item = $("input[name='roadMap_new_item']").val();
+		if(item != ""){
+			addRoadMapCategory('${sessionLoginMember.MEMBER_CODE}${sessionLoginKakao.MEMBER_CODE}${sessionLoginNaver.MEMBER_CODE}', item);
+		}
+	})
 	// 지우기 버튼 클릭 시
 	$("#roadMap_item_remove_button").click(function(){
 		var item = $("#roadMap_item_name").text();
@@ -267,10 +262,10 @@ $(function(){
 	$("#bar_chart_description").css("display", "none");
 	$(document).on("click", "tspan", function(e){
 		var item_name = $(this).text();
-		alert($(this).text());
 		
 		$("#bar_chart_description").toggle(function(){
 			$(this).find("#bar_chart_item_name").text(item_name);
+			wikiSearching(item_name);				
 		});
 	});
 	// 닫기 클릭시
@@ -310,10 +305,93 @@ function linkBypass(selectedItem, Item){
 // barChart컬럼 클릭시 
 function barChartColumClick(onclickBarItem){
 	$("#bar_chart_description").toggle(function(){
-		$(this).find("#bar_chart_item_name").text(onclickBarItem);
+		$(this).find("#bar_chart_item_name").text(onclickBarItem);		
+		wikiSearching(onclickBarItem);		
 	});
 }
+function wikiSearching(word){
+	var des = $("#bar_chart_item_description");
+	des.empty();
+	des.append($("<div>").attr({"id":"loading","class":"text-center","style":"width:100%;"})
+				.append($("<img>").attr({"src":"../resources/images/Spinner-1s-200px-bg-black.gif","style":"display:block; margin: 0px auto; z-index:9000;"}))						
+		)
+	$.ajax({				
+		type: "POST",
+		data : {word : word},
+		url: "/DEVCA/main/getDescriptionWikiSearchingAjax.do",
+		dataType: "JSON",
+		
+		success: function(data) {	
+			console.log(data)
+			des.empty();
+			des.append(JSON.stringify(data.description))
+		},
+		
+		error : function() {
+			alert("통신 실패");
+		}
+	})	
+}
 
+/* 내 강의에 추가하기  */
+function addMyLecture(LECTURE_CODE){
+	//상위로 이벤트가 전파되지 않도록 중단한다.
+    event.stopPropagation();
+	
+    $.ajax({
+        type: "POST",
+        url: "/DEVCA/lecture/addmylectureajax.do",
+        data: {
+        	MEMBER_CODE : '${sessionMember_profile.MEMBER_CODE}',
+        	LECTURE_CODE: LECTURE_CODE
+        },
+        datatType: "JSON",
+
+        success: function (args) {
+        	alert("내 강의에 추가되었습니다");
+        	selectMyList('${sessionMember_profile.MEMBER_CODE}');
+        },
+
+        error: function (request, status, error) {
+           alert("통신 실패");
+           alert("code : " + request.status + "\n" +
+              "message : " + request.responseText + "\n" +
+              "error : " + error);
+        }
+     });
+}
+/* myLecture 지우기 */
+function DeleteMyGarbageLecture(LECTURE_CODE){
+	//상위로 이벤트가 전파되지 않도록 중단한다.
+    event.stopPropagation();
+
+    $.ajax({
+        type: "POST",
+        url: "/DEVCA/lecture/deleteMyGarbageLecture.do",
+        data: {
+        	MEMBER_CODE: '${sessionMember_profile.MEMBER_CODE}',
+        	LECTURE_CODE: LECTURE_CODE
+        },
+        datatType: "JSON",
+
+        success: function (args) {
+        	$("#lectureListContainer").empty();
+        	alert("강의 지우기")
+        	
+        	isEnd = false;
+        	startNo = 0;
+        	selectMyList('${sessionMember_profile.MEMBER_CODE}');
+        },
+
+        error: function (request, status, error) {
+           alert("통신 실패");
+           alert("code : " + request.status + "\n" +
+              "message : " + request.responseText + "\n" +
+              "error : " + error);
+        }
+    });
+  	
+}
 </script>
 <!-- END :: JAVASCRIPT -->
 
@@ -325,19 +403,20 @@ function barChartColumClick(onclickBarItem){
 
 </head>
 <body>	
-	<section class="bg-light">		
+	<section>		
 		<article id="roadmap">
 			
-			<div class="card my-3 bg-dark" style="width: 99%">
-				<!-- 구독자의 경우에 한해서 roadMap 서비스 제공 -->
+			<div class="card p-4 my-3 mx-1 bg-dark">
+				
+				<!-- 비 구독자 결제 페이지 이동 버튼 -->
 				<c:if test="${sessionMember_profile.MEMBER_ROLE eq '1'}">
-					<!-- 비 구독자 결제 페이지 이동 버튼 -->
 					<button type="button" onclick="location.href='/DEVCA/member/privacypaymentpage.do'">DEVCA 6개월 구독하러가기</button>
 				</c:if>
 				
+				
+				<!-- 구독자의 경우 로드맵 서비스 제공 -->
 				<c:if test="${sessionMember_profile.MEMBER_ROLE eq '2'}">
-					<!-- 구독자의 경우 로드맵 서비스 제공 -->
-					<h5 class="card-title text-light p-3">
+					<h5 class="card-title text-light p-3" data-toggle="collapse" data-target="#roadMap_container">
 						<c:out value="${sessionLoginMember.MEMBER_NAME}"></c:out>
 						<c:out value="${sessionLoginKakao.KAKAO_NICKNAME}"></c:out>
 						<c:out value="${sessionLoginNaver.NAVER_NICKNAME}"></c:out>
@@ -345,100 +424,135 @@ function barChartColumClick(onclickBarItem){
 						님의 <strong id="roadMap_field"></strong> 로드맵
 					</h5>
 					
-					<div id="roadMap_container">
-						<div id="chartdiv_roadmap"></div>
+					<div id="roadMap_container" class="collapse show flex">
+						<div id="chartdiv_roadmap">
+							<div id="loading" class="text-center" style="width:100%">
+								<img src='../resources/images/Spinner-1s-200px-main.gif' class="bg-dark" style="display:block; margin: 0px auto; z-index:9000;"/>
+							</div>
+						</div>
 						
-						<span id="roadMap_description">
-							<div id="roadMap_item_name"></div>
-							<button id="roadMap_item_remove_button">지우기</button>
+						<div id="roadMap_description" class="card p-4">
+							<h3 id="roadMap_item_name" class="mx-auto font-weight-bold my-3">
+							</h3>
+							<button id="roadMap_item_remove_button" class="btn mb-5">지우기</button>
 							
-							<input type="text" name="roadMap_new_item">
-							<button id="roadMap_item_add_button">로드맵에 추가하기</button>
-						</span>			
+							<input type="text" name="roadMap_new_item" class="form-control">
+							<div class="flex">
+								<button id="roadMap_item_add_button" class="btn">로드맵에 추가하기</button>
+								<button id="roadMap_category_add_button" class="btn">카테고리 추가하기</button>
+							</div>
+							
+						</div>			
 					</div>	
 				</c:if>
+				
 			</div>
 			
 			
-			<div class="card p-4 my-3 bg-dark" style="width: 99%">
+			<div class="card p-4 my-3 mx-1 bg-dark">
 			
-				<h5 class="card-title text-light p-3">기업의 기술 요구사항</h5>
-				<ul class="nav nav-tabs nav-justified text-light">
-  					<li class="nav-item">
-    					<a class="nav-link active" id="Developer">개발자라면</a>
-  					</li>
-  					<li class="nav-item">
-    					<a class="nav-link" id="Web">웹 지식</a>
-  					</li>
-  					<li class="nav-item">
-    					<a class="nav-link" id="Server">서버</a>
-  					</li>
-  					<li class="nav-item">
-    					<a class="nav-link" id="Language">언어</a>
-  					</li>
-  					<li class="nav-item">
-    					<a class="nav-link" id="DataBase">데이터베이스</a>
-  					</li>
-  					<li class="nav-item">
-    					<a class="nav-link" id="frameWork">프레임워크 & 라이브러리</a>
-  					</li>
-				</ul>
-				
-				<div id="bar_chart_container" class="bg-light">
-					<div id="chartdiv_job_rank">
-					</div>
+				<h5 class="card-title text-light p-3" data-toggle="collapse" data-target="#bar_chart_all_container">기업의 기술 요구사항</h5>
+				<div id="bar_chart_all_container" class="collapse show">
+					<ul class="nav nav-tabs nav-justified text-light">
+	  					<li class="nav-item">
+	    					<a class="nav-link active" id="Developer">개발자라면</a>
+	  					</li>
+	  					<li class="nav-item">
+	    					<a class="nav-link" id="Web">웹 지식</a>
+	  					</li>
+	  					<li class="nav-item">
+	    					<a class="nav-link" id="Server">서버</a>
+	  					</li>
+	  					<li class="nav-item">
+	    					<a class="nav-link" id="Language">언어</a>
+	  					</li>
+	  					<li class="nav-item">
+	    					<a class="nav-link" id="DataBase">데이터베이스</a>
+	  					</li>
+	  					<li class="nav-item">
+	    					<a class="nav-link" id="frameWork">프레임워크 & 라이브러리</a>
+	  					</li>
+					</ul>
 					
-					<span id="bar_chart_description">
-						<div id="bar_chart_item_name">					
+					<div id="bar_chart_container" class="bg-light flex">
+						<div id="chartdiv_job_rank">
 						</div>
 						
-						<button id="bar_chart_item_add_button">로드맵에 추가하기</button>
-						<button id="bar_chart_item_close">닫기</button>
-					</span>
+						<div id="bar_chart_description" class="card p-4">
+							<h3 id="bar_chart_item_name" class="mx-auto font-weight-bold my-3">					
+							</h3>
+							<div id="bar_chart_item_description" class="font-weight-bold p-1">
+								
+							</div>
+							<div class="flex my-auto">
+								<c:if test="${sessionMember_profile.MEMBER_ROLE eq '2'}">
+									<button id="bar_chart_item_add_button" class="btn btn-lg">로드맵에 추가하기</button>
+								</c:if>
+								<button id="bar_chart_item_close" class="btn btn-lg">닫기</button>
+							</div>
+							
+						</div>
+					</div>
+					<p class="text-light">위 차트는 programmers 와 saramIn 데이터를 참조합니다. </p>
 				</div>
-				<p class="text-light">위 차트는 programmers 와 saramIn 데이터를 참조합니다. </p>
 			</div>
 		</article>
 		
 		<article id="persnoal" class="container-fluid">
-			<div class="row p-2">
-				<div class="col-sm-6 card p-4 my-3 bg-dark">
-					<div id="profile">
-						<h5 class="card-title text-light p-3">프로필 정보</h5>
-						
-						<div id="MyChart">
-							<%
-							   int[] data = (int[])request.getAttribute("data");
-							%>
-	            
-	            			<canvas id="myChart" width="500" height="200"></canvas>
-	            
-	            			<div>
-	            				<table>
-	            					<tbody>
-		            					<tr>
-							               <td>희망 직무   <hr></td>
-							            </tr>
-							            <tr>
-							               <td>주요 기술   <hr></td>
-							            </tr>
-							            <tr>
-							               <td>등록 항목   </td>
-							            </tr>
-					            	</tbody>
-					            </table>
-	            			</div>
-         				</div>
-						
-						
-					</div>
+			<div class="row">
+				<div class="col-sm-6 p-0">
+					
+					<div id="profile" class="card p-4 mx-1 bg-dark">
+		                <h5 class="card-title text-light p-3">프로필 정보</h5>
+		                  
+		                <div id="MyChart">
+		                   <%
+		                      int[] data = (int[])request.getAttribute("data");
+		                   %>
+		               
+		                      <canvas id="myChart" width="330" height="330"></canvas>
+		               
+		                      <div>
+		                         <table>
+		                            <tbody>
+		                               <tr>
+		                                  <td style="color: white;">희망 직무  : 
+		                                  <c:forEach items="${work }" var="work">
+		                                        ${work } 
+		                                  </c:forEach>
+		                                  <hr class="hr"></td>
+		                               </tr>
+		                               <tr>
+		                                  <td style="color: white;">주요 기술  : 
+		                                  <c:forEach items="${skill }" var="skill">
+		                                        ${skill } 
+		                                  </c:forEach>
+		                                  <hr class="hr"></td>
+		                               </tr>
+		                               <tr>
+		                                  <td style="color: white;">등록 항목  : 
+		                                  	경력 : <c:out value="${career_count }"></c:out>, 
+		                                  	프로젝트 : <c:out value="${project_count }"></c:out>, 
+		                                  	학력 : <c:out value="${school_credit }"></c:out>, 
+		                                  	외국어 : <c:out value="${language_count }"></c:out>, 
+		                                  	활동 : <c:out value="${action_count }"></c:out>, 
+		                                  	수상/자격증 : <c:out value="${certificate_count }"></c:out>
+		                                  </td>
+		                               </tr>
+		                            </tbody>
+		                         </table>
+		                      </div>
+		                   </div>
+	               </div>
+					
+					
 				</div>
 				
-				<div class="col-sm-6 card p-4 my-3 bg-dark">
-					<div id="study">
-						<h5 class="card-title text-light p-3">스터디</h5>
+				<div class="col-sm-6 p-0">
+					<div id="study" class="card p-4 mx-1 bg-dark">
+						<h5 class="card-title text-light p-3" data-toggle="collapse" data-target="#map_wrap">스터디</h5>
 						
-						<div class="map_wrap">
+						<div id="map_wrap" class="map_wrap" class="collapse show">
 						    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 						
 						    <div id="menu_wrap" class="bg_white">
@@ -467,13 +581,16 @@ function barChartColumClick(onclickBarItem){
 		
 		<article id="lecture-board">
 		
-			<div class="card p-4 my-3 bg-dark" style="width: 99%">
+			<div class="card p-4 my-3 mx-1 bg-dark">
 				<div>
-					<h5 class="card-title text-light p-3">추천강의</h5>
+					<h6 class="card-title text-light p-3" data-toggle="collapse" data-target="#recommand-container">추천</h6>
 					
 					<!-- 클래스명은 변경하면 안 됨 -->
-					<div class="swiper-container">
+					<div id="recommand-container" class="swiper-container collapse show">
 						<div class="swiper-wrapper" id="recommand-wrapper">
+							<div id="loading" class="text-center" style="width:100%">
+								<img src='../resources/images/Spinner-1s-200px-main.gif' class="bg-dark" style="display:block; margin: 0px auto; z-index:9000;"/>
+							</div>
 						</div>				
 						<!-- 네비게이션 버튼 -->
 						<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
@@ -482,10 +599,13 @@ function barChartColumClick(onclickBarItem){
 				</div>
 				
 				<div>
-					보관 강의
+					<h6 class="card-title text-light p-3" data-toggle="collapse" data-target="#my-lecture-container">MY</h6>
 					<!-- 클래스명은 변경하면 안 됨 -->
-					<div class="swiper-container">
+					<div id="my-lecture-container" class="swiper-container collapse show">
 						<div class="swiper-wrapper" id="my-wrapper">
+							<div id="loading" class="text-center" style="width:100%">
+								<img src='../resources/images/Spinner-1s-200px-main.gif' class="bg-dark" style="display:block; margin: 0px auto; z-index:9000;"/>
+							</div>
 						</div>				
 						<!-- 네비게이션 버튼 -->
 						<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
@@ -494,10 +614,13 @@ function barChartColumClick(onclickBarItem){
 				</div>
 				
 				<div>
-					프론트앤드 인기강의
+					<h6 class="card-title text-light p-3" data-toggle="collapse" data-target="#front-end-container">Front-End</h6>
 					<!-- 클래스명은 변경하면 안 됨 -->
-					<div class="swiper-container">
+					<div id="front-end-container" class="swiper-container collapse show">
 						<div class="swiper-wrapper" id="frontend-wrapper">
+							<div id="loading" class="text-center" style="width:100%">
+								<img src='../resources/images/Spinner-1s-200px-main.gif' class="bg-dark" style="display:block; margin: 0px auto; z-index:9000;"/>
+							</div>
 						</div>				
 						<!-- 네비게이션 버튼 -->
 						<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
@@ -506,10 +629,13 @@ function barChartColumClick(onclickBarItem){
 				</div>
 				
 				<div>
-					백엔드 인기강의
+					<h6 class="card-title text-light p-3" data-toggle="collapse" data-target="#back-end-container">Back-End</h6>
 					<!-- 클래스명은 변경하면 안 됨 -->
-					<div class="swiper-container">
+					<div id="back-end-container" class="swiper-container collapse show">
 						<div class="swiper-wrapper" id="backend-wrapper">
+							<div id="loading" class="text-center" style="width:100%">
+								<img src='../resources/images/Spinner-1s-200px-main.gif' class="bg-dark" style="display:block; margin: 0px auto; z-index:9000;"/>
+							</div>
 						</div>				
 						<!-- 네비게이션 버튼 -->
 						<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
@@ -518,10 +644,13 @@ function barChartColumClick(onclickBarItem){
 				</div>
 				
 				<div>
-					풀스택 인기강의
+					<h6 class="card-title text-light p-3" data-toggle="collapse" data-target="#full-stack-container">Full-Stack</h6>
 					<!-- 클래스명은 변경하면 안 됨 -->
-					<div class="swiper-container">
+					<div id="full-stack-container" class="swiper-container collapse show">
 						<div class="swiper-wrapper" id="fullstack-wrapper">
+							<div id="loading" class="text-center" style="width:100%">
+								<img src='../resources/images/Spinner-1s-200px-main.gif' class="bg-dark" style="display:block; margin: 0px auto; z-index:9000;"/>
+							</div>
 						</div>				
 						<!-- 네비게이션 버튼 -->
 						<div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
@@ -552,8 +681,8 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 var map = new kakao.maps.Map(mapContainer, mapOption); 
 
 ///////////////////내 위치 마커////////////////////////
-var MyimageSrc =  <c:choose>
-					<c:when test="${not empty study.MEMBER_PROFILE_IMAGE_S_NAME}">'../resources/images/profileupload/${study.MEMBER_PROFILE_IMAGE_S_NAME }'</c:when>
+var MyimageSrc = <c:choose>
+					<c:when test="${not empty sessionMember_profile.MEMBER_PROFILE_IMAGE_S_NAME}">'../resources/images/profileupload/${sessionMember_profile.MEMBER_PROFILE_IMAGE_S_NAME }'</c:when>
 			   		<c:otherwise>'../resources/images/add.png'</c:otherwise>
 				</c:choose>	, // 마커이미지의 주소입니다    
 				MyimageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
@@ -584,6 +713,7 @@ function displayStudyList(){
 		json.title = '${study.STUDY_TITLE}'
 		json.latlng = new kakao.maps.LatLng('${study.STUDY_LATITUDE}', '${study.STUDY_LOGITUDE}')
 		json.study_code = '${study.STUDY_CODE}'
+		json.STUDY_PARTICIPANTS = '${study.STUDY_PARTICIPANTS}'
 		
 		jsonArray.push(json);
 	</c:forEach>
@@ -603,19 +733,24 @@ function displayStudyList(){
 	        image : markerImage // 마커 이미지 
 	    });
 	    
+	 	// 마커가 지도 위에 표시되도록 설정합니다
+	    marker.setMap(map);
+		
 	    // 인포윈도우에 제목 표시
-	    var iwContent = '<div><a href="/DEVCA/study/studydetailpage.do?STUDY_CODE=' + positions[i].study_code + '">'
-	    					+ positions[i].title +
-	    				'</a></div>',
-	    iwPosition = new kakao.maps.LatLng(positions[i].latlng, positions[i].title); //인포윈도우 표시 위치입니다
+	    var content = '<div class="customoverlay">'
+	    					+ '<a href="/DEVCA/study/studydetailpage.do?STUDY_CODE=' + positions[i].study_code + '">'
+	    					+ positions[i].title + ':' + positions[i].STUDY_PARTICIPANTS + '명 참여중'
+	    					+ '</a>' +
+	    			  '</div>';
 
 		// 인포윈도우를 생성합니다
-		var Sinfowindow = new kakao.maps.InfoWindow({
-		    position : iwPosition, 
-		    content : iwContent 
+		var customOverlay = new kakao.maps.CustomOverlay({
+			map: map,
+		    position : positions[i].latlng, 
+		    content : content,
+		    yAnchor: -1
 		});
-		marker.setMap(map);
-		Sinfowindow.open(map, marker); 
+		customOverlay.setMap(map);
 	}
 
 }
@@ -837,25 +972,76 @@ function removeAllChildNods(el) {
       var myRadarChart = new Chart(ctx, {
        type: 'radar',
        data: {
-          labels: ['경력', '프로젝트', '학력', '외국어', '활동', '수상/자격증','출판/논문/특허'],
+          labels: ['경력', '프로젝트', '학력', '외국어', '활동', '수상/자격증'],
                datasets: [{
-                  label: '내 프로필',
-                   data: [<%=data[0]%>, <%=data[1]%>, <%=data[2]%>, <%=data[3]%>, <%=data[4]%>, <%=data[5]%>, <%=data[6]%>]
+                   label: '내프로필',
+                   backgroundColor: "rgba(194,223,255,0.8)",
+                   borderColor: "rgba(0,191,255,1)",
+                   fill: true,
+                   radius: 5,
+                   pointRadius: 3,
+                   pointBorderWidth: 3,
+                   pointBackgroundColor: "#0078ff",
+                   pointBorderColor: "rgba(204,205,207,1)",
+                   pointHoverRadius: 6,
+                   pointHitDetectionRadius : 20,
+                   data: [<%=data[0]%>, <%=data[1]%>, <%=data[2]%>, <%=data[3]%>, <%=data[4]%>, <%=data[5]%>,]
                }]
        },
        options: options ={
-             responsive: false,
-                  scale: {
-                      angleLines: {
-                          display: true
-                      },
-                      ticks: {
-                          suggestedMin: 0,
-                          suggestedMax: 3,
-                          stepSize: 1
-                      }
-                  }
-          }
+             legend: {
+                   labels: {
+                       fontColor: "white",
+                       fontSize: 15
+                   }
+               },
+         responsive: false,
+         tooltips: {
+            enabled: false
+         },
+         hover: {
+            animationDuration: 0
+         },
+         animation: {
+            duration: 3,
+            onComplete: function () {
+               var chartInstance = this.chart,
+                  ctx = chartInstance.ctx;
+               ctx.fillStyle = 'white';
+               ctx.font = "20px Verdana";
+               this.data.datasets.forEach(function (dataset, i) {
+                  var meta = chartInstance.controller.getDatasetMeta(i);
+                  meta.data.forEach(function (bar, index) {
+                     var data = dataset.data[index];                     
+                     ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                  });
+               });
+            }
+         },
+         scale: {
+            gridLines: {
+               color:"#dddddd",
+               lineWidth: 3
+            },
+            angleLines: {
+               display: true,
+               color : "rgba(221,221,221,1)",
+               lineWidth: 3
+            },
+            ticks: {
+               beginAtZero: true,
+               display: false,
+               backdropColor: "rgba(52,58,64,1)",
+               suggestedMin: 0,
+               suggestedMax: 3,
+               stepSize: 1
+            },
+            pointLabels:{
+               fontSize: 10,
+               fontColor: "white"
+            },
+         }
+      }
       });
 </script>
 <!-- END :: MYCHART.JS -->

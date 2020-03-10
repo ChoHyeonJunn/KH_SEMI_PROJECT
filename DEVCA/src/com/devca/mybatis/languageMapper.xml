@@ -5,21 +5,23 @@
 	<select id="language_select" parameterType="int" resultType="LANGUAGE">
 		SELECT * FROM LANGUAGE
 		WHERE LANGUAGE_MEMBER_CODE = #{LANGUAGE_MEMBER_CODE}
+		ORDER BY LANGUAGE_SEQ ASC
 	</select>
 	<insert id="language_insert" parameterType="LANGUAGE">
 		INSERT INTO LANGUAGE
-		VALUES(LANGUAGE_SEQ.NEXTVAL,#{LANGUAGE_MEMBER_CODE},#{LANGUAGE})
+		VALUES(LANGUAGE_SEQ.NEXTVAL,#{LANGUAGE_MEMBER_CODE},#{LANGUAGE},#{LANGUAGE_OTHER},#{LANGUAGE_NAME},#{LANGUAGE_GRADE})
 	</insert>
 	<update id="language_update" parameterType="LANGUAGE">
 		UPDATE LANGUAGE
-		SET LANGUAGE = #{LANGUAGE}
-		WHERE LANGUAGE_SEQ = #{LANGUAGE_SEQ}
-		AND  LANGUAGE_MEMBER_CODE = #{LANGUAGE_MEMBER_CODE}
-	</update>
-	<delete id="language_delete" parameterType="HashMap">
-		DELETE FROM LANGUAGE
+		SET LANGUAGE = #{LANGUAGE},
+		LANGUAGE_OTHER = #{LANGUAGE_OTHER},
+		LANGUAGE_NAME = #{LANGUAGE_NAME},
+		LANGUAGE_GRADE = #{LANGUAGE_GRADE}
 		WHERE LANGUAGE_SEQ = #{LANGUAGE_SEQ}
 		AND LANGUAGE_MEMBER_CODE = #{LANGUAGE_MEMBER_CODE}
+	</update>
+	<delete id="language_delete" parameterType="int">
+		DELETE FROM LANGUAGE WHERE LANGUAGE_MEMBER_CODE = #{LANGUAGE_MEMBER_CODE}
 	</delete>
 	<select id="language_select_seq" parameterType="int" resultType="LANGUAGE">
 		SELECT LANGUAGE_SEQ FROM LANGUAGE
@@ -31,6 +33,6 @@
 	</select>
 	<insert id="language_insert_new" parameterType="LANGUAGE">
 		INSERT INTO LANGUAGE
-		VALUES(LANGUAGE_SEQ.NEXTVAL,#{LANGUAGE_MEMBER_CODE},'')
+		VALUES(LANGUAGE_SEQ.NEXTVAL,#{LANGUAGE_MEMBER_CODE},'','','','')
 	</insert>
 </mapper>

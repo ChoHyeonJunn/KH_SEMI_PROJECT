@@ -5,6 +5,7 @@
 	<select id="action_select" parameterType="int" resultType="ACTION_DTO">
 		SELECT * FROM ACTION_TABLE
 		WHERE ACTION_MEMBER_CODE= #{ACTION_MEMBER_CODE}
+		ORDER BY ACTION_SEQ ASC
 	</select>
 	<select id="action_select_seq" parameterType="int" resultType="ACTION_DTO">
 		SELECT ACTION_SEQ FROM ACTION_TABLE

@@ -16,8 +16,7 @@
 <%@ include file="/views/form/header.jsp"%>
 
 <!-- START :: css -->
-<link href="/DEVCA/resources/css/master.css" rel="stylesheet"
-	type="text/css">
+<link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
 <!-- END :: css -->
 
 <!-- START :: set JSTL variable -->

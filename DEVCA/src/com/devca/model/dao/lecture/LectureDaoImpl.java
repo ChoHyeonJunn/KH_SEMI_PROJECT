@@ -180,10 +180,9 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 
 		List<LECTURE> lectureList = session.selectList(namespace + ".selectMyLectureList", map);
 
-		if (lectureList.size() == 0) {
-			lectureList = session.selectList(namespace + ".selectMyGarbageLecture", map);
-		}
-		System.out.println(lectureList);
+//		if (lectureList.size() == 0) {
+//			lectureList = session.selectList(namespace + ".selectMyGarbageLecture", map);
+//		}
 		session.close();
 
 		return lectureList;
@@ -233,9 +232,13 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 
 	// 내 강의 삭제
 	@Override
-	public int deleteMyGarbageLecture(int LECTURE_CODE) {
+	public int deleteMyGarbageLecture(int LECTURE_CODE, int MEMBER_CODE) {
 		SqlSession session = getSqlSessionFactory().openSession(false);
-		int res = session.delete(namespace + ".deleteMyGarbageLecture", LECTURE_CODE);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("LECTURE_CODE", LECTURE_CODE);
+		map.put("MEMBER_CODE", MEMBER_CODE);
+		System.out.println(MEMBER_CODE+" : "+LECTURE_CODE);
+		int res = session.delete(namespace + ".deleteMyGarbageLecture", map);
 		if (res > 0) {
 			session.commit();
 		}
@@ -257,7 +260,6 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 			recommand += key + "|";
 		}
 		recommand = recommand.substring(0, recommand.length() - 1);
-		System.out.println(recommand);
 
 		List<LECTURE> lectureList = session.selectList(namespace + ".selectRecommandList", recommand);
 		session.close();

@@ -12,6 +12,10 @@ public class CAREER {
 	private String DAY_OF_ENTRY;
 	private String DATE_OF_DEPARTURE;
 	private String STACK;
+	private String PERFORMANCE;
+	private String START_DATE;
+	private String END_DATE;
+	private String DETAIL_CONTEXT;
 	private String LINK;
 	private String EXPLANATION;
 	
@@ -19,9 +23,30 @@ public class CAREER {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+
+	public CAREER(int cAREER_MEMBER_CODE, String cOMPANY_NAME, String dUTY, String dAY_OF_ENTRY,
+			String dATE_OF_DEPARTURE, String sTACK, String pERFORMANCE, String sTART_DATE, String eND_DATE,
+			String dETAIL_CONTEXT, String lINK, String eXPLANATION) {
+		super();
+		CAREER_MEMBER_CODE = cAREER_MEMBER_CODE;
+		COMPANY_NAME = cOMPANY_NAME;
+		DUTY = dUTY;
+		DAY_OF_ENTRY = dAY_OF_ENTRY;
+		DATE_OF_DEPARTURE = dATE_OF_DEPARTURE;
+		STACK = sTACK;
+		PERFORMANCE = pERFORMANCE;
+		START_DATE = sTART_DATE;
+		END_DATE = eND_DATE;
+		DETAIL_CONTEXT = dETAIL_CONTEXT;
+		LINK = lINK;
+		EXPLANATION = eXPLANATION;
+	}
+
 
 	public CAREER(int cAREER_MEMBER_CODE, int cAREER_SEQ, String cOMPANY_NAME, String dUTY, String dAY_OF_ENTRY,
-			String dATE_OF_DEPARTURE, String sTACK, String lINK, String eXPLANATION) {
+			String dATE_OF_DEPARTURE, String sTACK, String pERFORMANCE, String sTART_DATE, String eND_DATE,
+			String dETAIL_CONTEXT, String lINK, String eXPLANATION) {
 		super();
 		CAREER_MEMBER_CODE = cAREER_MEMBER_CODE;
 		CAREER_SEQ = cAREER_SEQ;
@@ -30,9 +55,15 @@ public class CAREER {
 		DAY_OF_ENTRY = dAY_OF_ENTRY;
 		DATE_OF_DEPARTURE = dATE_OF_DEPARTURE;
 		STACK = sTACK;
+		PERFORMANCE = pERFORMANCE;
+		START_DATE = sTART_DATE;
+		END_DATE = eND_DATE;
+		DETAIL_CONTEXT = dETAIL_CONTEXT;
 		LINK = lINK;
 		EXPLANATION = eXPLANATION;
 	}
+
+
 
 	public int getCAREER_MEMBER_CODE() {
 		return CAREER_MEMBER_CODE;
@@ -90,6 +121,38 @@ public class CAREER {
 		STACK = sTACK;
 	}
 
+	public String getPERFORMANCE() {
+		return PERFORMANCE;
+	}
+
+	public void setPERFORMANCE(String pERFORMANCE) {
+		PERFORMANCE = pERFORMANCE;
+	}
+
+	public String getSTART_DATE() {
+		return START_DATE;
+	}
+
+	public void setSTART_DATE(String sTART_DATE) {
+		START_DATE = sTART_DATE;
+	}
+
+	public String getEND_DATE() {
+		return END_DATE;
+	}
+
+	public void setEND_DATE(String eND_DATE) {
+		END_DATE = eND_DATE;
+	}
+
+	public String getDETAIL_CONTEXT() {
+		return DETAIL_CONTEXT;
+	}
+
+	public void setDETAIL_CONTEXT(String dETAIL_CONTEXT) {
+		DETAIL_CONTEXT = dETAIL_CONTEXT;
+	}
+
 	public String getLINK() {
 		return LINK;
 	}
@@ -107,6 +170,5 @@ public class CAREER {
 	}
 
 	
-
 	
 }

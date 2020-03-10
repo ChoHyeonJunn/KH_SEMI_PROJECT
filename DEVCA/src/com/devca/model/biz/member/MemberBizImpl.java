@@ -56,27 +56,36 @@ public class MemberBizImpl implements MemberBiz {
 
 			MEMBER_PROFILE member_profile = new MEMBER_PROFILE(member_seq.getMEMBER_CODE(), "", "", "", "", "", "", "",
 					"");
-			int profile_result = dao.insertMemberProfile(member_profile);
-
-			// 로드맵 데이터 입력
-			JsonParser jsonParser = new JsonParser();
-
-			JsonElement jsonFrontEnd = jsonParser.parse(FrontEnd);
-			JsonElement jsonBackEnd = jsonParser.parse(BackEnd);
-			JsonElement jsonFullStack = jsonParser.parse(FullStack);
-
-			ROADMAP FrontRoadmap = new ROADMAP();
-
-			FrontRoadmap.setMEMBER_CODE(member_seq.getMEMBER_CODE());
-			FrontRoadmap.setROADMAP_FIELD("FrontEnd");
-			FrontRoadmap.setROADMAP_TECH(jsonFrontEnd.toString());
-
-			int roadmap_result = dao.insertRoadMap(FrontRoadmap);
-
-			return (profile_result > 0 && roadmap_result > 0) ? 1 : 0;
+			return dao.insertMemberProfile(member_profile);
 		} else {
 			return res;
 		}
+	}
+
+	public int insertRoadMapData(int MEMBER_CODE, String position) {
+		System.out.println(MEMBER_CODE + " : " + position);
+		// 로드맵 데이터 입력
+		JsonParser jsonParser = new JsonParser();
+
+		JsonElement jsonFrontEnd = jsonParser.parse(FrontEnd);
+		JsonElement jsonBackEnd = jsonParser.parse(BackEnd);
+		JsonElement jsonFullStack = jsonParser.parse(FullStack);
+
+		ROADMAP FrontRoadmap = new ROADMAP();
+
+		FrontRoadmap.setMEMBER_CODE(MEMBER_CODE);
+		if (position.equals("프론트 개발자")) {
+			FrontRoadmap.setROADMAP_FIELD("FrontEnd");
+			FrontRoadmap.setROADMAP_TECH(jsonFrontEnd.toString());
+		} else if (position.equals("백엔드 개발자")) {
+			FrontRoadmap.setROADMAP_FIELD("BackEnd");
+			FrontRoadmap.setROADMAP_TECH(jsonBackEnd.toString());
+		} else {
+			FrontRoadmap.setROADMAP_FIELD("FullStack");
+			FrontRoadmap.setROADMAP_TECH(jsonFullStack.toString());
+		}
+
+		return dao.insertRoadMap(FrontRoadmap);
 	}
 
 	// 카카오 회원가입

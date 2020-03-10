@@ -20,13 +20,40 @@ import com.devca.model.biz.lecture.LectureBiz;
 import com.devca.model.biz.lecture.LectureBizImpl;
 import com.devca.model.biz.main.MainBiz;
 import com.devca.model.biz.main.MainBizImpl;
+import com.devca.model.biz.protfolio.ActionBiz;
+import com.devca.model.biz.protfolio.ActionBizImpl;
+import com.devca.model.biz.protfolio.CareerBiz;
+import com.devca.model.biz.protfolio.CareerBizImpl;
+import com.devca.model.biz.protfolio.CertificateBiz;
+import com.devca.model.biz.protfolio.CertificateBizImpl;
+import com.devca.model.biz.protfolio.LanguageBiz;
+import com.devca.model.biz.protfolio.LanguageBizImpl;
+import com.devca.model.biz.protfolio.ProjectBiz;
+import com.devca.model.biz.protfolio.ProjectBizImpl;
+import com.devca.model.biz.protfolio.SchoolBiz;
+import com.devca.model.biz.protfolio.SchoolBizImpl;
+import com.devca.model.biz.protfolio.SkillBiz;
+import com.devca.model.biz.protfolio.SkillBizImpl;
+import com.devca.model.biz.protfolio.WorkBiz;
+import com.devca.model.biz.protfolio.WorkBizImpl;
 import com.devca.model.biz.study.StudyBiz;
 import com.devca.model.biz.study.StudyBizImpl;
 import com.devca.model.dto.lecture.JOB_RANK;
 import com.devca.model.dto.lecture.LECTURE;
+import com.devca.model.dto.member.KAKAO_MEMBER;
 import com.devca.model.dto.member.MEMBER;
+import com.devca.model.dto.member.NAVER_MEMBER;
 import com.devca.model.dto.member.ROADMAP;
+import com.devca.model.dto.profile.ACTION_DTO;
+import com.devca.model.dto.profile.CAREER;
+import com.devca.model.dto.profile.CERTIFICATE;
+import com.devca.model.dto.profile.LANGUAGE;
+import com.devca.model.dto.profile.PROJECT;
+import com.devca.model.dto.profile.SCHOOL;
+import com.devca.model.dto.profile.SKILL;
+import com.devca.model.dto.profile.WORK;
 import com.devca.model.dto.study.STUDY;
+import com.devca.utility.crawling.WikiSearch;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -45,6 +72,15 @@ public class MainController extends HttpServlet {
 	MainBiz biz = new MainBizImpl();
 	LectureBiz lectureBiz = new LectureBizImpl();
 	StudyBiz studyBiz = new StudyBizImpl();
+
+	SkillBiz skillbiz = new SkillBizImpl();// 6각 다이어그램 아래 주요기술
+	WorkBiz workbiz = new WorkBizImpl();// 6각 다이어그램 아래 희망직종
+	CareerBiz careerbiz = new CareerBizImpl();// 6각 다이어그램 경력
+	ProjectBiz projectbiz = new ProjectBizImpl();// 6각 다이어그램 경력
+	SchoolBiz schoolBiz = new SchoolBizImpl();// 6각 다이어그램 학력
+	LanguageBiz languagebiz = new LanguageBizImpl();// 6각 다이어그램 외국어
+	ActionBiz actionbiz = new ActionBizImpl();// 6각 다이어그램 활동
+	CertificateBiz certificateBiz = new CertificateBizImpl();// 6각 다이어그램 수상,자격증
 
 	public MainController() {
 		super();
@@ -73,10 +109,14 @@ public class MainController extends HttpServlet {
 			doGetRoadMapData(request, response); // 로드맵 데이터 요청 처리
 		} else if (command.endsWith("/addRoadMapData.do")) {
 			doAddRoadMapData(request, response); // 로드맵 데이터 추가 요청 처리
+		} else if (command.endsWith("/addRoadMapCategory.do")) {
+			doAddRoadMapCategory(request, response); // 로드맵 중분류 추가 요청 처리
 		} else if (command.endsWith("/removeRoadMapData.do")) {
 			doRemoveRoadMapData(request, response); // 로드맵 데이터 삭제 요청 처리
 		} else if (command.endsWith("/linkRoadMapData.do")) {
 			doLinkRoadMapData(request, response); // 로드맵 데이터 연결 요청 처리
+		} else if (command.endsWith("/getDescriptionWikiSearchingAjax.do")) {
+			doGetDescriptionWikiSearchingAjax(request, response); // 기술 간단설명 크롤링
 		}
 
 		/*
@@ -111,23 +151,136 @@ public class MainController extends HttpServlet {
 			// 로그인 상태일 때
 			System.out.println("로그인 상태로 main 접근");
 
-			// 스터디 
+			// 스터디
 			List<STUDY> studyList = studyBiz.selectStudyList();
 			request.setAttribute("studyList", studyList);
 
 			// 육각다이어그램 데이터(temp)
 			int MEMBER_CODE = 0;
-	         if (session.getAttribute("loginMember") != null) {
-	            MEMBER_CODE = ((MEMBER) session.getAttribute("loginMember")).getMEMBER_CODE();
-	         } else if (session.getAttribute("loginKakao") != null) {
-	            MEMBER_CODE = ((MEMBER) session.getAttribute("loginKakao")).getMEMBER_CODE();
-	         } else if (session.getAttribute("loginNaver") != null) {
-	            MEMBER_CODE = ((MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
-	         }
+			if (session.getAttribute("loginMember") != null) {
+				MEMBER_CODE = ((MEMBER) session.getAttribute("loginMember")).getMEMBER_CODE();
+			} else if (session.getAttribute("loginKakao") != null) {
+				MEMBER_CODE = ((KAKAO_MEMBER) session.getAttribute("loginKakao")).getMEMBER_CODE();
+			} else if (session.getAttribute("loginNaver") != null) {
+				MEMBER_CODE = ((NAVER_MEMBER) session.getAttribute("loginNaver")).getMEMBER_CODE();
+			}
 
-	         int[] data = { 1, 1, 2, 1, 3, 3, 3 };
-	         request.setAttribute("data", data);
-			
+			List<SKILL> skillList = skillbiz.skill_select(MEMBER_CODE);
+	          String[] skill = new String[skillList.size()];
+	          
+	          for(int i = 0; i< skillList.size(); i++) {
+	             skill[i] = skillList.get(i).getSKILL();
+	             
+	             request.setAttribute("skill", skill);
+	         }
+	         
+	         List<WORK> workList = workbiz.work_select(MEMBER_CODE);
+	         String[] work = new String[workList.size()];
+	         
+	         for(int i = 0; i< workList.size(); i++) {
+	            work[i] = workList.get(i).getLINE_OF_WORK();
+	            
+	            request.setAttribute("work", work);
+	         }
+	         /*경력 */
+	         List<CAREER> career = careerbiz.career_select(MEMBER_CODE);
+	         int career_count = 0;
+	         if(career.isEmpty()) {// 프로필 창 진입 x
+	        	 career_count = 0;
+	         }else if(career.get(0).getCOMPANY_NAME() == null) {
+	        	 career_count = 0;
+	         }else {
+	        	 career_count = career.size();
+	         }
+	         if(career_count > 3) {
+	        	career_count = 3;
+	         }
+	         request.setAttribute("career_count", career_count);
+	         
+	         /*프로젝트 */
+	         List<PROJECT> project = projectbiz.project_select(MEMBER_CODE);
+	         int project_count = 0;
+	         if(project.isEmpty()) {//프로필 창 진입 x
+	        	 project_count = 0;
+	         }else if(project.get(0).getPROJECT_NAME() == null) {
+	        	 project_count = 0;
+	         }else {
+	        	 project_count = project.size();
+	         }
+	         if(project_count > 3) {
+	        	 project_count = 3;
+	         }
+	         request.setAttribute("project_count", project_count);
+	         
+			 /*학력 */
+	         List<SCHOOL> list = schoolBiz.school_select(MEMBER_CODE);
+	         int credit = 0;
+	         int school_credit = 0;
+	         if(list.isEmpty()) {
+	        	 credit = 0;
+	         }else {
+	        	 credit = (int)(list.get(0).getSCHOOL_CREDIT());
+	             if(credit < 2) {
+	            	 school_credit = 0;
+	             }else if(credit < 3){
+	            	 school_credit = 1;
+	             }else if(credit < 4){
+	            	 school_credit = 2;
+	             }else {
+	            	 school_credit = 3;
+	             }
+	         }
+	         
+	        
+	         request.setAttribute("school_credit", school_credit);
+			 /*외국어 */
+	         List<LANGUAGE> language = languagebiz.language_select(MEMBER_CODE);
+	         int language_count = 0;
+	         if(language.isEmpty()) {// 프로필 창 진입 x
+	        	 language_count = 0;
+	         }else if(language.get(0).getLANGUAGE_NAME() == null) {
+	        	 language_count = 0;
+	         }else {
+	        	 language_count = language.size();
+	         }
+	         if(career_count > 3) {
+	        	career_count = 3;
+	         }
+	         request.setAttribute("language_count", language_count);
+	         
+			 /*활동 */
+	         List<ACTION_DTO> action = actionbiz.action_select(MEMBER_CODE);
+	         int action_count = 0;
+	         if(action.isEmpty()) {// 프로필 창 진입 x
+	        	 action_count = 0;
+	         }else if(action.get(0).getACTION_NAME()== null) {
+	        	 action_count = 0;
+	         }else {
+	        	 action_count = action.size();
+	         }
+	         if(career_count > 3) {
+	        	career_count = 3;
+	         }
+	         request.setAttribute("action_count", action_count);
+	         
+			 /*수상/자격증 */
+	         List<CERTIFICATE> certificate = certificateBiz.certificate_select(MEMBER_CODE);
+	         int certificate_count = 0;
+	         if(certificate.isEmpty()) {// 프로필 창 진입 x
+	        	 certificate_count = 0;
+	         }else if(certificate.get(0).getCERTIFICATE_NAME()== null) {
+	        	 certificate_count = 0;
+	         }else {
+	        	 certificate_count = certificate.size();
+	         }
+	         if(career_count > 3) {
+	        	career_count = 3;
+	         }
+	         request.setAttribute("certificate_count", certificate_count);
+	         
+	         int[] data = { career_count, project_count, school_credit, language_count, action_count, certificate_count };
+	           request.setAttribute("data", data);
+
 			dispatch("/views/main/main.jsp", request, response);
 		} else {
 			// 미 로그인 상태일 때
@@ -197,6 +350,22 @@ public class MainController extends HttpServlet {
 		out.println(obj);
 	}
 
+	// 로드맵 중분류 추가 요청 처리
+	@SuppressWarnings("unchecked")
+	private void doAddRoadMapCategory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int MEMBER_CODE = Integer.parseInt(request.getParameter("MEMBER_CODE"));
+		String item = request.getParameter("item");
+
+		int res = biz.addRoadMapCategory(MEMBER_CODE, item);
+
+		ROADMAP roadMap = biz.getRoadMapData(MEMBER_CODE);
+
+		JSONObject obj = new JSONObject();
+		obj.put("roadMap", roadMap.getROADMAP_TECH());
+		PrintWriter out = response.getWriter();
+		out.println(obj);
+	}
+
 	// 로드맵 데이터 삭제 요청 처리
 	@SuppressWarnings("unchecked")
 	private void doRemoveRoadMapData(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -230,6 +399,18 @@ public class MainController extends HttpServlet {
 		out.println(obj);
 	}
 
+	// 기술 간단설명 크롤링
+	@SuppressWarnings("unchecked")
+	private void doGetDescriptionWikiSearchingAjax(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		String word = request.getParameter("word");
+		String description = WikiSearch.wikiSearching(word);
+
+		JSONObject obj = new JSONObject();
+		obj.put("description", description.replace("\n", ""));
+		PrintWriter out = response.getWriter();
+		out.println(obj);
+	}
 	/*
 	 * 메인에 뿌릴 강의 관련 요청
 	 */

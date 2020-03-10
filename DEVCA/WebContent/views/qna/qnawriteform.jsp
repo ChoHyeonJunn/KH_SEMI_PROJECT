@@ -27,14 +27,31 @@
 <!-- START :: JAVASCRIPT -->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+	
 <script type="text/javascript">
+
+$(document).ready(function() {
+	$('#summernote').summernote({
+		 height: 300,                 // set editor height
+         minHeight: null,             // set minimum height of editor
+         maxHeight: null,             // set maximum height of editor
+         focus: true                  // set focus to editable area after initializing summernote
+	})
+});
+
 	
 </script>
 
 <!-- END :: JAVASCRIPT -->
-
-<script
-	src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
 
 </head>
 <body>
@@ -42,18 +59,14 @@
 	<section>
 		<h1>글쓰기 <input type="button" value="취소" onclick="location.href='/DEVCA/qnapage/qnalist.do'" /></h1>
 		<form action="/DEVCA/qnapage/qnawriteres.do" method="post">
+			<input type="hidden" name="MEMBER_CODE" value="${sessionMember_profile.MEMBER_CODE }">
 			<div>
 				<div>
 					제목 : <input type="text" name="QNA_TITLE" />
 				</div>
 
 				<div>
-						<textarea rows="10" cols="60" name="QNA_CONTENT" id="content"></textarea>
-						<script
-							src="${pageContext.request.contextPath}/resources/js/ckeditor.js"></script>
-				</div>
-				<div>
-					작성자 : <input type="text" name="QNA_WRITER" />
+						<textarea id="summernote" rows="10" cols="60" name="QNA_CONTENT"></textarea>
 				</div>
 				<div>
 					<input type="submit" value="작성" />

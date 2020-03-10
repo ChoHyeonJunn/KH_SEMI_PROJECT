@@ -1,5 +1,6 @@
 package com.devca.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -213,9 +214,6 @@ public class MemberController extends HttpServlet {
 		System.out.println(Arrays.toString(request.getParameterValues("SURBEY_DATABASE_NON_MAJOR")));
 		System.out.println(Arrays.toString(request.getParameterValues("SURBEY_FRAMEWORK_NON_MAJOR")));
 
-		// 0번 배열의 값만 읽어온다. 그박스가 선택되면
-		// 0번인덱스부터 값이차례로 들어간다.
-
 		if (session.getAttribute("RSAprivateKey") != null)
 			session.removeAttribute("RSAprivateKey");
 
@@ -302,10 +300,40 @@ public class MemberController extends HttpServlet {
 					? (String) session.getAttribute("SURVEY_FRAMEWORK_NON_MAJOR")
 					: "");
 
-			// String SURVEY_LANGUAGE = (String) session.getAttribute("SURVEY_LANGUAGE");
+			String position = "";
+			if (((String) session.getAttribute("SURVEY_LANGUAGE")).equals("배워본 적이 없습니다.")) { // 비전공
+				int front = 0;
+				int back = 0;
+
+				// 프론트 or 백엔드 와 관련된 체크박스의 밸류 갯수를 통해 font/back/full 을 나눔
+				String[] SURBEY_CHECK_NON_MAJOR = ((String) session.getAttribute("SURVEY_CHECK_NON_MAJOR")).replace("[", "").replace("]", "").split(", ");
+				for (int i = 0; i < SURBEY_CHECK_NON_MAJOR.length; i++) {
+					if (SURBEY_CHECK_NON_MAJOR[i].startsWith("1")) {
+						front++;
+					} else {
+						back++;
+					}
+				}
+				
+				System.out.println(front + " : " + back);
+
+				if (front >= back) {
+					position = "프론트 개발자";
+				} else {
+					position = "백엔드 개발자";
+				}
+				System.out.println("비전공 position : " + position);
+			} else { // 전공
+				position = (String) session.getAttribute("SURVEY_POSITION");
+				System.out.println("전공 position : " + position);
+			}
 
 			int resSurvey = surveyBiz.insertMySurvey(survey);
 			if (resSurvey > 0) {
+				// 로드맵 데이터 입력
+				int roadMapResult = biz.insertRoadMapData(joinMember.getMEMBER_CODE(), position);
+
+				// 세션에서 설문조사 데이터 파기
 				session.removeAttribute("SURVEY_LANGUAGE");
 				session.removeAttribute("SURVEY_POSITION");
 				session.removeAttribute("SURVEY_BASIC");
@@ -319,7 +347,11 @@ public class MemberController extends HttpServlet {
 				session.removeAttribute("SURVEY_DATABASE_NON_MAJOR");
 				session.removeAttribute("SURVEY_FRAMEWORK_NON_MAJOR");
 
-				jsResponse("회원가입 성공", "/DEVCA/member/loginpage.do", response);
+				if (roadMapResult > 0) {
+					jsResponse("회원가입 성공", "/DEVCA/member/loginpage.do", response);
+				} else {
+					jsResponse("로드맵 데이터 입력 실패,,,", "/DEVCA/member/loginpage.do", response);
+				}
 			} else {
 				jsResponse("회원가입 실패", "/DEVCA/member/joinpage.do", response);
 			}
@@ -615,6 +647,12 @@ public class MemberController extends HttpServlet {
 		int resP = biz.updateMemberProfile(member_profile);
 		int resM = biz.updateMember(member_profile);
 		if (resP > 0 && resM > 0) {
+			// 프로필 정보를 session에 리셋
+			session = request.getSession();
+			MEMBER_PROFILE new_member_profile = biz.selectMemberProfile(MEMBER_CODE);
+			session.removeAttribute("member_profile");
+			session.setAttribute("member_profile", new_member_profile);
+
 			jsResponse("프로필 수정", "/DEVCA/member/privacyprofilepage.do", response);
 		} else {
 			jsResponse("프로필 수정 실패", "/DEVCA/member/privacyprofilepage.do", response);
@@ -636,6 +674,12 @@ public class MemberController extends HttpServlet {
 
 		String encoding = "UTF-8";
 		int maxSize = 1024 * 1024 * 3;
+
+		// 디렉토리 없을 시 자동 생성!
+		File file;
+		if (!(file = new File(FILE_PATH)).isDirectory()) {
+			file.mkdirs();
+		}
 
 		MultipartRequest mr = null;
 
@@ -686,6 +730,14 @@ public class MemberController extends HttpServlet {
 
 		int res = biz.updateMemberProfileImage(member_profile);
 
+		if (res > 0) {
+			// 프로필 정보를 session에 리셋
+			session = request.getSession();
+			MEMBER_PROFILE new_member_profile = biz.selectMemberProfile(MEMBER_CODE);
+			session.removeAttribute("member_profile");
+			session.setAttribute("member_profile", new_member_profile);
+		}
+
 		JSONObject obj = new JSONObject();
 		obj.put("res", res);
 		obj.put("img", biz.selectMemberProfile(MEMBER_CODE).getMEMBER_PROFILE_IMAGE_S_NAME());
@@ -708,6 +760,14 @@ public class MemberController extends HttpServlet {
 		member_profile.setMEMBER_PROFILE_LOGITUDE(MEMBER_PROFILE_LOGITUDE);
 
 		int res = biz.updateMemberProfileGps(member_profile);
+
+		if (res > 0) {
+			// 프로필 정보를 session에 리셋
+			session = request.getSession();
+			MEMBER_PROFILE new_member_profile = biz.selectMemberProfile(MEMBER_CODE);
+			session.removeAttribute("member_profile");
+			session.setAttribute("member_profile", new_member_profile);
+		}
 
 		JSONObject obj = new JSONObject();
 		obj.put("res", res);
@@ -855,6 +915,7 @@ public class MemberController extends HttpServlet {
 	}
 
 	// 계정관리(결제) 정기결제 처리 (6개월)
+	@SuppressWarnings("unchecked")
 	private void doPrivacyPaymentPageRegular(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		JSONObject obj = new JSONObject();

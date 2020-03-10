@@ -52,7 +52,7 @@ public interface LectureBiz {
 	public int updateRate(LECTURE lecture);
 
 	// 내 강의 삭제
-	public int deleteMyGarbageLecture(int lECTURE_CODE);
+	public int deleteMyGarbageLecture(int lECTURE_CODE, int MEMBER_CODE);
 
 	/*
 	 * main 요청

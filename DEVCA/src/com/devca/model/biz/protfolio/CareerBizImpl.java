@@ -30,8 +30,8 @@ public class CareerBizImpl implements CareerBiz {
 	}
 
 	@Override
-	public int career_delete(int profile_seq, int career_seq) {
-		return dao.career_delete(profile_seq, career_seq);
+	public int career_delete(int member_code) {
+		return dao.career_delete(member_code);
 	}
 
 	@Override
@@ -45,10 +45,10 @@ public class CareerBizImpl implements CareerBiz {
 	}
 
 	@Override
-	public int[] career_date(int member_code) {
-		int[] date = {0, 0};
-		int year = (dao.career_date(member_code)/365);
-		int month = (dao.career_date(member_code)-(year*365))/30;
+	public int[] career_date(int member_code,int career_seq) {
+		int[] date = new int[2];
+		int year = (dao.career_date(member_code,career_seq)/365);
+		int month = (dao.career_date(member_code,career_seq)-(year*365))/30;
 		date[0] = year;
 		date[1] = month;
 		return date;

@@ -5,7 +5,9 @@
 aside {
 	height: 100%;
 }
-
+section{
+	min-height: 100vh;
+}
 /* bootStrap */
 .card {
 	/* margin: 10% auto 100px auto; */
@@ -13,17 +15,26 @@ aside {
 	-webkit-transition: .25s box-shadow;
 	transition: .25s box-shadow;
 }
-.card:focus,
-.card:hover {
+.card:focus, .card:hover {
 	box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
-.card-link{
+.card-link, .nav-link{
 	color: #862d86;
 	font-weight: 800;
 }
-
+.nav-link:hover{	
+	color: #ddd;
+	font-weight: 1000;
+}
 .btn, .input-group-text{
 	color: white;
 	font-weight: 800;
 	background-color: #862d86; 
+}
+[data-toggle="collapse"]{
+	cursor: pointer;
+}
+[data-toggle="collapse"]:hover{
+	cursor: pointer;
+	font-weight: 800;
 }

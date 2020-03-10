@@ -193,7 +193,7 @@ $(function(){
 						
 						<label for="homepage">홈페이지(optional)</label>
 						<div class="input-group mb-3">	
-							<input id="homepage" class="form-control" type="url" name="MEMBER_PROFILE_HOMEPAGE" value="${member.MEMBER_PROFILE_HOMEPAGE}" placeholder="example@example.com">
+							<input id="homepage" class="form-control" type="url" name="MEMBER_PROFILE_HOMEPAGE" value="${member.MEMBER_PROFILE_HOMEPAGE}" placeholder="http://www.example.com">
 							<div class="input-group-append">				
 			       				<span class="input-group-text"><i class="fas fa-home"></i></span>
 							</div>					

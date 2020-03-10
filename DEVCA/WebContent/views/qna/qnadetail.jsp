@@ -60,39 +60,24 @@
 											function(index, comm) {
 
 												output += "<div>"
-														+ comm.COMMENT_WRITER
+														+ comm.COMMENT_CONTENT
+														+ "</div>";
+
+												output += comm.MEMBER_NAME
+														+ " / "
+														+ comm.MEMBER_EMAIL
 														+ " / "
 														+ comm.COMMENT_DATE
 														+ "<br/>";
 
-												output += "<div>"
-														+ comm.COMMENT_CONTENT
-														+ "</div>";
+												output += "<c:if test='${not empty sessionLoginMember.MEMBER_CODE || not empty sessionLoginKakao.MEMBER_CODE || not empty sessionLoginNaver.MEMBER_CODE}'>"
 
-												output += "<input type='button' value='답글' onclick='createSubComment("
+												output += "<input type='button' value='답글' id='subCommentBtn' onclick='subCommentToggle("
 														+ comm.COMMENT_NO
-														+ ","
-														+ comm.COMMENT_BOARD_NO
-														+ ","
-														+ '"'
-														+ comm.COMMENT_WRITER
-														+ '"'
-														+ ","
-														+ comm.COMMENT_GROUP_NO
-														+ ","
-														+ comm.COMMENT_GROUP_ORDER
-														+ ","
-														+ comm.COMMENT_GROUP_DEPTH
 														+ ")'/>&nbsp;&nbsp;&nbsp;";
 
-												output += "<input type='button' value='수정' onclick='updateFormToggle("
+												output += "<input type='button' value='수정' id='updateBtn' onclick='updateFormToggle("
 														+ comm.COMMENT_NO
-														+ ","
-														+ comm.COMMENT_GROUP_NO
-														+ ","
-														+ '"'
-														+ comm.COMMENT_CONTENT
-														+ '"'
 														+ ")'/>&nbsp;&nbsp;&nbsp;";
 
 												output += "<input type='button' value='삭제' onclick='deleteComment("
@@ -103,10 +88,40 @@
 														+ comm.COMMENT_GROUP_DEPTH
 														+ ","
 														+ comm.COMMENT_GROUP_NO
-														+ ")'/><br/>";
+														+ ")'/><br/></c:if>";
 
-												output += "<form id='updateForm" + comm.COMMENT_NO + "'></form>";
-												output += "<form id='subCommentForm" + comm.COMMENT_NO + "'></form></div>";
+												output += "<form action='/DEVCA/qnacomment/qnacommentupdate.do' method='post' id='updateForm" + comm.COMMENT_NO + "' style='display:none;'>"
+														+ "<input type='hidden' name='COMMENT_BOARD_NO' value='" + comm.COMMENT_BOARD_NO + "'/>"
+														+ "<input type='hidden' name='COMMENT_NO' value='" + comm.COMMENT_NO + "'/>"
+														+ "<textarea cols='50' rows='3' name='COMMENT_CONTENT' placeholder=''>"
+														+ comm.COMMENT_CONTENT
+														+ "</textarea>"
+														+ "<br/><input type='button' value='수정' onclick='updateComment("
+														+ comm.COMMENT_NO
+														+ ")'/>"
+														+ "&nbsp;&nbsp;&nbsp;"
+														+ "<input type='button' value='취소' onclick='updateCancel("
+														+ comm.COMMENT_NO
+														+ ")'/>" + "</form>";
+
+												output += '<form action="/DEVCA/qnacomment/qnasubcommment.do" method="post" id="subCommentForm' + comm.COMMENT_NO + '" style="display:none;">'
+														+ '<input type="hidden" name="MEMBER_CODE" value="' + comm.MEMBER_CODE + '">'
+														+ '<input type="hidden" name="parentcommentno" value="' + comm.COMMENT_NO + '"/>'
+														+ '<input type="hidden" name="COMMENT_BOARD_NO" value="' + comm.COMMENT_BOARD_NO + '"/>'
+														+ '<input type="hidden" name="COMMENT_GROUP_NO" value="' + comm.COMMENT_GROUP_NO + '"/>'
+														+ '<input type="hidden" name="COMMENT_GROUP_ORDER" value="' + comm.COMMENT_GROUP_ORDER + '"/>'
+														+ '<input type="hidden" name="COMMENT_GROUP_DEPTH" value="' + comm.COMMENT_GROUP_DEPTH + '"/>'
+														+ '<textarea cols="50" rows="3" name="COMMENT_CONTENT">ㄴ'
+														+ comm.MEMBER_NAME
+														+ ' : </textarea>'
+														+ '<br/><input type="button" value="답글달기" onclick="insertSubComment('
+														+ comm.COMMENT_NO
+														+ ')"/>'
+														+ '&nbsp;&nbsp;&nbsp;'
+														+ '<input type="button" value="취소" onclick="subCommentCancel('
+														+ comm.COMMENT_NO
+														+ ')"/>'
+														+ '</form><hr/>';
 
 											});
 
@@ -119,10 +134,10 @@
 	}
 
 	function insertComment() {
+		var MEMBER_CODE = $("#commentSubmit").find("input[name='MEMBER_CODE']")
+				.val();
 		var COMMENT_BOARD_NO = $("#commentSubmit").find(
 				"input[name='COMMENT_BOARD_NO']").val();
-		var COMMENT_WRITER = $("#commentSubmit").find(
-				"input[name='COMMENT_WRITER']").val();
 		var COMMENT_CONTENT = $("#commentSubmit").find(
 				"textarea[name='COMMENT_CONTENT']").val();
 
@@ -130,16 +145,14 @@
 			type : 'POST',
 			url : "/DEVCA/qnacomment/qnacommentwrite.do",
 			data : {
+				MEMBER_CODE : MEMBER_CODE,
 				COMMENT_BOARD_NO : COMMENT_BOARD_NO,
-				COMMENT_WRITER : COMMENT_WRITER,
 				COMMENT_CONTENT : COMMENT_CONTENT
 			},
 			datatype : "text",
 
 			success : function(args) {
 				selectComment();
-				$("#commentSubmit").find("input[name='COMMENT_WRITER']")
-						.val("");
 				$("#commentSubmit").find("textarea[name='COMMENT_CONTENT']")
 						.val("");
 
@@ -178,28 +191,13 @@
 		})
 	}
 
-	function updateFormToggle(COMMENT_NO, COMMENT_BOARD_NO, COMMENT_CONTENT) {
-
-		var updateForm = document.getElementById("updateForm" + COMMENT_NO);
-
-		var str = '<form action="/DEVCA/qnacomment/qnacommentupdate.do" method="post" id="updateForm' + COMMENT_NO + '">'
-				+ '<input type="hidden" name="COMMENT_BOARD_NO" value="' + COMMENT_BOARD_NO + '"/>'
-				+ '<input type="hidden" name="COMMENT_NO" value="' + COMMENT_NO + '"/>'
-				+ '<textarea cols="50" rows="3" name="COMMENT_CONTENT" placeholder="">'
-				+ COMMENT_CONTENT
-				+ '</textarea>'
-				+ '<br/><input type="button" value="수정" onclick="updateComment('
-				+ COMMENT_NO
-				+ ')"/>'
-				+ '&nbsp;&nbsp;&nbsp;'
-				+ '<input type="button" value="취소" onclick="selectComment()"/>'
-				+ '</form>';
-
-		var addForm = document.createElement("div");
-		addForm.innerHTML = str;
-		updateForm.appendChild(addForm);
+	function updateFormToggle(COMMENT_NO) {
+		$("#updateForm" + COMMENT_NO).show();
 	}
 
+	function updateCancel(COMMENT_NO) {
+		$("#updateForm" + COMMENT_NO).hide();
+	}
 	// update : ajax : 댓글 수정
 	function updateComment(COMMENT_NO) {
 		var COMMENT_BOARD_NO = $("#updateForm" + COMMENT_NO).find(
@@ -231,115 +229,21 @@
 		})
 	}
 
-	function createSubComment(parentcommentno, COMMENT_BOARD_NO,
-			COMMENT_WRITER, COMMENT_GROUP_NO, COMMENT_GROUP_ORDER,
-			COMMENT_GROUP_DEPTH) {
-
-		var subCommentForm = document.getElementById("subCommentForm"
-				+ parentcommentno);
-
-		var str = '<form action="/DEVCA/qnacomment/qnasubcommment.do" method="post" id="subCommentForm' + parentcommentno + '">'
-				+ '<input type="hidden" name="parentcommentno" value="' + parentcommentno + '"/>'
-				+ '<input type="hidden" name="COMMENT_BOARD_NO" value="' + COMMENT_BOARD_NO + '"/>'
-				+ '<input type="hidden" name="COMMENT_GROUP_NO" value="' + COMMENT_GROUP_NO + '"/>'
-				+ '<input type="hidden" name="COMMENT_GROUP_ORDER" value="' + COMMENT_GROUP_ORDER + '"/>'
-				+ '<input type="hidden" name="COMMENT_GROUP_DEPTH" value="' + COMMENT_GROUP_DEPTH + '"/>'
-				+ '<textarea cols="50" rows="3" name="COMMENT_CONTENT" placeholder="">@'
-				+ COMMENT_WRITER
-				+ ' : </textarea>'
-				+ '<br/> 작성자 : <input type="text" name="COMMENT_WRITER" />'
-				+ '<br/><input type="button" value="답글달기" onclick="insertSubComment('
-				+ parentcommentno
-				+ ')"/>'
-				+ '&nbsp;&nbsp;&nbsp;'
-				+ '<input type="button" value="취소" onclick="selectComment()"/>'
-				+ '</form>';
-
-		var addForm = document.createElement("div");
-		addForm.innerHTML = str;
-		subCommentForm.appendChild(addForm);
+	function subCommentToggle(COMMENT_NO) {
+		$("#subCommentForm" + COMMENT_NO).show();
 	}
 
-	/* function createSubComment(parentcommentno, COMMENT_BOARD_NO, COMMENT_WRITER,
-			COMMENT_GROUP_NO, COMMENT_GROUP_ORDER, COMMENT_GROUP_DEPTH) {
-		// 대댓글 달기 폼
-		var subCommentForm = $("#subCommentForm" + COMMENT_NO);
-		subCommentForm.append($("<form>").attr({
-			action : "/DEVCA/qnacomment/qnasubcomment.do",
-			method : "POST",
-			id : "subCommentSubmit" + COMMENT_NO
-		}));
-		subCommentForm.append($("<input>").attr({
-			type : "hidden",
-			name : "parentcommentno",
-			value : parentcommentno
-		}));
-		subCommentForm.append($("<input>").attr({
-			type : "hidden",
-			name : "COMMENT_BOARD_NO",
-			value : COMMENT_BOARD_NO
-		}));
-
-		subCommentForm.append($("<input>").attr({
-			type : "hidden",
-			name : "COMMENT_GROUP_NO",
-			value : COMMENT_GROUP_NO
-		}));
-		subCommentForm.append($("<input>").attr({
-			type : "hidden",
-			name : "COMMENT_GROUP_ORDER",
-			value : COMMENT_GROUP_ORDER
-		}));
-		subCommentForm.append($("<input>").attr({
-			type : "hidden",
-			name : "COMMENT_GROUP_DEPTH",
-			value : COMMENT_GROUP_DEPTH
-		}));
-
-		subCommentForm.append($("<br/>"));
-		subCommentForm.append($("<textarea>").attr({
-			cols : "120",
-			rows : "3",
-			name : "COMMENT_CONTENT",
-			placeholder : "여러분의 소중한 답글을 입력해주세요.",
-		}).text("ㄴ@" + COMMENT_WRITER +""));
-
-		subCommentForm.append($("<br/>"));
-
-		subCommentForm.append("작성자 : ");
-		subCommentForm.append($("<input>").attr({
-			type : "text",
-			name : "COMMENT_WRITER"
-		}));
-		subCommentForm.append($("<br/>"));
-		subCommentForm.append($("<br/>"));
-		subCommentForm.append($("<input>").attr({
-			type : "button",
-			value : "답글달기",
-			onclick : "insertSubComment(" + COMMENT_NO + ");",
-			"class" : "btn btn-dark",
-		}));
-		subCommentForm.append("&nbsp;&nbsp;&nbsp;");
-		subCommentForm.append($("<input>").attr({
-			type : "button",
-			value : "취소",
-			onclick : "cancelSubComment(" + COMMENT_NO + ");"
-		}));
+	function subCommentCancel(COMMENT_NO) {
+		$("#subCommentForm" + COMMENT_NO).hide();
 	}
-
-	// insert : 대댓글 폼 display 숨기기
-	function cancelSubComment(COMMENT_NO) {
-		$("#subCommentForm" + COMMENT_NO).empty();
-	}*/
 
 	// insert : ajax : 대댓글 쓰기
-	function insertSubComment(parentcommentno) {
-		var form = $("#subCommentForm" + parentcommentno);
+	function insertSubComment(COMMENT_NO) {
+		var form = $("#subCommentForm" + COMMENT_NO);
 
 		var parentcommentno = form.find("input[name='parentcommentno']").val();
 		var COMMENT_BOARD_NO = form.find("input[name='COMMENT_BOARD_NO']")
 				.val();
-		var COMMENT_WRITER = form.find("input[name='COMMENT_WRITER']").val();
 		var COMMENT_CONTENT = form.find("textarea[name='COMMENT_CONTENT']")
 				.val();
 		var COMMENT_GROUP_NO = form.find("input[name='COMMENT_GROUP_NO']")
@@ -348,6 +252,7 @@
 				.find("input[name='COMMENT_GROUP_ORDER']").val();
 		var COMMENT_GROUP_DEPTH = form
 				.find("input[name='COMMENT_GROUP_DEPTH']").val();
+		var MEMBER_CODE = form.find("input[name='MEMBER_CODE']").val();
 
 		$.ajax({
 			type : "POST",
@@ -355,11 +260,11 @@
 			data : {
 				parentcommentno : parentcommentno,
 				COMMENT_BOARD_NO : COMMENT_BOARD_NO,
-				COMMENT_WRITER : COMMENT_WRITER,
 				COMMENT_CONTENT : COMMENT_CONTENT,
 				COMMENT_GROUP_NO : COMMENT_GROUP_NO,
 				COMMENT_GROUP_ORDER : COMMENT_GROUP_ORDER,
-				COMMENT_GROUP_DEPTH : COMMENT_GROUP_DEPTH
+				COMMENT_GROUP_DEPTH : COMMENT_GROUP_DEPTH,
+				MEMBER_CODE : MEMBER_CODE
 			},
 			datatype : "text",
 
@@ -387,18 +292,22 @@
 		<form>
 			<div>
 				${QNA_BOARD.QNA_TITLE }
-				<div>${QNA_BOARD.QNA_WRITER }/${QNA_BOARD.QNA_DATE }</div>
+				<div>${QNA_BOARD.MEMBER_NAME }/${QNA_BOARD.MEMBER_EMAIL }/${QNA_BOARD.QNA_DATE }</div>
 				${QNA_BOARD.QNA_CONTENT }
 				<div>
-					<input type="button" class="btn" value="글쓰기"
-						onclick="location.href='/DEVCA/qnapage/qnawriteform.do'" />
+					<c:if
+						test="${not empty sessionLoginMember.MEMBER_CODE || not empty sessionLoginKakao.MEMBER_CODE || not empty sessionLoginNaver.MEMBER_CODE}">
+						<input type="button" value="글쓰기"
+							onclick="location.href='/DEVCA/qnapage/qnawriteform.do'" />
 					&nbsp; <input type="button" value="답글"
-						onclick="location.href='/DEVCA/qnapage/answerform.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
+							onclick="location.href='/DEVCA/qnapage/answerform.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
 					&nbsp; <input type="button" value="수정"
-						onclick="location.href='/DEVCA/qnapage/qnaupdateform.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
+							onclick="location.href='/DEVCA/qnapage/qnaupdateform.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
 					&nbsp; <input type="button" value="삭제"
-						onclick="location.href='/DEVCA/qnapage/qnadelete.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
-					&nbsp; <input type="button" value="목록"
+							onclick="location.href='/DEVCA/qnapage/qnadelete.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
+					&nbsp; 
+					</c:if>
+					<input type="button" value="목록"
 						onclick="location.href='/DEVCA/qnapage/qnalist.do'" />
 				</div>
 			</div>
@@ -410,19 +319,25 @@
 			<!-- end :: ajax 댓글 리스트 -->
 
 			<!-- start :: 댓글 달기 -->
-			<form action="/DEVCA/comment/commentwrite.do" method="post"
-				id="commentSubmit">
-				<input type="hidden" name="COMMENT_BOARD_NO"
-					value="${QNA_BOARD.QNA_BOARD_NO }" />
-				<div>
-					<textarea cols="50" rows="5" name="COMMENT_CONTENT"
-						placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
-					<br /> 작성자 : <input type="text" name="COMMENT_WRITER" /> <br />
-					<br /> <input type="button" value="댓글달기"
-						onclick="insertComment();" />
-				</div>
+			<c:if
+				test="${not empty sessionLoginMember.MEMBER_CODE || not empty sessionLoginKakao.MEMBER_CODE || not empty sessionLoginNaver.MEMBER_CODE}">
+				<form action="/DEVCA/comment/commentwrite.do" method="post"
+					id="commentSubmit">
+					<input type="hidden" name="MEMBER_CODE"
+						value="${sessionMember_profile.MEMBER_CODE }"> <input
+						type="hidden" name="COMMENT_BOARD_NO"
+						value="${QNA_BOARD.QNA_BOARD_NO }" />
+					<div>
+						<textarea cols="50" rows="5" name="COMMENT_CONTENT"
+							placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
+						<br /> <input type="button" value="댓글달기"
+							onclick="insertComment();" />
 
-			</form>
+					</div>
+
+				</form>
+
+			</c:if>
 
 
 		</div>

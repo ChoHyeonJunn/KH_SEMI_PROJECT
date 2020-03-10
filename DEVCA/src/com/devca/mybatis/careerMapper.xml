@@ -6,10 +6,12 @@
 	<select id="career_select" parameterType="CAREER" resultType="CAREER">
 		SELECT * FROM CAREER
 		WHERE CAREER_MEMBER_CODE = #{CAREER_MEMBER_CODE}
+		ORDER BY CAREER_SEQ ASC
 	</select>
-	<select id="career_date" parameterType="int" resultType="int">
+	<select id="career_date" parameterType="hashmap" resultType="int">
 		SELECT TRUNC(DATE_OF_DEPARTURE - DAY_OF_ENTRY) FROM CAREER
 		WHERE CAREER_MEMBER_CODE = #{CAREER_MEMBER_CODE}
+		AND CAREER_SEQ = #{CAREER_SEQ}
 	</select>
 	<select id="career_select_seq" parameterType="CAREER" resultType="CAREER">
 		SELECT CAREER_SEQ FROM CAREER
@@ -18,8 +20,20 @@
 	
 	<insert id="career_insert" parameterType="CAREER">
 		INSERT INTO CAREER
-		VALUES(CAREER_SEQ.NEXTVAL, #{CAREER_MEMBER_CODE},#{COMPANY_NAME},
-		#{DUTY},to_date(#{DAY_OF_ENTRY},'YYYY-MM-DD HH24:MI:SS'),to_date(#{DATE_OF_DEPARTURE},'YYYY-MM-DD HH24:MI:SS'),#{STACK},#{LINK},#{EXPLANATION})
+		VALUES(CAREER_SEQ.NEXTVAL, 
+		#{CAREER_MEMBER_CODE},
+		#{COMPANY_NAME},
+		#{DUTY},
+		to_date(#{DAY_OF_ENTRY},'YYYY-MM-DD HH24:MI:SS'),
+		to_date(#{DATE_OF_DEPARTURE},'YYYY-MM-DD HH24:MI:SS'),
+		#{STACK},
+		#{PERFORMANCE},
+		to_date(#{START_DATE},'YYYY-MM-DD HH24:MI:SS'),
+		to_date(#{END_DATE},'YYYY-MM-DD HH24:MI:SS'),
+		#{DETAIL_CONTEXT},
+		#{LINK},
+		#{EXPLANATION}
+		)
 	</insert>
 	<update id="career_update" parameterType="CAREER">
 		UPDATE CAREER SET 
@@ -28,13 +42,17 @@
 		DAY_OF_ENTRY = to_date(#{DAY_OF_ENTRY},'YYYY-MM-DD HH24:MI:SS'),
 		DATE_OF_DEPARTURE = to_date(#{DATE_OF_DEPARTURE},'YYYY-MM-DD HH24:MI:SS'),
 		STACK = #{STACK},
+		PERFORMANCE = #{PERFORMANCE},
+		START_DATE = to_date(#{START_DATE},'YYYY-MM-DD HH24:MI:SS'),
+		END_DATE = to_date(#{END_DATE},'YYYY-MM-DD HH24:MI:SS'),
+		DETAIL_CONTEXT = #{DETAIL_CONTEXT},
 		LINK = #{LINK},
 		EXPLANATION = #{EXPLANATION}
 		WHERE CAREER_SEQ = #{CAREER_SEQ} AND CAREER_MEMBER_CODE = #{CAREER_MEMBER_CODE}
 	</update>
-	<delete id="career_delete" parameterType="Hashmap">
+	<delete id="career_delete" parameterType="int">
 		DELETE FROM CAREER
-		WHERE CAREER_SEQ = #{CAREER_SEQ} AND CAREER_MEMBER_CODE = #{CAREER_MEMBER_CODE}
+		WHERE CAREER_MEMBER_CODE = #{CAREER_MEMBER_CODE}
 	</delete>
 	<select id="career_count" parameterType="int" resultType="int">
 		SELECT COUNT(*) FROM CAREER
@@ -42,7 +60,7 @@
 	</select>
 	<insert id="career_insert_new" parameterType="int">
 		INSERT INTO CAREER
-		VALUES(CAREER_SEQ.NEXTVAL, #{CAREER_MEMBER_CODE},' ',' ', SYSDATE, SYSDATE,' ',' ',' ')
+		VALUES(CAREER_SEQ.NEXTVAL, #{CAREER_MEMBER_CODE},'','', SYSDATE, SYSDATE,'','',SYSDATE,SYSDATE,'','','')
 	</insert>
 </mapper>
 

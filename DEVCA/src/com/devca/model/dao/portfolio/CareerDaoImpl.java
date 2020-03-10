@@ -52,14 +52,9 @@ public class CareerDaoImpl extends SqlMapConfig implements CareerDao {
 	}
 
 	@Override
-	public int career_delete(int profile_seq, int career_seq) {
-		Map<String,Integer> map = new HashMap<String,Integer>();
-		map.put("career_detail_seq",career_seq);
-		map.put("career_seq", career_seq);
-
-		
+	public int career_delete(int member_code) {
 		SqlSession session = getSqlSessionFactory().openSession(false);
-		int res = session.delete(namespace +".career_delete",map);
+		int res = session.delete(namespace +".career_delete",member_code);
 		if(res > 0) {
 			session.commit();
 		}
@@ -89,9 +84,13 @@ public class CareerDaoImpl extends SqlMapConfig implements CareerDao {
 	}
 
 	@Override
-	public int career_date(int member_code) {
+	public int career_date(int member_code, int career_seq) {
+		Map<String,Integer> map = new HashMap<String, Integer>();
+		map.put("CAREER_MEMBER_CODE", member_code);
+		map.put("CAREER_SEQ", career_seq);
+		
 		SqlSession session = getSqlSessionFactory().openSession(false);
-		int career_date = session.selectOne(namespace +".career_date",member_code);		
+		int career_date = session.selectOne(namespace +".career_date",map);		
 		session.close();
 		return career_date;
 	}

@@ -39,19 +39,21 @@ section{
 </head>
 <body>
 	
+	<!-- 비회원 전용 페이지 -->
 	<section>
-		<!-- 비회원 전용 페이지 -->
-		<div>			
-			<div>
-				<p>10년 후 인정받는 개발자가 되기 위해</p>
-				<p>나의 어떤 스킬을 업그레이드 시켜야할까?</p>
-				<p>나의 스킬에 맞는 정보를 찾아드립니다.</p>
-			</div>
-			<div>
-				<button onclick="location.href='/DEVCA/main/survey.do'">스킬 체크해보기</button>
+		<div class="card p-4 my-3 mx-1 bg-dark" style="height: 100%;">
+		
+			<div class="text-center my-auto">
+				<div class="font-weight-bold text-light py-3">
+					<h5 class="py-1">10년 후 인정받는 개발자가 되기 위해</h5>
+					<h5 class="py-1">나의 어떤 스킬을 업그레이드 시켜야할까?</h5>
+					<h5 class="py-1">나의 스킬에 맞는 정보를 찾아드립니다.</h5>
+				</div>
+				<div>
+					<button class="btn btn-lg" onclick="location.href='/DEVCA/main/survey.do'">스킬 체크해보기</button>
+				</div>
 			</div>
 		</div>
-		
 	</section>
 	
 	<!-- FOOTER FORM -->		

@@ -4,7 +4,8 @@
 
 	<select id="work_select" parameterType="int" resultType="WORK">
 		SELECT * FROM WORK
-		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}		
+		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}
+		ORDER BY WORK_SEQ ASC	
 	</select>
 	<select id="work_select_seq" parameterType="int" resultType="WORK">
 		SELECT WORK_SEQ FROM WORK
@@ -22,7 +23,7 @@
 		AND WORK_SEQ = #{WORK_SEQ}
 	</update>
 	<delete id="work_delete" parameterType="int">
-		DELETE FROM WORK
+		DELETE FROM WORK 
 		WHERE WORK_MEMBER_CODE = #{WORK_MEMBER_CODE}
 	</delete>
 	<delete id="work_delete_one" parameterType="hashmap">

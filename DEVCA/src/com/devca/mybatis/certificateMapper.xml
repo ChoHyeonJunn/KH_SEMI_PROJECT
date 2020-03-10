@@ -4,6 +4,7 @@
 	<select id="certificate_select" parameterType="int" resultType="CERTIFICATE">
 		SELECT * FROM CERTIFICATE
 		WHERE CERTIFICATE_MEMBER_CODE = #{CERTIFICATE_MEMBER_CODE}
+		ORDER BY CERTIFICATE_SEQ ASC
 	</select>
 	<select id="certificate_select_seq" parameterType="int" resultType="CERTIFICATE">
 		SELECT CERTIFICATE_SEQ FROM CERTIFICATE
@@ -30,7 +31,7 @@
 	</delete>
 	<delete id="certificate_delete" parameterType="int">
 		DELETE FROM CERTIFICATE
-		AND CERTIFICATE_MEMBER_CODE = #{CERTIFICATE_MEMBER_CODE}
+		WHERE CERTIFICATE_MEMBER_CODE = #{CERTIFICATE_MEMBER_CODE}
 	</delete>
 	<select id="certificate_count" parameterType="int" resultType="int">
 		SELECT COUNT(*) FROM CERTIFICATE

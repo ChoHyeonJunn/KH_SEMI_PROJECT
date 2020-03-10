@@ -32,18 +32,20 @@
 $(function() {
 	var i = 0;
 	$("#skillList").change(function(){
-		if($(".skillbox-items").length <= 3){
+		if($(".skillbox-items").length < 3){
 			var skill = $(this).val();
 			
-				$("#skillbox").append("<div class='container p-3 my-3 bg-primary text-white skillbox-items'>"+skill+"</div>"+"<input type='hidden' name='skill_name' value='"+skill+"'>");
+				$("#skillbox").append("<div class='container p-3 my-3 bg-primary text-white skillbox-items'>"+skill+"<span class='click' style='float: right;'><input type='hidden' name='skill_name' value='"+skill+"'>X</span></div>");
 			};
 		i++;
 	});
+	
 });
 
-//$(document).on('click','.skillbox-items container',(function() {
-//	$(this).remove();
-
+$(document).on('click','.click',(function() {
+	$(this).parent().remove();
+	})
+);
 //})
 //);
 //$(function() {
@@ -79,7 +81,9 @@ $(function() {
 										<c:when test="${empty skillList }"></c:when>
 										<c:otherwise>
 											<c:forEach items="${skillList }" var="skillList">
-												<div class="container p-3 my-3 bg-dark text-white">${skillList.SKILL }</div>
+												<div class="container p-3 my-3 bg-dark text-white">${skillList.SKILL }
+													<span class='click' style='float: right;'>X</span>
+												</div>
 											</c:forEach>
 										</c:otherwise>
 									</c:choose>
@@ -87,19 +91,19 @@ $(function() {
 									</div>
 								</div>
 								<div class="input-group mb-3">
-									<select class="form-control" id="skillList" onchange="document.getElementById('skill_name').value = this.options[this.selectedIndex].value">
-									    <option value="0">스킬을 선택하세요.</option>
+									<select class="form-control" id="skillList"  onchange="document.getElementById('skill_name').value = this.options[this.selectedIndex].value">
+									    <option disabled="disabled" selected="selected">스킬을 선택하세요.</option>
 									    <option value="Visual Basic">Visual Basic</option>
 									    <option value="Java">Java</option>
 									    <option value="Database">Database</option>
-									    <option value="htmlcss">html/css</option>
-									    <option value="javascriptjquery">javascript/jquery</option>
+									    <option value="HTML CSS">HTML CSS</option>
+									    <option value="Javascript Jquery">Javascript Jquery</option>
 									    <option value="C">C</option>
 									    <option value="C++">C++</option>
 									    <option value="C#">C#</option>
-									    <option value="github">gitbub</option>
+									    <option value="Github">Gitbub</option>
 									    <option value="Django">Django</option>
-									    <option value="mongoDB">mongoDB</option>
+									    <option value="MongoDB">MongoDB</option>
 									    <option value="Spring">Spring</option>
 									</select>
 								</div>

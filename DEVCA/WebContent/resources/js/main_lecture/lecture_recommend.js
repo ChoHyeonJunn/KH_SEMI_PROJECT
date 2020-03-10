@@ -15,56 +15,7 @@ function recommend_swiper(){
 }				
 function selectRecommandList(MEMBER_CODE){
 	$.getJSON("/DEVCA/main/recommandlistajax.do", {MEMBER_CODE : MEMBER_CODE}, function(data){
-		$.each(data, function(index, item){					
-			//swipe div
-			var swiper_slide = $("<div>").attr({
-				"class" : "swiper-slide"
-			})
-							
-			// 강의 div
-			var lectureItem = $("<div>").attr({
-				"class" : "lecture"
-			})
-							
-			// 강의 링크버튼 opacity
-			var lecture_back = $("<div>").attr({
-				"class" : "lecture_back",
-				"onclick" : "location.href='/DEVCA/lecture/lecturedetailpage.do?lecture_code=" + item.LECTURE_CODE + "'"
-			}).append(
-					$("<h4>").text(item.LECTURE_TITLE).attr("style","color: white;")
-				).append(
-							$("<div>").text(item.LECTURE_DESCRIPTION).attr("style","color: white;")
-							);
-
-			// 이미지 관련 div
-			var lecture_img_div = $("<div>").attr({
-				"class" : "lecture_img_div"
-			})
-			var lecture_img = $("<img>").attr({
-				"src" : item.LECTURE_IMG,
-				"style" : "width: 100%; height: 100%; object-fit: cover;"
-			})			
-			lecture_img_div.append(lecture_img);
-							
-			// 강의 정보 div
-			var lecture_des_div = $("<div>").attr({
-				"class" : "lecture_des_div"
-			});
-			var lecture_title = $("<h4>").text(item.LECTURE_TITLE);
-			var lecture_description = $("<div>").text(item.LECTURE_DESCRIPTION);
-			var lecture_payflag = $("<div>").text(item.LECTURE_PAYFLAG);
-			lecture_des_div.append(lecture_title).append(lecture_description).append(lecture_payflag);
-							
-			// 강의 div 에 append 하여 content 완성
-			lectureItem.append(lecture_back);
-			lectureItem.append(lecture_img_div);
-			lectureItem.append(lecture_des_div);
-							
-			swiper_slide.append(lectureItem);
-							
-			$("#recommand-wrapper").append(swiper_slide);
-		})
-
+		fillMainLectureList(data, "#recommand-wrapper")
 		recommend_swiper();
 	});
 }

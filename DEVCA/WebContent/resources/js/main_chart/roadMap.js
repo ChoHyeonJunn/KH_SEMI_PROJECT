@@ -37,7 +37,25 @@ function addRoadMapData(MEMBER_CODE, item){
 		}
 	})	
 }
-
+function addRoadMapCategory(MEMBER_CODE, item){
+	$.ajax({				
+		type: "POST",
+		data : {
+			MEMBER_CODE : MEMBER_CODE,
+			item : item
+		},
+		url: "/DEVCA/main/addRoadMapCategory.do",
+		dataType: "JSON",
+		
+		success: function(data) {		
+			drawRoadMap(JSON.parse(data.roadMap));
+		},
+		
+		error : function() {
+			alert("통신 실패");
+		}
+	})	
+}
 function removeRoadMapData(MEMBER_CODE, item){
 	$.ajax({				
 		type: "POST",
@@ -81,6 +99,7 @@ function linkRoadMapData(MEMBER_CODE, selectedItem, Item){
 
 function drawRoadMap(data, field){	
 	console.log("roadMapData" + data)
+	$("#chartdiv_roadmap").empty();
 	
 	
 	$("#roadMap_field").text(field)	
