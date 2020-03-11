@@ -158,7 +158,7 @@ $(function(){
                   </div>
                </c:forEach>
                <!-- 프론트기본셋 -->
-               <div class="Frontend_page" style="margin: auto; display: none;">
+               <div class="Frontend_page" style="display: none;">
                   <div style="float: left; text-align: center;">
                      <b class="btn btn-secondary btn-sm" style="font-size: 15pt; background-color: orange;">
                         General</b>
@@ -202,7 +202,7 @@ $(function(){
                   </div>
                </div>
                <!-- 백앤드기본셋 -->
-               <div class="Backend_page" style="margin: auto; display: none;">
+               <div class="Backend_page" style="display: none;">
                   <div style="float: left; text-align: center;">
                      <b class="btn btn-secondary btn-sm mx-5" style="font-size: 15pt; background-color: orange;">
                         General</b>
@@ -255,7 +255,7 @@ $(function(){
                   </div>
                </div>
                <!-- 풀스택기본셋 -->
-               <div class="Full_page" style="margin: auto; display: none;">
+               <div class="Full_page" style="display: none;">
                   <div style="float: left; text-align: center;">
                      <b class="btn btn-secondary btn-sm mx-5" style="font-size: 15pt; background-color: orange;">
                         General</b>

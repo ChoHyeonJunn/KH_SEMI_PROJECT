@@ -101,7 +101,7 @@ $(document).on('click','.click',(function() {
 									    <option value="C">C</option>
 									    <option value="C++">C++</option>
 									    <option value="C#">C#</option>
-									    <option value="Github">Gitbub</option>
+									    <option value="Github">Github</option>
 									    <option value="Django">Django</option>
 									    <option value="MongoDB">MongoDB</option>
 									    <option value="Spring">Spring</option>

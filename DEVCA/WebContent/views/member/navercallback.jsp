@@ -16,7 +16,7 @@
 </head>
 <body>
 <script type="text/javascript">
-	var naver_id_login = new naver_id_login("irD1NHw9tD2Loycjai2X", "http://localhost:8090/DEVCA/views/member/navercallback.jsp");
+	var naver_id_login = new naver_id_login("irD1NHw9tD2Loycjai2X", "http://qclass.iptime.org:8787/DEVCA/views/member/navercallback.jsp");
 	// 접근 토큰 값 출력
 	/* alert(naver_id_login.oauthParams.access_token); */
 	// 네이버 사용자 프로필 조회

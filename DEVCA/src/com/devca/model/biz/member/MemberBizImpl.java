@@ -37,7 +37,7 @@ public class MemberBizImpl implements MemberBiz {
 			+ "	{name: 'ORM', value: 3},{name: 'Mybatis', value: 3},{name: 'BootStrap', value: 3}" + "]},"
 			+ "{name: 'Framework', children: [" + "	{name: 'Spring', value: 3}" + "]}," + "{name: 'Web', children: ["
 			+ "	{name: 'WAS', value: 3}" + "]}," + "{name: 'DB', children: ["
-			+ "	{name: 'Oracle', value: 3},{name: 'MongoDB', value: 3}" + "]}," + "]";
+			+ "	{name: 'Oracle', value: 3},{name: 'MongoDB', value: 3}" + "]}" + "]";
 
 	/*
 	 * 회원가입 코드
@@ -112,22 +112,7 @@ public class MemberBizImpl implements MemberBiz {
 					"");
 			int profile_result = dao.insertMemberProfile(member_profile);
 
-			// 로드맵 데이터 입력
-			JsonParser jsonParser = new JsonParser();
-
-			JsonElement jsonFrontEnd = jsonParser.parse(FrontEnd);
-			JsonElement jsonBackEnd = jsonParser.parse(BackEnd);
-			JsonElement jsonFullStack = jsonParser.parse(FullStack);
-
-			ROADMAP FrontRoadmap = new ROADMAP();
-
-			FrontRoadmap.setMEMBER_CODE(member_seq.getMEMBER_CODE());
-			FrontRoadmap.setROADMAP_FIELD("FrontEnd");
-			FrontRoadmap.setROADMAP_TECH(jsonFrontEnd.toString());
-
-			int roadmap_result = dao.insertRoadMap(FrontRoadmap);
-
-			return (kakao_res > 0 && profile_result > 0 && roadmap_result > 0) ? 1 : 0;
+			return (kakao_res > 0 && profile_result > 0) ? 1 : 0;
 		} else {
 			return res;
 		}
@@ -158,22 +143,7 @@ public class MemberBizImpl implements MemberBiz {
 					"");
 			int profile_result = dao.insertMemberProfile(member_profile);
 
-			// 로드맵 데이터 입력
-			JsonParser jsonParser = new JsonParser();
-
-			JsonElement jsonFrontEnd = jsonParser.parse(FrontEnd);
-			JsonElement jsonBackEnd = jsonParser.parse(BackEnd);
-			JsonElement jsonFullStack = jsonParser.parse(FullStack);
-
-			ROADMAP FrontRoadmap = new ROADMAP();
-
-			FrontRoadmap.setMEMBER_CODE(member_seq.getMEMBER_CODE());
-			FrontRoadmap.setROADMAP_FIELD("FrontEnd");
-			FrontRoadmap.setROADMAP_TECH(jsonFrontEnd.toString());
-
-			int roadmap_result = dao.insertRoadMap(FrontRoadmap);
-
-			return (naver_res > 0 && profile_result > 0 && roadmap_result > 0) ? 1 : 0;
+			return (naver_res > 0 && profile_result > 0) ? 1 : 0;
 		} else {
 			return res;
 		}

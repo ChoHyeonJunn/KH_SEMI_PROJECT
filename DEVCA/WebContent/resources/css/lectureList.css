@@ -1,7 +1,7 @@
 /* lecture container */
 .lecture, .lecture_back{
-	width: 300px;
-	height: 400px;
+	width: 240px;
+	height: 370px;
 }
 .lecture_back{
 	position: absolute;

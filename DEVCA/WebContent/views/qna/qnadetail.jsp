@@ -59,28 +59,29 @@
 											data,
 											function(index, comm) {
 
-												output += "<div>"
+												output += "<div class='card p-4 my-3 bg-white'><div>"
 														+ comm.COMMENT_CONTENT
-														+ "</div>";
+														+ "</div></div>";
 
-												output += comm.MEMBER_NAME
+												output += "<strong>"
+														+ comm.MEMBER_NAME
 														+ " / "
 														+ comm.MEMBER_EMAIL
-														+ " / "
+														+ "</strong> / "
 														+ comm.COMMENT_DATE
-														+ "<br/>";
+														+ "<br/><br/>";
 
 												output += "<c:if test='${not empty sessionLoginMember.MEMBER_CODE || not empty sessionLoginKakao.MEMBER_CODE || not empty sessionLoginNaver.MEMBER_CODE}'>"
 
-												output += "<input type='button' value='답글' id='subCommentBtn' onclick='subCommentToggle("
+												output += "<input type='button' class='btn' value='답글' id='subCommentBtn' onclick='subCommentToggle("
 														+ comm.COMMENT_NO
 														+ ")'/>&nbsp;&nbsp;&nbsp;";
 
-												output += "<input type='button' value='수정' id='updateBtn' onclick='updateFormToggle("
+												output += "<input type='button' class='btn' value='수정' id='updateBtn' onclick='updateFormToggle("
 														+ comm.COMMENT_NO
 														+ ")'/>&nbsp;&nbsp;&nbsp;";
 
-												output += "<input type='button' value='삭제' onclick='deleteComment("
+												output += "<input type='button' class='btn' value='삭제' onclick='deleteComment("
 														+ comm.COMMENT_BOARD_NO
 														+ ","
 														+ comm.COMMENT_NO
@@ -93,14 +94,14 @@
 												output += "<form action='/DEVCA/qnacomment/qnacommentupdate.do' method='post' id='updateForm" + comm.COMMENT_NO + "' style='display:none;'>"
 														+ "<input type='hidden' name='COMMENT_BOARD_NO' value='" + comm.COMMENT_BOARD_NO + "'/>"
 														+ "<input type='hidden' name='COMMENT_NO' value='" + comm.COMMENT_NO + "'/>"
-														+ "<textarea cols='50' rows='3' name='COMMENT_CONTENT' placeholder=''>"
+														+ "<textarea class='form-control' cols='50' rows='3' name='COMMENT_CONTENT' placeholder=''>"
 														+ comm.COMMENT_CONTENT
 														+ "</textarea>"
-														+ "<br/><input type='button' value='수정' onclick='updateComment("
+														+ "<br/><input type='button' class='btn' value='수정' onclick='updateComment("
 														+ comm.COMMENT_NO
 														+ ")'/>"
 														+ "&nbsp;&nbsp;&nbsp;"
-														+ "<input type='button' value='취소' onclick='updateCancel("
+														+ "<input type='button' class='btn' value='취소' onclick='updateCancel("
 														+ comm.COMMENT_NO
 														+ ")'/>" + "</form>";
 
@@ -111,14 +112,14 @@
 														+ '<input type="hidden" name="COMMENT_GROUP_NO" value="' + comm.COMMENT_GROUP_NO + '"/>'
 														+ '<input type="hidden" name="COMMENT_GROUP_ORDER" value="' + comm.COMMENT_GROUP_ORDER + '"/>'
 														+ '<input type="hidden" name="COMMENT_GROUP_DEPTH" value="' + comm.COMMENT_GROUP_DEPTH + '"/>'
-														+ '<textarea cols="50" rows="3" name="COMMENT_CONTENT">ㄴ'
+														+ '<textarea class="form-control" cols="50" rows="3" name="COMMENT_CONTENT">ㄴ'
 														+ comm.MEMBER_NAME
 														+ ' : </textarea>'
-														+ '<br/><input type="button" value="답글달기" onclick="insertSubComment('
+														+ '<br/><input type="button" class="btn" value="답글달기" onclick="insertSubComment('
 														+ comm.COMMENT_NO
 														+ ')"/>'
 														+ '&nbsp;&nbsp;&nbsp;'
-														+ '<input type="button" value="취소" onclick="subCommentCancel('
+														+ '<input type="button" class="btn" value="취소" onclick="subCommentCancel('
 														+ comm.COMMENT_NO
 														+ ')"/>'
 														+ '</form><hr/>';
@@ -126,7 +127,7 @@
 											});
 
 							if (output == "") {
-								output += "<div>---등록된 댓글이 없습니다---</div>";
+								output += "<div class='card p-4 my-3 bg-white'>---등록된 댓글이 없습니다---</div>";
 							}
 							$("#ajaxCommentForm").html(output);
 						})
@@ -287,34 +288,41 @@
 <body>
 
 	<section>
-		<input type="button" value="목록"
-			onclick="location.href='/DEVCA/qnapage/qnalist.do'" />
+
 		<form>
-			<div>
-				${QNA_BOARD.QNA_TITLE }
-				<div>${QNA_BOARD.MEMBER_NAME }/${QNA_BOARD.MEMBER_EMAIL }/${QNA_BOARD.QNA_DATE }</div>
-				${QNA_BOARD.QNA_CONTENT }
+			<div class="card p-4 my-3 bg-white">
+				<div class="col-md-10">
+					<h2>${QNA_BOARD.QNA_TITLE }</h2>
+				</div>
+				<div class="col-md-9">
+					<strong>${QNA_BOARD.MEMBER_NAME } /
+						${QNA_BOARD.MEMBER_EMAIL }</strong> / ${QNA_BOARD.QNA_DATE }
+				</div>
+				<div class="card p-4 my-3 bg-white">${QNA_BOARD.QNA_CONTENT }</div>
 				<div>
 					<c:if
 						test="${not empty sessionLoginMember.MEMBER_CODE || not empty sessionLoginKakao.MEMBER_CODE || not empty sessionLoginNaver.MEMBER_CODE}">
-						<input type="button" value="글쓰기"
+						<input type="button" class="btn" value="글쓰기"
 							onclick="location.href='/DEVCA/qnapage/qnawriteform.do'" />
-					&nbsp; <input type="button" value="답글"
+					&nbsp; <input type="button" class="btn" value="답글"
 							onclick="location.href='/DEVCA/qnapage/answerform.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
-					&nbsp; <input type="button" value="수정"
+					&nbsp; <input type="button" class="btn" value="수정"
 							onclick="location.href='/DEVCA/qnapage/qnaupdateform.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
-					&nbsp; <input type="button" value="삭제"
+					&nbsp; <input type="button" class="btn" value="삭제"
 							onclick="location.href='/DEVCA/qnapage/qnadelete.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
 					&nbsp; 
 					</c:if>
-					<input type="button" value="목록"
+					<input type="button" class="btn" value="목록"
 						onclick="location.href='/DEVCA/qnapage/qnalist.do'" />
 				</div>
 			</div>
 		</form>
-		<div class="container mx-auto m-4 p-4 bg-ligth shadow">
 
-			<!-- start :: ajax 댓글 리스트 -->
+
+
+		<!-- start :: ajax 댓글 리스트 -->
+		<div class="card p-4 my-3 bg-white">
+			<h5>댓글</h5>
 			<div id="ajaxCommentForm"></div>
 			<!-- end :: ajax 댓글 리스트 -->
 
@@ -328,9 +336,9 @@
 						type="hidden" name="COMMENT_BOARD_NO"
 						value="${QNA_BOARD.QNA_BOARD_NO }" />
 					<div>
-						<textarea cols="50" rows="5" name="COMMENT_CONTENT"
-							placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
-						<br /> <input type="button" value="댓글달기"
+						<textarea class="form-control" cols="50" rows="5"
+							name="COMMENT_CONTENT" placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
+						<br /> <input class="btn" type="button" value="댓글달기"
 							onclick="insertComment();" />
 
 					</div>
@@ -338,10 +346,8 @@
 				</form>
 
 			</c:if>
-
-
+			<!-- end :: Comment Form-->
 		</div>
-		<!-- end :: Comment Form-->
 	</section>
 
 	<!-- FOOTER FORM -->

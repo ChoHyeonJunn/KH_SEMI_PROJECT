@@ -156,7 +156,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <!-- kakaoMap -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dde3d6a6f398e8afdf7600f84f211532&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10378302e2e084e60bce37163dc9cca1&libraries=services"></script>
 
 <!-- Resources -->
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
@@ -426,8 +426,8 @@ function DeleteMyGarbageLecture(LECTURE_CODE){
 					
 					<div id="roadMap_container" class="collapse show flex">
 						<div id="chartdiv_roadmap">
-							<div id="loading" class="text-center" style="width:100%">
-								<img src='../resources/images/Spinner-1s-200px-main.gif' class="bg-dark" style="display:block; margin: 0px auto; z-index:9000;"/>
+							<div id="loading" class="text-center" style="width:100%; height: 100%">
+								<img src='../resources/images/Spinner-1s-200px-main.gif' class="bg-dark my-auto" style="display:block; margin: 0px auto; z-index:9000;"/>
 							</div>
 						</div>
 						
@@ -502,7 +502,7 @@ function DeleteMyGarbageLecture(LECTURE_CODE){
 			<div class="row">
 				<div class="col-sm-6 p-0">
 					
-					<div id="profile" class="card p-4 mx-1 bg-dark">
+					<div id="profile" class="card p-4 mx-1 bg-dark" style="height: 100%;">
 		                <h5 class="card-title text-light p-3">프로필 정보</h5>
 		                  
 		                <div id="MyChart">

@@ -16,7 +16,8 @@
 <%@ include file="/views/form/header.jsp"%>
 
 <!-- START :: css -->
-<link href="/DEVCA/resources/css/master.css" rel="stylesheet" type="text/css">
+<link href="/DEVCA/resources/css/master.css" rel="stylesheet"
+	type="text/css">
 <!-- END :: css -->
 
 <!-- START :: set JSTL variable -->
@@ -27,27 +28,21 @@
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-<!-- include libraries(jQuery, bootstrap) -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-
-<!-- include summernote css/js-->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-	
+<!-- summernote including -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
+    
 <script type="text/javascript">
-
-$(document).ready(function() {
-	$('#summernote').summernote({
-		 height: 300,                 // set editor height
-         minHeight: null,             // set minimum height of editor
-         maxHeight: null,             // set maximum height of editor
-         focus: true                  // set focus to editable area after initializing summernote
-	})
-});
-
-	
+	$(document).ready(function() {
+		$('#summernote').summernote({
+			height : 300, // set editor height
+			minHeight : null, // set minimum height of editor
+			maxHeight : null, // set maximum height of editor
+			focus : true
+		// set focus to editable area after initializing summernote
+		})
+	});
 </script>
 
 
@@ -56,29 +51,33 @@ $(document).ready(function() {
 <body>
 
 	<section>
-		<h1>글수정</h1>
-		<form action="/DEVCA/qnapage/qnaupdateres.do" method="post">
-			<input type="hidden" name="QNA_BOARD_NO"
-				value="${QNA_BOARD.QNA_BOARD_NO }">
-			<div>
-				<div>작성자 : ${QNA_BOARD.MEMBER_NAME }/${QNA_BOARD.MEMBER_EMAIL }</div>
+		<div class="card p-4 my-3 bg-white">
+			<h1 class="card-title">글 수정</h1>
+			<br/>
+			<form action="/DEVCA/qnapage/qnaupdateres.do" method="post">
+				<input type="hidden" name="QNA_BOARD_NO"
+					value="${QNA_BOARD.QNA_BOARD_NO }">
 				<div>
-					제목 : <input type="text" name="QNA_TITLE"
-						value="${QNA_BOARD.QNA_TITLE }" />
-				</div>
-				<div>
-					내용
 					<div>
-						<textarea rows="10" cols="60" name="QNA_CONTENT" id="summernote">${QNA_BOARD.QNA_CONTENT }</textarea>
+						<input class="form-control form-control-lg" type="text"
+							name="QNA_TITLE" value="${QNA_BOARD.QNA_TITLE }" />
+					</div>
+					<br/>
+					<div>
+						<div>
+							<textarea rows="10" cols="60" name="QNA_CONTENT" id="summernote">${QNA_BOARD.QNA_CONTENT }</textarea>
+						</div>
+					</div>
+					<br/>
+					<div>
+						<input class="btn" type="submit" value="수정" /> 
+						&nbsp;
+						<input class="btn" type="button" value="취소"
+							onclick="location.href='/DEVCA/qnapage/qnadetail.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
 					</div>
 				</div>
-
-				<div>
-					<input type="submit" value="수정" /> <input type="button" value="취소"
-						onclick="location.href='/DEVCA/qnapage/qnadetail.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
-				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</section>
 
 	<!-- FOOTER FORM -->

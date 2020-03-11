@@ -306,7 +306,8 @@ public class MemberController extends HttpServlet {
 				int back = 0;
 
 				// 프론트 or 백엔드 와 관련된 체크박스의 밸류 갯수를 통해 font/back/full 을 나눔
-				String[] SURBEY_CHECK_NON_MAJOR = ((String) session.getAttribute("SURVEY_CHECK_NON_MAJOR")).replace("[", "").replace("]", "").split(", ");
+				String[] SURBEY_CHECK_NON_MAJOR = ((String) session.getAttribute("SURVEY_CHECK_NON_MAJOR"))
+						.replace("[", "").replace("]", "").split(", ");
 				for (int i = 0; i < SURBEY_CHECK_NON_MAJOR.length; i++) {
 					if (SURBEY_CHECK_NON_MAJOR[i].startsWith("1")) {
 						front++;
@@ -314,7 +315,7 @@ public class MemberController extends HttpServlet {
 						back++;
 					}
 				}
-				
+
 				System.out.println(front + " : " + back);
 
 				if (front >= back) {
@@ -373,6 +374,9 @@ public class MemberController extends HttpServlet {
 		String SNS_NICKNAME = request.getParameter("SNS_NICKNAME");
 		String access_token = request.getParameter("access_token");
 
+		int res = 0;	// sns 회원가입 성공여부
+		String resultMsg = "";	// sns회원가입 성공 메시지
+		
 		if (snsType.equals("KAKAO")) {
 
 			KAKAO_MEMBER kakao_member = new KAKAO_MEMBER();
@@ -384,14 +388,15 @@ public class MemberController extends HttpServlet {
 			kakao_member.setKAKAO_ID(SNS_ID);
 			kakao_member.setKAKAO_NICKNAME(SNS_NICKNAME);
 
-			int res = biz.kakaoJoin(kakao_member);
+			res = biz.kakaoJoin(kakao_member);
 
 			if (res > 0) {
 				// test 회원가입 후 바로 로그인
 //				session = request.getSession();
 //				session.setAttribute("loginKakao", kakao_member);
-//				session.setAttribute("access_token", access_token);
-				jsResponse("KAKAO 회원가입 성공", "/DEVCA/main/loginpage.do", response);
+
+				resultMsg = "KAKAO 회원가입 성공";
+				// jsResponse("KAKAO 회원가입 성공", "/DEVCA/main/loginpage.do", response);
 			} else {
 				jsResponse("KAKAO 회원가입 실패", "/DEVCA/member/joinpage.do", response);
 			}
@@ -407,15 +412,117 @@ public class MemberController extends HttpServlet {
 			naver_member.setNAVER_ID(SNS_ID);
 			naver_member.setNAVER_NICKNAME(SNS_NICKNAME);
 
-			int res = biz.naverJoin(naver_member);
+			res = biz.naverJoin(naver_member);
 
 			if (res > 0) {
 				// test 회원가입 후 바로 로그인
 //				session = request.getSession();
 //				session.setAttribute("loginNaver", naver_member);
-				jsResponse("NAVER 회원가입 성공", "/DEVCA/main/loginpage.do", response);
+
+				resultMsg = "NAVER 회원가입 성공";
+				// jsResponse("NAVER 회원가입 성공", "/DEVCA/main/loginpage.do", response);
 			} else {
 				jsResponse("NAVER 회원가입 실패", "/DEVCA/member/joinpage.do", response);
+			}
+		}
+
+		if (res > 0) {
+			// sessionScope 에 저장했던 survey 정보 뽑아오기 -> removeAttribute
+			MEMBER joinMember = biz.getMEMBER_CODE(MEMBER_EMAIL);
+
+			SURVEY survey = new SURVEY();
+			survey.setMEMBER_CODE(joinMember.getMEMBER_CODE());
+
+			survey.setSURVEY_LANGUAGE(
+					(session.getAttribute("SURVEY_LANGUAGE") != null) ? (String) session.getAttribute("SURVEY_LANGUAGE")
+							: "");
+			survey.setSURVEY_POSITION(
+					(session.getAttribute("SURVEY_POSITION") != null) ? (String) session.getAttribute("SURVEY_POSITION")
+							: "");
+			survey.setSURVEY_BASIC(
+					(session.getAttribute("SURVEY_BASIC") != null) ? (String) session.getAttribute("SURVEY_BASIC")
+							: "");
+			survey.setSURVEY_SERVER(
+					(session.getAttribute("SURVEY_SERVER") != null) ? (String) session.getAttribute("SURVEY_SERVER")
+							: "");
+			survey.setSURVEY_DATABASE(
+					(session.getAttribute("SURVEY_DATABASE") != null) ? (String) session.getAttribute("SURVEY_DATABASE")
+							: "");
+			survey.setSURVEY_FRAMEWORK((session.getAttribute("SURVEY_FRAMEWORK") != null)
+					? (String) session.getAttribute("SURVEY_FRAMEWORK")
+					: "");
+
+			survey.setSURVEY_CHECK_NON_MAJOR((session.getAttribute("SURVEY_CHECK_NON_MAJOR") != null)
+					? (String) session.getAttribute("SURVEY_CHECK_NON_MAJOR")
+					: "");
+			survey.setSURVEY_BASIC_NON_MAJOR((session.getAttribute("SURVEY_BASIC_NON_MAJOR") != null)
+					? (String) session.getAttribute("SURVEY_BASIC_NON_MAJOR")
+					: "");
+			survey.setSURVEY_SERVER_NON_MAJOR((session.getAttribute("SURVEY_SERVER_NON_MAJOR") != null)
+					? (String) session.getAttribute("SURVEY_SERVER_NON_MAJOR")
+					: "");
+			survey.setSURVEY_DATABASE_NON_MAJOR((session.getAttribute("SURVEY_DATABASE_NON_MAJOR") != null)
+					? (String) session.getAttribute("SURVEY_DATABASE_NON_MAJOR")
+					: "");
+			survey.setSURVEY_FRAMEWORK_NON_MAJOR((session.getAttribute("SURVEY_FRAMEWORK_NON_MAJOR") != null)
+					? (String) session.getAttribute("SURVEY_FRAMEWORK_NON_MAJOR")
+					: "");
+
+			String position = "";
+			if (((String) session.getAttribute("SURVEY_LANGUAGE")).equals("배워본 적이 없습니다.")) { // 비전공
+				int front = 0;
+				int back = 0;
+
+				// 프론트 or 백엔드 와 관련된 체크박스의 밸류 갯수를 통해 font/back/full 을 나눔
+				String[] SURBEY_CHECK_NON_MAJOR = ((String) session.getAttribute("SURVEY_CHECK_NON_MAJOR"))
+						.replace("[", "").replace("]", "").split(", ");
+				for (int i = 0; i < SURBEY_CHECK_NON_MAJOR.length; i++) {
+					if (SURBEY_CHECK_NON_MAJOR[i].startsWith("1")) {
+						front++;
+					} else {
+						back++;
+					}
+				}
+
+				System.out.println(front + " : " + back);
+
+				if (front >= back) {
+					position = "프론트 개발자";
+				} else {
+					position = "백엔드 개발자";
+				}
+				System.out.println("비전공 position : " + position);
+			} else { // 전공
+				position = (String) session.getAttribute("SURVEY_POSITION");
+				System.out.println("전공 position : " + position);
+			}
+
+			int resSurvey = surveyBiz.insertMySurvey(survey);
+			if (resSurvey > 0) {
+				// 로드맵 데이터 입력
+				int roadMapResult = biz.insertRoadMapData(joinMember.getMEMBER_CODE(), position);
+
+				// 세션에서 설문조사 데이터 파기
+				session.removeAttribute("SURVEY_LANGUAGE");
+				session.removeAttribute("SURVEY_POSITION");
+				session.removeAttribute("SURVEY_BASIC");
+				session.removeAttribute("SURVEY_SERVER");
+				session.removeAttribute("SURVEY_DATABASE");
+				session.removeAttribute("SURVEY_FRAMEWORK");
+
+				session.removeAttribute("SURVEY_CHECK_NON_MAJOR");
+				session.removeAttribute("SURVEY_BASIC_NON_MAJOR");
+				session.removeAttribute("SURVEY_SERVER_NON_MAJOR");
+				session.removeAttribute("SURVEY_DATABASE_NON_MAJOR");
+				session.removeAttribute("SURVEY_FRAMEWORK_NON_MAJOR");
+
+				if (roadMapResult > 0) {
+					jsResponse(resultMsg, "/DEVCA/member/loginpage.do", response);
+				} else {
+					jsResponse("로드맵 데이터 입력 실패,,,", "/DEVCA/member/loginpage.do", response);
+				}
+			} else {
+				jsResponse("회원가입 실패", "/DEVCA/member/joinpage.do", response);
 			}
 		}
 	}

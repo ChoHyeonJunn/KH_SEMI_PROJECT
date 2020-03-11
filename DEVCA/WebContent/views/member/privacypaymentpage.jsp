@@ -56,7 +56,7 @@ $(function(){
 			        dataType: "JSON",
 
 					success: function(msg) {	
-						alert("결제 예약 성공");
+						console.log("결제 예약 성공");
 						
 						// ajax로 회원 등급 up
 		 			 	$.ajax({

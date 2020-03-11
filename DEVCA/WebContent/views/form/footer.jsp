@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-img{
+#EnterpriseImg{
 	width: 45px;
 	height: 20px;
 }
@@ -28,17 +28,17 @@ img{
 			
 			
 			<!-- 제작 관련 사이트들의 아이콘 표시 -->
-			<div>제작과 관련된 회사</div>
+			<div>제작 관련...</div>
 			<div class="d-flex justify-content-center mx-5 my-3 px-5">
 				<!-- 사람인 -->
 				<div class="mx-2">
-					<img alt="naver" src="../resources/images/crawlingSiteIcon/naver.png">
+					<img id="EnterpriseImg" alt="naver" src="../resources/images/crawlingSiteIcon/naver.png">
 				</div>
 				<div class="mx-2">
-					<img alt="kakao" src="../resources/images/crawlingSiteIcon/kakao.png">
+					<img id="EnterpriseImg" alt="kakao" src="../resources/images/crawlingSiteIcon/kakao.png">
 				</div>
 				<div class="mx-2">
-					<img alt="amchart" src="../resources/images/crawlingSiteIcon/amchart.png">
+					<img id="EnterpriseImg" alt="amchart" src="../resources/images/crawlingSiteIcon/amchart.png">
 				</div>
 				<div class="mx-2">
 					iamport
@@ -57,6 +57,12 @@ img{
 				</div>
 				<div class="mx-2">
 					w3cSchool
+				</div>
+				<div class="mx-2">
+					OLC CENTER
+				</div>
+				<div class="mx-2">
+					Udemy
 				</div>
 			</div>
 		</div> 

@@ -28,21 +28,16 @@
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-<!-- include libraries(jQuery, bootstrap) -->
+<!-- summernote including -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
 <link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
+	href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.css"
 	rel="stylesheet">
 <script
-	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script
-	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
 
-<!-- include summernote css/js-->
-<link
-	href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css"
-	rel="stylesheet">
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -62,30 +57,33 @@
 <body>
 
 	<section>
-		<h1>
-			답변하기 <input type="button" value="취소"
-				onclick="location.href='/DEVCA/qnapage/qnadetail.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
-		</h1>
-		<form action="/DEVCA/qnapage/answerres.do" method="post">
-			<input type="hidden" name="MEMBER_CODE"
-				value="${sessionMember_profile.MEMBER_CODE }"> <input
-				type="hidden" name="parentboardno"
-				value="${QNA_BOARD.QNA_BOARD_NO }" />
-			<div>
+		<div class="card p-4 my-3 bg-white">
+			<h1 class="card-title">답글 쓰기</h1>
+			<br />
+			<form action="/DEVCA/qnapage/answerres.do" method="post">
+				<input type="hidden" name="MEMBER_CODE"
+					value="${sessionMember_profile.MEMBER_CODE }"> <input
+					type="hidden" name="parentboardno"
+					value="${QNA_BOARD.QNA_BOARD_NO }" />
 				<div>
-					제목 : <input type="text" name="QNA_TITLE"
-						value="RE:${QNA_BOARD.QNA_TITLE }" />
-				</div>
-				<div>
-					<textarea rows="10" cols="60" name="QNA_CONTENT" id="summernote">Q. ${QNA_BOARD.QNA_CONTENT }
-					A. : 
+					<div>
+						<input class="form-control form-control-lg" type="text"
+							name="QNA_TITLE" value="RE:${QNA_BOARD.QNA_TITLE }" />
+					</div>
+					<br />
+					<div>
+						<textarea rows="10" cols="60" name="QNA_CONTENT" id="summernote">${QNA_BOARD.QNA_CONTENT }==============================
 					</textarea>
+					</div>
+					<br />
+					<div>
+						<input class="btn" type="submit" value="답변 작성" /> &nbsp; <input
+							class="btn" type="button" value="취소"
+							onclick="location.href='/DEVCA/qnapage/qnadetail.do?QNA_BOARD_NO=${QNA_BOARD.QNA_BOARD_NO }'" />
+					</div>
 				</div>
-				<div>
-					<input type="submit" value="답변 작성" />
-				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</section>
 
 	<!-- FOOTER FORM -->

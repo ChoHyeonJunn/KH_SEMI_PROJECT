@@ -110,8 +110,7 @@ $(function(){
 			error : function() {
 				alert("통신 실패");
 			}
-		})
-			
+		})			
 	}
 	
 	$("#name").keyup(function() {

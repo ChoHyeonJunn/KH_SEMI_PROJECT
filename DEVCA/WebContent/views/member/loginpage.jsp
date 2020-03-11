@@ -247,10 +247,10 @@ $(function(){
 
 <!-- START :: NAVER LOGIN -->
 <script type="text/javascript">
-	var naver_id_login = new naver_id_login("irD1NHw9tD2Loycjai2X", "http://localhost:8090/DEVCA/views/member/navercallback.jsp");
+var naver_id_login = new naver_id_login("irD1NHw9tD2Loycjai2X", "http://qclass.iptime.org:8787/DEVCA/views/member/navercallback.jsp");
   	var state = naver_id_login.getUniqState();
   	naver_id_login.setButton("green", 1, 100);
-  	naver_id_login.setDomain("http://localhost:8090/DEVCA");
+    naver_id_login.setDomain("http://qclass.iptime.org:8787/DEVCA");
   	naver_id_login.setState(state);
   	naver_id_login.setPopup();
   	naver_id_login.init_naver_id_login();

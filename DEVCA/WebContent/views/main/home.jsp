@@ -6,6 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta property="og:title" content="DEVCA">
+<meta property="og:description" content="10년 후 인정받는 개발자가 되기 위해 나의 어떤 스킬을 업그레이드 시켜야할까? 나의 스킬에 맞는 정보를 찾아드립니다.">
+<meta property="og:image" content="https://devca.ca/wp-content/uploads/2019/09/devca2.png">
+
 <title>Insert title here</title>
 <!-- HEADER FORM -->
 <%@ include file="/views/form/header.jsp"%>

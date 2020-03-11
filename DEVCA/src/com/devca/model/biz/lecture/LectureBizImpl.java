@@ -8,7 +8,9 @@ import com.devca.model.dto.lecture.JOB_RANK;
 import com.devca.model.dto.lecture.LECTURE;
 import com.devca.utility.crawling.Programmers;
 import com.devca.utility.crawling.Saramin;
+import com.devca.utility.crawling.lecture.Coursera;
 import com.devca.utility.crawling.lecture.Inflearn;
+import com.devca.utility.crawling.lecture.Udemy;
 
 public class LectureBizImpl implements LectureBiz {
 
@@ -140,7 +142,8 @@ public class LectureBizImpl implements LectureBiz {
 	// 강의 리스트 crawling
 	@Override
 	public int crawlingLectureList() {
-		return Inflearn.inflearnCrawlingWithoutSearching();
+		//return Inflearn.inflearnCrawlingWithoutSearching();
+		return Coursera.CourseraCrawlingWithoutSearching();
 	}
 
 	// 강의 리스트 선택

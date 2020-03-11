@@ -98,7 +98,7 @@ function linkRoadMapData(MEMBER_CODE, selectedItem, Item){
 }
 
 function drawRoadMap(data, field){	
-	console.log("roadMapData" + data)
+	console.log("roadMapData" + JSON.stringify(data))
 	$("#chartdiv_roadmap").empty();
 	
 	

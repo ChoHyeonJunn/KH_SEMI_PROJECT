@@ -110,8 +110,10 @@ function fillLectureList(data){
 			"class" : "lecture_back card p-3",
 			"onclick" : "location.href='/DEVCA/lecture/lecturedetailpage.do?lecture_code=" + item.LECTURE_CODE + "'"
 		})
-		.append($("<h4>").text(item.LECTURE_TITLE).attr("style","color: white;"))
-		.append($("<div>").text(item.LECTURE_DESCRIPTION).attr({"class":"pt-3","style":"color: white;"}))
+		.append($("<div>").attr({"style":"height:90%; overflow: hidden;"})
+				.append($("<h4>").text(item.LECTURE_TITLE).attr("style","color: white;"))
+				.append($("<div>").text(item.LECTURE_DESCRIPTION).attr({"class":"pt-3","style":"color: white;"}))
+				)
 		.append(add_my_lecture)
 		
 		// 이미지 관련 div
@@ -123,7 +125,7 @@ function fillLectureList(data){
 		var lecture_des_div = $("<div>").attr({
 			"class" : "lecture_des_div p-3"
 		});
-		var lecture_title = $("<h4>").text(item.LECTURE_TITLE);		// 제목		
+		var lecture_title = $("<h5>").attr({"class":"font-weight-bold"}).text(item.LECTURE_TITLE);		// 제목		
 		var lecture_additional_des = $("<div>").attr({"class":"lecture_additional_des row py-4 px-1"}) // 부가정보		
 		var lecture_rate = $("<div>").attr({"class":"col-sm-6"})
 							.append($("<div>").append(   $("<div>").attr({"class":"star-rating"}).append($("<span>").attr({"class":"rear-start","style":"width:"+item.LECTURE_RATE*20+"%;"}))  )  )
@@ -216,9 +218,10 @@ function selectSearchList(search){
 
 <!-- END :: JAVASCRIPT -->
 </head>
-<body>
-	<a href="/DEVCA/lecture/CrawlingJobData.do">jobd 탐색 시작!</a>
+<body><!-- 
+	<a href="/DEVCA/lecture/CrawlingJobData.do">jobd 탐색 시작!</a> -->
 	<a href="/DEVCA/lecture/CrawlingLectureList.do">크롤링 시작!</a>
+
 	<section class="card p-4 my-3 bg-white">
 		<h1 class="card-title">LECTURE</h1>
 	
@@ -231,6 +234,7 @@ function selectSearchList(search){
 		
 	</section>
 	
+		
 	
 	<!-- FOOTER FORM -->
 	<%@ include file="/views/form/footer.jsp"%>

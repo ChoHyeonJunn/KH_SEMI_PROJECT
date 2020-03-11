@@ -70,7 +70,7 @@ public class Email {
 				+ "<h2>비밀번호 재설정 안내</h2>"
 				+ "<p>안녕하세요 " + member_name + "님</p>"
 				+ "<p>본 메일은 비밀번호 재설정을 위해 DEVCA에서 발송하는 메일입니다. 본인이 요청한 메일이 아니라면 개인정보 보호를 위해 비밀번호를 재설정해주세요. 비밀번호를 다시 설정하려면 '비밀번호 재설정' 링크를 클릭해주세요.</p>"
-				+ "<a href='http://localhost:8090/DEVCA/member/privacypasswordresetemailpage.do'>비밀번호 재설정</a>"
+				+ "<a href='http://qclass.iptime.org:8787/DEVCA/member/privacypasswordresetemailpage.do'>비밀번호 재설정</a>"
 				+ "</div>";
 		
 		Properties props = new Properties();
@@ -124,7 +124,7 @@ public class Email {
 				+ "<h1>" + study_title + "</h1>"
 				+ "<p>" + study_content + "<p>"
 				+ "<p>본 메일은 스터디 초대 알림을 위해 DEVCA에서 발송하는 메일입니다. '스터디 보러가기' 링크를 클릭해주세요.</p>"
-				+ "<a href='http://localhost:8090/DEVCA/study/studydetailpage.do?STUDY_CODE=" + study_code + "'>스터디 보러가기</a>"
+				+ "<a href='http://qclass.iptime.org:8787/DEVCA/study/studydetailpage.do?STUDY_CODE=" + study_code + "'>스터디 보러가기</a>"
 				+ "</div>";
 		
 		Properties props = new Properties();
