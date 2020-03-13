@@ -52,7 +52,7 @@
                      '</div>'+
                      '<div class="input-group mb-3" id="hidediv">'+
                         '<input type="text" id="otherlanguage" name="otherlanguage" placeholder="기타 언어 입력" <c:if test="${languagelist.LANGUAGE eq \'other\'}">value="${languagelist.LANGUAGE }"</c:if>/>'+
-                        '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                        '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
                      '</div>'+
                   '</div>'+
                   '<div id = "langcert">'+
@@ -61,13 +61,13 @@
                         '<div class="col-md-4">'+
                            '<div class="input-group mb-3">'+
                               '<input type="text" name="language_name" placeholder="시험명"/>'+
-                              '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                              '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
                            '</div>'+
                         '</div>'+
                         '<div class="col-md-4">'+
                            '<div class="input-group mb-4">'+
                               '<input type="text" name="language_grade" placeholder="점수/등급"/>'+
-                              '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                              '<span class="input-group-text"><i class="fas fa-wallet"></i></span>'+
                            '</div>'+
                         '</div>'+
                      '</div>'+
@@ -132,7 +132,7 @@
                            </div>
                         <div class="input-group mb-3" id="hidediv">
                            <input type="text" id="otherlanguage" name="otherlanguage" placeholder="기타 언어 입력" value="<c:if test="${languagelist.LANGUAGE eq 'other'}">${languagelist.LANGUAGE_OTHER }</c:if>"/>
-                           <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                           <span class="input-group-text"><i class="far fa-edit"></i></span>
                         </div>
                         </div>
                         <div id = "langcert">
@@ -141,13 +141,13 @@
                               <div class="col-md-4">
                                  <div class="input-group mb-3">
                                     <input type="text" name="language_name" placeholder="시험명" value="${languagelist.LANGUAGE_NAME }"/>
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <span class="input-group-text"><i class="far fa-edit"></i></span>
                                  </div>
                               </div>
                               <div class="col-md-4">
                                  <div class="input-group mb-4">
                                     <input type="text" name="language_grade" placeholder="점수/등급" value="${languagelist.LANGUAGE_GRADE }"/>
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-wallet"></i></span>
                                  </div>
                               </div>
                            </div>

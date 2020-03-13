@@ -30,19 +30,19 @@ function attachAddr(){
                '<label>수상/ 취득내역</label>'+
                '<div class="input-group mb-3">'+
                   '<input type="text" name="certificate_name" placeholder="입력"/>'+
-                  '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                  '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
                '</div>'+
             
                '<label>취득 년월</label>'+
                '<div class="input-group mb-3">'+
                   '<input type="date" name="certificate_start_date" placeholder="취득일(2000-11-11)"/>'+
-                  '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                  '<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>'+
                '</div>'+
             
                '<label>링크</label>'+
                '<div class="input-group mb-3">'+
                   '<input type="text" name="certificate_link" placeholder="http://"/>'+
-                  '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                  '<span class="input-group-text"><i class="fas fa-share-alt"></i></span>'+
                '</div>'+
             
                '<label>설명</label>'+
@@ -102,19 +102,19 @@ function attachAddr(){
                         <label>수상/ 취득내역</label>
                         <div class="input-group mb-3">
                            <input type="text" name="certificate_name" value="${certificateList.CERTIFICATE_NAME }" placeholder="입력"/>
-                           <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                           <span class="input-group-text"><i class="far fa-edit"></i></span>
                         </div>
                      
                         <label>취득 년월</label>
                         <div class="input-group mb-3">
                            <input type="date" name="certificate_start_date" value="${certificateList.CERTIFICATE_DATE }"/>
-                           <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                           <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                         </div>
                      
                         <label>링크</label>
                         <div class="input-group mb-3">
                            <input type="text" name="certificate_link" value="${certificateList.CERTIFICATE_LINK }" placeholder="http://"/>
-                           <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                           <span class="input-group-text"><i class="fas fa-share-alt"></i></span>
                         </div>
                      
                         <label>설명</label>

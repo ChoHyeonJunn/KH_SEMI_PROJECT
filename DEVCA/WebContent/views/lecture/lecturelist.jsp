@@ -218,9 +218,9 @@ function selectSearchList(search){
 
 <!-- END :: JAVASCRIPT -->
 </head>
-<body><!-- 
-	<a href="/DEVCA/lecture/CrawlingJobData.do">jobd 탐색 시작!</a> -->
-	<a href="/DEVCA/lecture/CrawlingLectureList.do">크롤링 시작!</a>
+<body>
+	<!-- <a href="/DEVCA/lecture/CrawlingJobData.do">jobd 탐색 시작!</a> -->
+	<!-- <a href="/DEVCA/lecture/CrawlingLectureList.do">크롤링 시작!</a> -->
 
 	<section class="card p-4 my-3 bg-white">
 		<h1 class="card-title">LECTURE</h1>

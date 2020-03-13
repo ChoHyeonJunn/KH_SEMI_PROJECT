@@ -31,21 +31,21 @@
 			'<label>활동명</label>'+
 			'<div class="input-group mb-3">'+
 					'<input type="text" name="action_name" placeholder="입력"/>'+
-					'<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+					'<span class="input-group-text"><i class="far fa-edit"></i></span>'+
 				'</div>'+
 				'<div class="row">'+
 					'<div class="col-md-4">'+
 						'<label>시작일</label>'+
 					'<div class="input-group mb-3">'+
 							'<input type="date" name="action_start_date" placeholder="시작일(2000-11-11)"/>'+
-							'<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+							'<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>'+
 						'</div>'+
 					'</div>'+
 					'<div class="col-md-4">'+
 						'<label>종료일</label>'+
 						'<div class="input-group mb-3">'+
 							'<input type="date" name="action_end_date" placeholder="종료일(2000-11-11)"/>'+
-							'<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+							'<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -53,7 +53,7 @@
 				'<label>활동 링크</label>'+
 				'<div class="input-group mb-3">'+
 					'<input type="text" name="action_link" placeholder="http://"/>'+
-					'<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+					'<span class="input-group-text"><i class="fas fa-share-alt"></i></span>'+
 				'</div>'+
 				
 				'<label>설명</label>'+
@@ -115,21 +115,21 @@
 									<label>활동명</label>
 									<div class="input-group mb-3">
 			   							<input type="text" name="action_name" value="${actionList.ACTION_NAME }" placeholder="입력"/>
-			   							<span class="input-group-text"><i class="fas fa-phone"></i></span>
+			   							<span class="input-group-text"><i class="far fa-edit"></i></span>
 			   						</div>
 			   						<div class="row">
 				   						<div class="col-md-4">
 				  							<label>시작일</label>
 											<div class="input-group mb-3">
 					   							<input type="date" name="action_start_date" value="${actionList.ACTION_START_DATE }" placeholder="시작일(2000-11-11)"/>
-					   							<span class="input-group-text"><i class="fas fa-phone"></i></span>
+					   							<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
 					   						</div>
 				   						</div>
 				   						<div class="col-md-4">
 				   							<label>종료일</label>
 				   							<div class="input-group mb-3">
 					   							<input type="date" name="action_end_date" value="${actionList.ACTION_END_DATE }" placeholder="종료일(2000-11-11)"/>
-					   							<span class="input-group-text"><i class="fas fa-phone"></i></span>
+					   							<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
 					   						</div>
 				   						</div>
 			   						</div>
@@ -137,7 +137,7 @@
 			   						<label>활동 링크</label>
 			   						<div class="input-group mb-3">
 			   							<input type="text" name="action_link" value="${actionList.ACTION_LINK }" placeholder="http://"/>
-			   							<span class="input-group-text"><i class="fas fa-phone"></i></span>
+			   							<span class="input-group-text"><i class="fas fa-share-alt"></i></span>
 			   						</div>
 			   						
 			   						<label>설명</label>

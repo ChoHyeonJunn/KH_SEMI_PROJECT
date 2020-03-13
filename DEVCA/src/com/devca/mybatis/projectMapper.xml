@@ -39,5 +39,8 @@
 		INSERT INTO PROJECT
 		VALUES(PROJECT_SEQ.NEXTVAL, #{PROJECT_MEMBER_CODE},'',0,'','',0,'','','','','','')
 	</insert>
-
+	<select id="project_count_row" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM PROJECT
+		WHERE PROJECT_MEMBER_CODE = #{PROJECT_MEMBER_CODE}
+	</select>
 </mapper>

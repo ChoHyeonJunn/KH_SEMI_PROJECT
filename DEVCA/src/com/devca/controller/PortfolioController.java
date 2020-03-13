@@ -891,14 +891,14 @@ public class PortfolioController extends HttpServlet {
 		String[] iOS = request.getParameterValues("iOS");
 		int[] project_member = new int[project_count.length];
 		for(int i = 0; i < project_count.length;i++) {
-			if(project_member_count[i] == null && project_member_count[i] == "") {
+			if(project_member_count[i] == null || project_member_count[i] == "" || project_member_count[i] == "0") {
 				project_member[i] = 1;
 			}else {
 				project_member[i] = Integer.parseInt(project_member_count[i]);
 			}
 			System.out.println("oneline_ex"+project_oneline_ex[i]);
 			System.out.println("team"+project_team[i]);
-			System.out.println("**member"+project_count[i]);
+			System.out.println("**member"+project_member[i]);
 			System.out.println("usestack"+project_usestack[i]);
 			System.out.println("detail"+project_detail[i]);
 			System.out.println("link"+project_storage_link[i]);

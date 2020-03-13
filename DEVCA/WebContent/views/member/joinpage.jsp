@@ -89,12 +89,17 @@
 // 이메일 정규식
 var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;   
 
+//숫자와 문자 포함 형태의 6~12자리 이내의 암호 정규식
+var regexPW = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+
+var verificationName = 0;
+var verificationPassword = 0;
+var checkemail = '';
 
 $(function(){
    var rsa = new RSAKey();
    rsa.setPublic("${modulus}", "${exponent}");
    
-   $("#SUBMIT").attr("disabled", "disabled");
    $("#email_check").attr("style", "display: none;");
    
    $("#name").keyup(function() {
@@ -115,12 +120,12 @@ $(function(){
                   $("#name_confirm").text("이미 사용중인 별명입니다.");
                   $("#name_confirm").attr("style", "color:red");
                   
-                  $("#SUBMIT").attr("disabled", "disabled");
+                  verificationName = 0;
                } else {
                   $("#name_confirm").text("사용 가능한 별명입니다.");
                   $("#name_confirm").attr("style", "color:blue");
                   
-                  $("#SUBMIT").removeAttr("disabled");
+                  verificationName = 1;
                }
             },
             
@@ -151,14 +156,11 @@ $(function(){
                      $("#email_confirm").text("이미 사용중인 이메일입니다.");
                      $("#email_confirm").attr("style", "color:red");
                      
-                     $("#SUBMIT").attr("disabled", "disabled");
                   } else {
                      $("#email_confirm").text("사용 가능한 이메일입니다. 이메일 인증을 진행해주세요.");
                      $("#email_confirm").attr("style", "color:blue");
                      $("#email_check_remove").attr("style", "display:none;")
-                     $("#email_check").attr("style", "display");
-                     $("#SUBMIT").removeAttr("disabled");
-                     
+                     $("#email_check").attr("style", "display");                     
                   }
                },
                
@@ -170,7 +172,7 @@ $(function(){
             $("#email_confirm").text("이메일 형식이 아닙니다.");
             $("#email_confirm").attr("style", "color:red");
             
-            $("#SUBMIT").attr("disabled", "disabled");
+            verificationEmail = 0;
          }
       }
    })
@@ -179,13 +181,22 @@ $(function(){
       var pwChk = $("#pwChk").val();
       
       if(pw != "" && pwChk != "") {
-         
-         if(pw != pwChk) {
-            $("#pw_confirm").text("비밀번호가 일치하지 않습니다.");
-            $("#pw_confirm").attr("style", "color:red");                  
-         } else {   
-            $("#pw_confirm").text("비밀번호가 일치합니다.");
-            $("#pw_confirm").attr("style", "color:green");
+         if(regexPW.test(pw)){         
+	         if(pw != pwChk) {
+	            $("#pw_confirm").text("비밀번호가 일치하지 않습니다.");
+	            $("#pw_confirm").attr("style", "color:red");   
+	            
+	            verificationPassword = 0;
+	         } else {   
+	            $("#pw_confirm").text("비밀번호가 일치합니다.");
+	            $("#pw_confirm").attr("style", "color:green");
+	            
+	            verificationPassword = 1;
+	         }
+         } else {
+        	 $("#pw_confirm").text("숫자, 문자, 특수문자 포함 8자리 이상의 암호를 입력해주세요.");
+	         $("#pw_confirm").attr("style", "color:red"); 
+   			 verificationPassword = 0;
          }
       } 
    })
@@ -222,9 +233,31 @@ $(function(){
       }
    })
    
-   $("#joinForm").submit(function(e) {            
+   $("#joinForm").submit(function(e) {   
       e.preventDefault();
-               
+      
+		if(verificationName != 1){
+			alert("별명을 다시 입력해주세요." + verificationName);
+			$("#name").focus();
+			return;
+		}
+		var emailcheck = $("#email_confirm").text();
+		if(emailcheck != "이메일 인증에 성공하였습니다."){
+			if(emailcheck == "사용 가능한 이메일입니다. 이메일 인증을 진행해주세요."){
+				alert("이메일을 인증을 진행해주세요.");
+				$("#email_check").focus();
+			}else{
+				alert("이메일을 다시 입력해주세요.");
+				$("#email").focus();
+			}
+			return;
+		}
+		if(verificationPassword != 1){
+			alert("비밀번호를 다시 입력해주세요.");
+			$("#pw").focus();
+			return;
+		}
+      
       var MEMBER_NAME = $(this).find("#name").val();
       var MEMBER_EMAIL = $(this).find("#email").val();
       var MEMBER_PHONE = $(this).find("#phone").val();
@@ -253,7 +286,7 @@ $(function(){
 </head>
 
 <body class="bg-light">
-   <c:if test="${empty SURVEY_LANGUAGE}">
+    <c:if test="${empty SURVEY_LANGUAGE}">
       <script type="text/javascript">
       $(function(){
          $("#JoinPageContainer").hide();

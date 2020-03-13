@@ -40,7 +40,7 @@ function headerSearchAutoComplete(){
 		var li_item = $("<div>").attr({"class":"my-auto"});
 		var img = $("<img>").attr({
 						"class" : "m-1",
-						"style" : "width: 50px; height: 30px; border-radius: 5px;",
+						"style" : "width: 50px; height: 30px; border-radius: 5%;",
 						"src" :  item.image
 					})
 		var link = $("<a>").attr({

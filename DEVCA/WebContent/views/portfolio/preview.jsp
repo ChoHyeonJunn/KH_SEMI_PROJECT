@@ -141,8 +141,8 @@ li{
                     
                   </c:forEach>
                </div>
-              <div class="action-wrap">
-                  <a href="#" onclick="location.href='/DEVCA/portfolio/sideprofilepage.do'">수정</a>
+              <div class="btn btn-primary btn-sm">
+                  <a href="#" onclick="location.href='/DEVCA/portfolio/sideportfoliopage.do'">수정</a>
                 </div>
            </div>
          </article>

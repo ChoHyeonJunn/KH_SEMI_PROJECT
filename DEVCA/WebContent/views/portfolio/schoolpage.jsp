@@ -66,7 +66,7 @@ label{
                            <label>학교/기관</label>
                            <div class="input-group mb-3">
                               <input type="text" name="schoolname" placeholder="OO학교" value="${schoolList.SCHOOL_NAME }"/>
-                              <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                              <span class="input-group-text"><i class="fas fa-school"></i></span>
                            </div>
                            
                            <div class="row">
@@ -74,14 +74,14 @@ label{
                               <label>전공</label>
                                  <div class="input-group mb-3">
                                     <input type="text" name="major" placeholder="컴퓨터 공학" value="${schoolList.SCHOOL_MAJOR }"/>
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-pen"></i></span>
                                  </div>
                             </div>
                             <div class="col-md-4">   
                             <label>학위</label>
                                  <div class="input-group mb-3">
                                     <input type="text" name="degree" placeholder="학사" value="${schoolList.SCHOOL_DEGREE }"/>
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-graduation-cap"></i></span>
                                  </div>
                               </div>
                            </div>
@@ -90,14 +90,14 @@ label{
                               <label>입학</label>
                                  <div class="input-group mb-3">
                                     <input type="date" name="start_date" placeholder="입학 년월" value="${schoolList.SCHOOL_OF_START }"/>
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                  </div>
                             </div>
                             <div class="col-md-4">   
                             <label>졸업(예정)</label>
                                  <div class="input-group mb-3">
                                     <input type="date" name="end_date" placeholder="졸업 년월" value="${schoolList.SCHOOL_OF_END }"/>
-                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                 <span class="input-group-text"><i class="fas fa-graduation-cap"></i></span>
                                  </div>
                               </div>
                            </div>
@@ -106,7 +106,7 @@ label{
                                  <label>내 학점</label>
                                  <div class="input-group mb-3">
                                     <input type="text" name="mycredit" placeholder="3.5"  value="${schoolList.SCHOOL_CREDIT }"/>
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-wallet"></i></span>
                                  </div>
                             </div>
                               
@@ -114,7 +114,7 @@ label{
                               <label>최대 학점</label>
                               <div class="input-group mb-3">
                                  <input type="text" name="maxcredit" placeholder="4.5" value="${schoolList.SCHOOL_MAXCREDIT }"/>
-                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                 <span class="input-group-text"><i class="fas fa-wallet"></i></span>
                               </div>
                               </div>   
                            </div>

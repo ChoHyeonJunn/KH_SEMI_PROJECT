@@ -75,8 +75,11 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script type="text/javascript">
+
+var verificationName = 0;
+var checkemail = '';
+
 $(function(){
-	$("#SUBMIT").attr("disabled", "disabled");
 	$("#email_check").attr("style", "display: none;");
 	
 	// 이메일 정규식
@@ -100,10 +103,11 @@ $(function(){
 			
 			success: function(msg) {	
 				if(msg.result > 0) {						
-					$("#SUBMIT").attr("disabled", "disabled");
 					$("#email_check").attr("disabled", "disabled");
 					$("#email_confirm").text("이미 사용중인 이메일입니다.");
 					$("#email_confirm").attr("style", "color:red");
+				}else{
+					$("#email").attr("disabled", "disabled");
 				}
 			},
 			
@@ -126,17 +130,17 @@ $(function(){
 				dataType: "JSON",
 				
 				success: function(msg) {	
-					if(msg.result > 0) {
-						$("#SUBMIT").attr("disabled", "disabled");
-						$("#email_check").attr("disabled", "disabled");						
+					if(msg.result > 0) {				
 						$("#name_confirm").text("이미 사용중인 별명입니다.");
 						$("#name_confirm").attr("style", "color:red");
+						
+						verificationName = 0;
 						
 					} else {
 						$("#name_confirm").text("사용 가능한 별명입니다.");
 						$("#name_confirm").attr("style", "color:blue");
 						
-						$("#SUBMIT").removeAttr("disabled");
+						verificationName = 1;
 					}
 				},
 				
@@ -166,7 +170,6 @@ $(function(){
 					
 					success: function(msg) {	
 						if(msg.result > 0) {						
-							$("#SUBMIT").attr("disabled", "disabled");
 							$("#email_check").attr("disabled", "disabled");
 							$("#email_confirm").text("이미 사용중인 이메일입니다.");
 							$("#email_confirm").attr("style", "color:red");
@@ -176,10 +179,7 @@ $(function(){
 							
 							$("#email_check_remove").attr("style", "display:none;")
 							$("#email_check").attr("style", "display");
-							
 							$("#email_check").removeAttr("disabled");
-							$("#SUBMIT").removeAttr("disabled");
-							
 						}
 					},
 					
@@ -188,7 +188,6 @@ $(function(){
 					}
 				})
 			} else{
-				$("#SUBMIT").attr("disabled", "disabled");
 				$("#email_check").attr("disabled", "disabled");
 				$("#email_confirm").text("이메일 형식이 아닙니다.");
 				$("#email_confirm").attr("style", "color:red");
@@ -201,7 +200,6 @@ $(function(){
 		$("#email_confirm").attr("style", "color:green");
 
 		if($("#email").val() == null || $("#email").val() == "") {
-			$("#SUBMIT").attr("disabled", "disabled");
 			$("#email_check").attr("disabled", "disabled");
 			$("#email_confirm").text("필수 정보입니다.");
 			$("#email_confirm").attr("style", "color:red");
@@ -232,6 +230,27 @@ $(function(){
 	
 	$("#snsJoinForm").submit(function(e){
 		e.preventDefault();
+		
+		if(verificationName != 1){
+			alert("별명을 다시 입력해주세요.");
+			$("#name").focus();
+			return;
+		}
+		var emailcheck = $("#email_confirm").text();
+		var snsEmailCanUse = $("#email").attr("disabled");
+		if(!snsEmailCanUse){
+			if(emailcheck != "이메일 인증에 성공하였습니다."){
+				if(emailcheck == "사용 가능한 이메일입니다. 이메일 인증을 진행해주세요."){
+					alert("이메일을 인증을 진행해주세요.");
+					$("#email_check").focus();
+				}else{
+					alert("이메일을 다시 입력해주세요.");
+					$("#email").focus();
+					
+				}
+				return;
+			}
+		}
 		// 실제 유저 입력 form은 event 취소
 		// javaScript가 작동되지 않는 환경에서는 유저 입력 form이 submit됨 -> server 측에서 검증되므로 로그인 불가.
 		

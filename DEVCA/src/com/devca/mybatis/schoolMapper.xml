@@ -32,7 +32,7 @@
 	<insert id="school_insert_new" parameterType="SCHOOL">
 		INSERT INTO SCHOOL
 		VALUES(SCHOOL_SEQ.NEXTVAL, #{SCHOOL_MEMBER_CODE},'','',
-		'',SYSDATE,SYSDATE,0,0,'')
+		'',SYSDATE,SYSDATE,0,4.5,'')
 	</insert>
 	<select id="school_count" parameterType="int" resultType="int">
 		SELECT COUNT(*) FROM SCHOOL

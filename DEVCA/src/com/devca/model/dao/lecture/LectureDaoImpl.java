@@ -268,7 +268,7 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 	}
 
 	// 프론트 추천 강의 리스트
-	private final String FrontEnd = "Git|Github|JavaScript|HTML|CSS|React.js|Vue.js|Angular.js|BootStrap|jQuery";
+	private final String FrontEnd = "React.js|Vue.js|Angular.js|Git|Github|JavaScript|HTML|CSS|BootStrap|jQuery";
 
 	@Override
 	public List<LECTURE> selectFrontEndList() {
@@ -281,7 +281,7 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 	}
 
 	// 백엔드 추천 강의 리스트
-	private final String BackEnd = "Git|Github|Maven|Linux|Java|Spring|WAS|DB|Oracle|ORM|Mybatis";
+	private final String BackEnd = "DB|Oracle|Mybatis|Maven|Linux|Java|Spring|WAS|ORM|Git|Github";
 
 	@Override
 	public List<LECTURE> selectBackEndList() {
@@ -294,7 +294,7 @@ public class LectureDaoImpl extends SqlMapConfig implements LectureDao {
 	}
 
 	// 풀스택추천 강의 리스트
-	private final String FullStack = "Git|Github|Maven|Linux|Java|JavaScript|HTML|CSS|ORM|Mybatis|BootStrap|Spring|WAS|Oracle|MongoDB";
+	private final String FullStack = "Git|Java|Spring|Github|Maven|Linux|JavaScript|HTML|CSS|ORM|Mybatis|BootStrap|WAS|Oracle|MongoDB";
 
 	@Override
 	public List<LECTURE> selectFullStackList() {

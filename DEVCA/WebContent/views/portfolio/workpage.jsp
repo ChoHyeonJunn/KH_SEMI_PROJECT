@@ -30,12 +30,12 @@
             '<label>직종</label>'+
             '<div class="input-group mb-3">'+
                '<input type="text" name="work_name" placeholder="입력"/>'+
-               '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+               '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
             '</div>'+
             '<label>연봉</label>'+
             '<div class="input-group mb-3">'+
                '<input type="text" name="income" placeholder="0만원"/>'+
-               '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+               '<span class="input-group-text"><i class="fas fa-hand-holding-usd"></i></span>'+
             '</div>'+
          '</div>';
          
@@ -87,19 +87,19 @@
                               <label>직종</label>
                               <div class="input-group mb-3">
                                  <input type="text" name="work_name" value="${workList.LINE_OF_WORK }" placeholder="입력"/>
-                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                 <span class="input-group-text"><i class="far fa-edit"></i></span>
                               </div>
                               <label>연봉</label>
                               <div class="input-group mb-3">
                                  <input type="text" name="income" value="${workList.INCOME }" placeholder="0만원"/>
-                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                 <span class="input-group-text"><i class="fas fa-hand-holding-usd"></i></span>
                               </div>
                            </div>
                            </c:forEach>
                         </div>
                            <div class="insert-center">
                            <div class="insert">
-                              <a href="#" class="btn btn-primary btn-sm" onclick="attachAddr();" >활동 추가</a>
+                              <a href="#" class="btn btn-primary btn-sm" onclick="attachAddr();" >직종/연봉 추가</a>
                            </div>
                         </div>
                         <div>

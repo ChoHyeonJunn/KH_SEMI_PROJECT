@@ -26,6 +26,7 @@
 	max-width: 80%;
 	height: 500px;
 }
+
 #chartdiv_job_rank {
   max-width: 100%;
   height: 500px;
@@ -410,7 +411,15 @@ function DeleteMyGarbageLecture(LECTURE_CODE){
 				
 				<!-- 비 구독자 결제 페이지 이동 버튼 -->
 				<c:if test="${sessionMember_profile.MEMBER_ROLE eq '1'}">
-					<button type="button" onclick="location.href='/DEVCA/member/privacypaymentpage.do'">DEVCA 6개월 구독하러가기</button>
+					<div id="notPremiumRoadMapContainer" class="text-center" style="width:100%; height: 100%; padding:100px; background-image: url('../resources/images/roadMapSample.PNG');">
+						<div class="my-auto mx-auto text-center">
+							<h5 class="text-light font my-2">
+								프리미엄 구독하고 나만의 로드맵을 완성하세요
+							</h5>
+							<button type="button" onclick="location.href='/DEVCA/member/privacypaymentpage.do'" class="btn">DEVCA 6개월 구독하러가기</button>
+						</div>
+					</div>
+					
 				</c:if>
 				
 				
@@ -437,9 +446,9 @@ function DeleteMyGarbageLecture(LECTURE_CODE){
 							<button id="roadMap_item_remove_button" class="btn mb-5">지우기</button>
 							
 							<input type="text" name="roadMap_new_item" class="form-control">
-							<div class="flex">
-								<button id="roadMap_item_add_button" class="btn">로드맵에 추가하기</button>
-								<button id="roadMap_category_add_button" class="btn">카테고리 추가하기</button>
+							<div class="d-flex">
+								<button id="roadMap_item_add_button" class="btn flex-fill mr-1 my-2">기술 추가</button>
+								<button id="roadMap_category_add_button" class="btn flex-fill ml-1 my-2">카테고리 추가</button>
 							</div>
 							
 						</div>			
@@ -502,18 +511,18 @@ function DeleteMyGarbageLecture(LECTURE_CODE){
 			<div class="row">
 				<div class="col-sm-6 p-0">
 					
-					<div id="profile" class="card p-4 mx-1 bg-dark" style="height: 100%;">
-		                <h5 class="card-title text-light p-3">프로필 정보</h5>
+					<div id="profile" class="card p-4 mx-1 bg-dark">
+		                <h5 class="card-title text-light p-3" data-toggle="collapse" data-target="#MyChart">프로필 정보</h5>
 		                  
-		                <div id="MyChart">
+		                <div id="MyChart" class="collapse show" style="height: 100%;">
 		                   <%
 		                      int[] data = (int[])request.getAttribute("data");
 		                   %>
 		               
-		                      <canvas id="myChart" width="330" height="330"></canvas>
+		                      <canvas id="myChart" width="340" height="360" class="mx-auto"></canvas>
 		               
 		                      <div>
-		                         <table>
+		                         <table style="width: 100%">
 		                            <tbody>
 		                               <tr>
 		                                  <td style="color: white;">희망 직무  : 
@@ -542,7 +551,7 @@ function DeleteMyGarbageLecture(LECTURE_CODE){
 		                            </tbody>
 		                         </table>
 		                      </div>
-		                   </div>
+		                </div>
 	               </div>
 					
 					

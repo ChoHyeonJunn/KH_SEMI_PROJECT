@@ -43,35 +43,35 @@ function attachAddr(){
                      '<label for="companyname">기업이름</label>'+
                      '<div class="input-group mb-3">'+
                         '<input type="text" id="companyname" name="COMPANYNAME" placeholder="기업 이름 입력"/>'+
-                        '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                        '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
                      '</div>'+
                      
                      
                      '<label for="duty">직무</label> '+
                      '<div class="input-group mb-3">'+
                         '<input type="text" id="duty" name="DUTY" placeholder="프론트엔드 개발자"/>'+
-                        '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                        '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
                      '</div>'+
                      
                      
                      '<label for="day_of_entry">입사일</label>'+
                      '<div class="input-group mb-3">'+
                         '<input type="date" id="day_of_entry" name="DAY_OF_ENTRY"/>'+
-                        '<span class="input-group-text"><i class="fas fa-phone"></i></span>   '+
+                        '<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>   '+
                      '</div>'+
                      
                      
                      '<label for="date_of_departure">퇴사일</label>'+
                      '<div class="input-group mb-3">'+
                         '<input type="date" id="date_of_departure" name="DATE_OF_DEPARTURE"/>'+
-                        '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                        '<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>'+
                      '</div>'+
                      
                      
                      '<label for="stack">사용 스택</label>'+
                      '<div class="input-group mb-3">'+
                         '<input type="text" id="stack" name="STACK" placeholder="스택 입력"/>   '+
-                        '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                        '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
                      '</div>'+                  
          
                         '<label>상세 업무 및 성과</label>'+
@@ -79,19 +79,19 @@ function attachAddr(){
                            '<div class="career-detail-item">'+
                               '<div class="input-group mb-3">'+
                                  '<input type="text" name="PERFORMANCE" placeholder="상세 업무 및 성과"/>'+
-                                 '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                                 '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
                               '</div>'+
                               '<div class="row">'+
                                  '<div class="col-md-4">'+
                                     '<div class="input-group mb-3">'+
                                        '<input type="date" name="START_DATE" placeholder="시작일(2020-01-01)"/>'+
-                                       '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                                       '<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>'+
                                     '</div>'+
                                  '</div>'+
                                  '<div class="col-md-4">'+
                                     '<div class="input-group mb-3">'+
                                        '<input type="date" name="END_DATE" placeholder="종료일(2020-01-01)"/>'+
-                                       '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                                       '<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>'+
                                     '</div>'+
                                  '</div>'+
                               '</div>'+
@@ -104,7 +104,7 @@ function attachAddr(){
                      '<label for="LINK">기타 링크</label>'+
                      '<div class="input-group mb-3">'+
                         '<input type="text" id="LINK" name="LINK" placeholder="https://website.com"/>'+
-                        '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                        '<span class="input-group-text"><i class="fas fa-share-alt"></i></span>'+
                      '</div>'+
                      '<label>기타 설명</label>'+
                      '<div class="input-group mb-3">'+
@@ -159,35 +159,35 @@ function attachAddr(){
                               <label for="companyname">기업이름</label>
                               <div class="input-group mb-3">
                                  <input type="text" id="companyname" name="COMPANYNAME" placeholder="기업 이름 입력" value="${careerList.COMPANY_NAME }"/>
-                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                 <span class="input-group-text"><i class="far fa-edit"></i></span>
                               </div>
                               
                               
                               <label for="duty">직무</label> 
                               <div class="input-group mb-3">
                                  <input type="text" id="duty" name="DUTY" placeholder="프론트엔드 개발자" value="${careerList.DUTY }" />
-                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                 <span class="input-group-text"><i class="far fa-edit"></i></span>
                               </div>
                               
                               
                               <label for="day_of_entry">입사일</label>
                               <div class="input-group mb-3">
                                  <input type="date" id="day_of_entry" name="DAY_OF_ENTRY" value="${careerList.DAY_OF_ENTRY }"/>   
-                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>   
+                                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>   
                               </div>
                               
                               
                               <label for="date_of_departure">퇴사일</label>
                               <div class="input-group mb-3">
                                  <input type="date" id="date_of_departure" name="DATE_OF_DEPARTURE" value="${careerList.DATE_OF_DEPARTURE }"/>
-                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                               </div>
                               
                               
                               <label for="stack">사용 스택</label>
                               <div class="input-group mb-3">
                                  <input type="text" id="stack" name="STACK" placeholder="스택 입력" value="${careerList.STACK }"/>   
-                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                 <span class="input-group-text"><i class="far fa-edit"></i></span>
                               </div>
                               
                               
@@ -196,19 +196,19 @@ function attachAddr(){
                                     <div class="career-detail-item">
                                        <div class="input-group mb-3">
                                           <input type="text" name="PERFORMANCE" placeholder="상세 업무 및 성과" value="${careerList.PERFORMANCE }"/>
-                                          <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                          <span class="input-group-text"><i class="far fa-edit"></i></span>
                                        </div>
                                        <div class="row">
                                           <div class="col-md-4">
                                              <div class="input-group mb-3">
                                                 <input type="date" name="START_DATE" placeholder="시작일(2020-01-01)" value="${careerList.START_DATE }"/>
-                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                              </div>
                                           </div>
                                           <div class="col-md-4">
                                              <div class="input-group mb-3">
                                                 <input type="date" name="END_DATE" placeholder="종료일(2020-01-01)" value="${careerList.END_DATE }"/>
-                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                              </div>
                                           </div>
                                        </div>
@@ -220,7 +220,7 @@ function attachAddr(){
                               <label for="LINK">기타 링크</label>
                               <div class="input-group mb-3">
                                  <input type="text" id="LINK" name="LINK" placeholder="https://website.com" value="${careerList.LINK }"/>
-                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                 <span class="input-group-text"><i class="fas fa-share-alt"></i></span>
                               </div>
                               <label>기타 설명</label>
                               <div class="input-group mb-3">

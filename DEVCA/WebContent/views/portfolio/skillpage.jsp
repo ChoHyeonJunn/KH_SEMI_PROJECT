@@ -70,7 +70,7 @@ $(document).on('click','.click',(function() {
 			<!-- START :: profile content -->
 			<article class="col-md-10">
 				<div class="card p-4 my-3 bg-white">
-					<h1>사용가능한 기술을 선택해주세요.</h1>
+					<h1>자신이 자신있는 스킬을 선택해주세요.(최대3개)</h1>
 						<fieldset>
 							<form action="/DEVCA/portfolio/languagepage.do" method="post">
 							<input type="hidden" name="member_code" value="${sessionLoginMember.MEMBER_CODE }"/>
@@ -101,7 +101,7 @@ $(document).on('click','.click',(function() {
 									    <option value="C">C</option>
 									    <option value="C++">C++</option>
 									    <option value="C#">C#</option>
-									    <option value="Github">Github</option>
+									    <option value="Github">Gitbub</option>
 									    <option value="Django">Django</option>
 									    <option value="MongoDB">MongoDB</option>
 									    <option value="Spring">Spring</option>

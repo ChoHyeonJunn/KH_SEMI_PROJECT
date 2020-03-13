@@ -90,7 +90,7 @@
          '<label for="project_name">프로젝트 이름</label>   '+
          '<div class="input-group mb-3">'+
             '<input type="text" name="project_name" id="project_name" placeholder="입력"/>'+
-            '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+            '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
          '</div>'+
          '<div class="input-group mb-3">'+
             '<select class="form-control" name="create_year">'+
@@ -104,7 +104,7 @@
          '<label for="project_one_ex">프로젝트 1줄 설명</label>'+
          '<div class="input-group mb-3">'+
             '<input type="text" name="project_oneline_ex" id="project_one_ex" placeholder="입력"/>'+
-            '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+            '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
          '</div>'+
          '<div class="project-items">'+
             '<label>팀 구성</label>'+
@@ -117,13 +117,13 @@
             '<label for="member">팀 구성원</label>'+
             '<div class="input-group mb-3">'+
                '<input type="text" name="project_member" id="member" placeholder="입력"/>'+
-               '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+               '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
             '</div>'+
          '</div>'+
          '<label for="usestack">사용 스택</label>'+
          '<div class="input-group mb-3">'+
             '<input type="text" name="project_usestack" id="usestack" placeholder="스택 입력"/>'+
-            '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+            '<span class="input-group-text"><i class="far fa-edit"></i></span>'+
          '</div>'+
          '<label for="detail_work">상세 업무 및 성과</label>'+
          '<div class="input-group mb-3">'+
@@ -132,7 +132,7 @@
          '<label for="storage_link">저장소 링크</label>'+
          '<div class="input-group mb-3">'+
             '<input type="text" name="project_storage_link" id="storage_link" placeholder="https://github.com/project"/>'+
-            '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+            '<span class="input-group-text"><i class="fas fa-share-alt"></i></span>'+
          '</div>'+
          '<div class="input-group mb-3">'+
             '<label>오픈 여부</label><br/>'+
@@ -151,21 +151,21 @@
                      '<label for="Website">Website</label>'+
                      '<div class="input-group mb-3">'+
                         '<input type="text" id="Website" name ="Website" placeholder="http://"/>'+
-                        '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                        '<span class="input-group-text"><i class="fas fa-share-alt"></i></span>'+
                      '</div>'+
                   '</div>'+
                   '<div class="col-md-4">'+
                      '<label for="Android">Android</label>'+
                      '<div class="input-group mb-3">'+
                         '<input type="text" id="Android" name ="Android" placeholder="http://"/>'+
-                        '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                        '<span class="input-group-text"><i class="fas fa-share-alt"></i></span>'+
                      '</div>'+
                   '</div>'+
                   '<div class="col-md-4">'+
                      '<label for="iOS">iOS</label>'+
                      '<div class="input-group mb-3">'+
                         '<input type="text" id="iOS" name ="iOS" placeholder="http://"/>'+
-                        '<span class="input-group-text"><i class="fas fa-phone"></i></span>'+
+                        '<span class="input-group-text"><i class="fas fa-share-alt"></i></span>'+
                      '</div>'+
                   '</div>'+
                '</div>'+
@@ -219,7 +219,7 @@
                         <label for="project_name">프로젝트 이름</label>   
                         <div class="input-group mb-3">
                            <input type="text" name="project_name" id="project_name" placeholder="입력" value="${projectdto.PROJECT_NAME }"/>
-                           <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                           <span class="input-group-text"><i class="far fa-edit"></i></span>
                         </div>
                         
                         
@@ -237,7 +237,7 @@
                         <label for="project_one_ex">프로젝트 1줄 설명</label>
                         <div class="input-group mb-3">
                            <input type="text" name="project_oneline_ex" id="project_one_ex" placeholder="입력" value="${projectdto.PROJECT_ONELINE_EX }"/>
-                           <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                           <span class="input-group-text"><i class="far fa-edit"></i></span>
                         </div>
                         
                         
@@ -254,7 +254,7 @@
                            <label for="member">팀 구성원</label>
                            <div class="input-group mb-3">
                               <input type="text" name="project_member" id="member" placeholder="입력" value="${projectdto.PROJECT_MEMBER }"/>
-                              <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                              <span class="input-group-text"><i class="far fa-edit"></i></span>
                            </div>
                         </div>
                         
@@ -262,7 +262,7 @@
                         <label for="usestack">사용 스택</label>
                         <div class="input-group mb-3">
                            <input type="text" name="project_usestack" id="usestack" placeholder="스택 입력" value="${projectdto.PROJECT_USE_STACK }"/>
-                           <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                           <span class="input-group-text"><i class="far fa-edit"></i></span>
                         </div>
                         
                         
@@ -275,7 +275,7 @@
                         <label for="storage_link">저장소 링크</label>
                         <div class="input-group mb-3">
                            <input type="text" name="project_storage_link" id="storage_link" placeholder="https://github.com/project"value="${projectdto.PROJECT_STORAGE_LINK }"/>
-                           <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                           <span class="input-group-text"><i class="fas fa-share-alt"></i></span>
                         </div>
                         
                         
@@ -299,7 +299,7 @@
                                     <label for="Website">Website</label>
                                     <div class="input-group mb-3">
                                        <input type="text" id="Website" name ="Website" placeholder="http://" value="${projectdto.PROJECT_WEBSITE }"/>
-                                       <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                       <span class="input-group-text"><i class="fas fa-share-alt"></i></span>
                                     </div>
                                  </div>
                                  
@@ -308,7 +308,7 @@
                                     <label for="Android">Android</label>
                                     <div class="input-group mb-3">
                                        <input type="text" id="Android" name ="Android" placeholder="http://" value="${projectdto.PROJECT_ANDROID }"/>
-                                       <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                       <span class="input-group-text"><i class="fas fa-share-alt"></i></span>
                                     </div>
                                  </div>
                                  
@@ -317,7 +317,7 @@
                                     <label for="iOS">iOS</label>
                                     <div class="input-group mb-3">
                                        <input type="text" id="iOS" name ="iOS" placeholder="http://" value="${projectdto.PROJECT_IOS }"/>
-                                       <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                       <span class="input-group-text"><i class="fas fa-share-alt"></i></span>
                                     </div>   
                                  </div>
                                  
@@ -330,7 +330,7 @@
                </div>
                   <div class="insert-center">
                      <div class="insert">
-                        <a href="#" class="btn btn-primary btn-sm" onclick="attachAddr();" >활동 추가</a>
+                        <a href="#" class="btn btn-primary btn-sm" onclick="attachAddr();" >프로젝트 추가</a>
                      </div>
                   </div>
                <div>

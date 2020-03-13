@@ -39,8 +39,10 @@ function fillMainLectureList(data, container){
 			"class" : "lecture_back card p-2",
 			"onclick" : "location.href='/DEVCA/lecture/lecturedetailpage.do?lecture_code=" + item.LECTURE_CODE + "'"
 		})
-		.append($("<h6>").text(item.LECTURE_TITLE).attr("style","color: white;"))
-		.append($("<div>").text(item.LECTURE_DESCRIPTION).attr({"class":"pt-3","style":"color: white; overflow: hidden;"}))
+		.append($("<div>").attr({"style":"height:80%; overflow: hidden;"})
+			.append($("<h5>").text(item.LECTURE_TITLE).attr("style","color: white; font-weight: bold;"))
+			.append($("<div>").text(item.LECTURE_DESCRIPTION).attr({"class":"pt-3","style":"color: white; overflow: hidden;"}))
+			)
 		.append(add_my_lecture)
 		
 		// 이미지 관련 div
