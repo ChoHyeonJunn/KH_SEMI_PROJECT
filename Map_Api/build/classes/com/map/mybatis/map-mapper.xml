@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="map">
+
+	<select id="selectList" resultType="member">
+		SELECT MEMBER_PROFILE_LATITUDE, MEMBER_PROFILE_LOGITUDE FROM MEMBER_MAP
+	</select>
+	<insert id="insert" parameterType="member">
+		INSERT INTO MEMBER_MAP VALUES(MEMBERSEQ.NEXTVAL,#{MEMBER_PROFILE_LATITUDE} ,#{MEMBER_PROFILE_LOGITUDE})
+	</insert>
+</mapper>
